@@ -2,6 +2,10 @@ v1.1.2
 General:
 - Added «Camera render interval» option.
 
+- Reduced chances of obtaining Key Card Omni from SCP-914 with Level 6 Key Card.
+
+- The Heavy Ballistic Vest can be modified by SCP-914.
+
 Rooms:
 - Added SCP-066's containment chamber.
 - Added an intermediate door to bypass elevators in «room3_storage».
@@ -13,6 +17,14 @@ Items:
 - Renamed «Small First Aid Kit» to «Compact First Aid Kit».
 
 - Tiny improvement for Compact First Aid Kit.
+
+- Tiny improvement for Ballistic Vests.
+
+NPCs:
+
+- NPCs that deal damage now have their damage scale with difficulty.
+
+- SCP-008-1's walk speed is slower than their chase speed.
 
 Bug fixes:
 - Fixed MAV after playing intro sequence.
