@@ -2,6 +2,7 @@ v1.1.2
 
 General:
 - Added «Camera render interval» option.
+- Added Voice Volume slider.
 
 - Reduced chances of obtaining Key Card Omni from SCP-914 with Level 6 Key Card.
 
