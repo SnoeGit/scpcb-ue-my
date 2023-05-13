@@ -5,6 +5,8 @@ Launcher:
 
 General:
 - Finished subtitles.
+- Upscaled some textures.
+- Made letter shadows more visible.
 
 Rooms:
 - Added security camera in «room2C_ez» room.
@@ -17,6 +19,11 @@ Bug Fixes:
 - Fixed wrong textures are applied for SCP-1048's drawings.
 - Fixed deaf effect.
 - Fixed SCP-427's texture.
+- Fixed SCP-066's attack not working in a room with "DisableDecals" parameter.
+- Fixed SCP-106's appearance state not reducing in a room with "DisableDecals" parameter.
+- Fixed an event with janitor staying in the dead end when SCP-106 was contained after the event was triggered.
+- Fixed softlock in SCP-513's containment chamber.
+- Fixed text flashing white after disappearing.
 
 - Some fixes for room items, hitboxes and textures.
 

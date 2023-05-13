@@ -921,6 +921,7 @@ Function UpdateNPCs%()
 								If (Not PlayerRoom\RoomTemplate\DisableDecals) Then
 									de.Decals = CreateDecal(DECAL_CORROSIVE_1, EntityX(me\Collider), 0.01, EntityZ(me\Collider), 90.0, Rnd(360.0), 0.0, 0.05, 0.8)
 									de\SizeChange = 0.001
+									EntityParent(de\OBJ, PlayerRoom\OBJ)
 								EndIf
 								
 								n\PrevY = EntityY(me\Collider)
@@ -1122,9 +1123,7 @@ Function UpdateNPCs%()
 							n\DropSpeed = 0.0
 							SetNPCFrame(n, 110.0)
 							
-							If (Not PlayerRoom\RoomTemplate\DisableDecals) Then
-								If PlayerRoom\RoomTemplate\Name <> "gate_a" Then n\State = n\State - (fps\Factor[0] * (1.0 + (SelectedDifficulty\AggressiveNPCs)))
-							EndIf
+							If PlayerRoom\RoomTemplate\Name <> "gate_a" Then n\State = n\State - (fps\Factor[0] * (1.0 + (SelectedDifficulty\AggressiveNPCs)))
 						EndIf
 						
 						ResetEntity(n\Collider)
@@ -1322,6 +1321,7 @@ Function UpdateNPCs%()
 													EntityPick(Pvt, 0.3)
 													
 													de.Decals = CreateDecal(Rand(DECAL_BLOOD_DROP_1, DECAL_BLOOD_DROP_2), PickedX(), PickedY() + 0.005, PickedZ(), 90.0, Rnd(360.0), 0.0, Rnd(0.2, 0.6))
+													EntityParent(de\OBJ, PlayerRoom\OBJ)
 												Next
 												FreeEntity(Pvt) : Pvt = 0
 												Kill(True) : me\KillAnim = 1
@@ -3711,11 +3711,12 @@ Function UpdateNPCs%()
 											Case 4
 												;[Block]
 												If (Not PlayerRoom\RoomTemplate\DisableDecals) Then
-													me\BigCameraShake = 5.0
 													de.Decals = CreateDecal(DECAL_CORROSIVE_2, EntityX(n\Collider), 0.005, EntityZ(n\Collider), 90.0, Rnd(360.0), 0.0, 0.3)
-													PlaySound_Strict(LoadTempSound("SFX\General\BodyFall.ogg"))
-													If DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider)) < 0.64 Then InjurePlayer(Rnd(0.3, 0.5), 0.0, 200.0)
+													EntityParent(de\OBJ, PlayerRoom\OBJ)
 												EndIf
+												me\BigCameraShake = 5.0
+												PlaySound_Strict(LoadTempSound("SFX\General\BodyFall.ogg"))
+												If DistanceSquared(EntityX(me\Collider), EntityX(n\Collider), EntityZ(me\Collider), EntityZ(n\Collider)) < 0.64 Then InjurePlayer(Rnd(0.3, 0.5), 0.0, 200.0)
 												;[End Block]
 											Case 5, 6 ; ~ No effect
 												;[Block]
