@@ -12,6 +12,8 @@ Rooms:
 - Added security camera in «room2C_ez» room.
 - Added «room2C_2_ez» room.
 
+- Changed «room2_4_hcz_106» event.
+
 - Some design improvements.
 
 Bug Fixes:
@@ -20,11 +22,11 @@ Bug Fixes:
 - Fixed deaf effect.
 - Fixed SCP-427's texture.
 - Fixed SCP-066's attack not working in a room with "DisableDecals" parameter.
-- Fixed SCP-106's appearance state not reducing in a room with "DisableDecals" parameter.
 - Fixed an event with janitor staying in the dead end when SCP-106 was contained after the event was triggered.
 - Fixed softlock in SCP-513's containment chamber.
 - Fixed text flashing white after disappearing.
 
+- Several fixes for SCP-268.
 - Some fixes for room items, hitboxes and textures.
 
 v1.1.3
