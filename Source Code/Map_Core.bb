@@ -497,8 +497,6 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 		Default RuntimeErrorEx(Format(Format(GetLocalString("runerr", "notrmesh"), File, "{0}"), IsRMesh, "{1}"))
 	End Select
 
-	DebugLog(File + " " + IsRMesh + " " + Version)
-
 	If Version > RMESH_MAX_VERSION Then RuntimeErrorEx("Unsupported RMesh version!")
 	
 	Local FilePath$ = StripFileName(File)
@@ -683,14 +681,12 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	
 	If version >= 0 Then
 		Count = ReadInt(f) ; ~ Drawn no collision mesh
-		DebugLog("drawn: " + Count)
 		If Count <> 0 Then RuntimeErrorEx("Drawn no collision meshes are not supported!")
 	EndIf
 
 	Local HiddenMesh% = CreateMesh()
 	
 	Count = ReadInt(f) ; ~ Invisible collision mesh
-	DebugLog("invis: " + Count)
 	For i = 1 To Count
 		Surf = CreateSurface(HiddenMesh)
 		Count2 = ReadInt(f) ; ~ Vertices
@@ -710,12 +706,10 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 
 	If Version >= 0 Then
 		Count = ReadInt(f) ; ~ Trigger boxes
-		DebugLog("triggers: " + Count)
 		If Count <> 0 Then RuntimeErrorEx("Trigger boxes are not supported!")
 	EndIf
 	
 	Count = ReadInt(f) ; ~ Point entities
-	DebugLog("entities: " + Count)
 	
 	Local ts.TempScreens, twp.TempWayPoints, tl.TempLights, tse.TempSoundEmitters, tp.TempProps
 	Local Range#, lColor$, Intensity#
@@ -726,7 +720,6 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	If rt <> Null ; ~ TEMPORARY SOLUTION
 		For i = 1 To Count
 			Temp1s = ReadString(f)
-			DebugLog("entity type: " + Temp1s)
 			Select Temp1s
 				Case "screen"
 					;[Block]
@@ -736,7 +729,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					ReadFloat(f)
 					
 					Temp2s = ReadString(f)
-					RuntimeErrorEx(Format(Format(GetLocalString("runerr", "screen.support"), rt\RoomID), "GFX\Map\Screens\" + Temp2s))
+					;RuntimeErrorEx(Format(Format(GetLocalString("runerr", "screen.support"), rt\RoomID), "GFX\Map\Screens\" + Temp2s))
 					;[End Block]
 				Case "save_screen"
 					;[Block]
