@@ -77,7 +77,6 @@ Function InitCheats%()
 End Function
 
 Function ResetNegativeStats%(Revive% = False)
-	Local e.Events
 	Local i%
 	
 	me\Injuries = 0.0
@@ -421,7 +420,7 @@ Function RenderConsole%()
 End Function
 
 Function ExecuteConsoleCommand%(ConsoleMessage$)
-	Local ev.Events, e.Events, e2.Events, r.Rooms, it.Items, n.NPCs, snd.Sound, itt.ItemTemplates, rt.RoomTemplates
+	Local e.Events, e2.Events, r.Rooms, it.Items, n.NPCs, snd.Sound, itt.ItemTemplates, rt.RoomTemplates
 	Local Tex%, Tex2%, Temp%, i%
 	Local Args$, StrTemp$, StrTemp2$, StrTemp3$, StrTemp4$
 	

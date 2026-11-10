@@ -1944,10 +1944,10 @@ End Function
 Function UpdateGUI%()
 	CatchErrors("UpdateGUI()")
 	
-	Local e.Events, it.Items, r.Rooms, n2.NPCs
+	Local e.Events, it.Items, n2.NPCs
 	Local Temp%, x%, y%, z%, i%
-	Local x2#, ProjY#, Scale#, Pvt%
-	Local n%, xTemp%, yTemp%, StrTemp$
+	Local ProjY#, Scale#, Pvt%
+	Local n%, xTemp%, yTemp%
 	
 	; ~ TODO: Get rid of this as soon as possible. Currently optimized by making a variable instead of calling array
 	If PlayerRoom\RoomTemplate\RoomID = r_dimension_106
@@ -2344,7 +2344,6 @@ Function UpdateGUI%()
 		If mo\MouseHit1 Then mo\DoubleClickSlot = IsMouseOn
 		
 		If SelectedItem <> Null
-			Local PrevOtherOpen.Items = Null
 			Local SecondInvItem.Items = Null
 			
 			For z = 0 To MaxItemAmount - 1
@@ -2930,7 +2929,7 @@ Function UpdateGUI%()
 End Function
 
 Function UpdateUseItem%(item.Items)
-	Local Scale#, StrTemp$, Temp%, i%, j%, Tex%
+	Local StrTemp$, Temp%, i%, j%
 	Local it.Items, r.Rooms, e.Events, n.NPCs, itt.ItemTemplates
 	
 	Select item\ItemTemplate\ID
@@ -4726,8 +4725,6 @@ Function RenderHUD%()
 	Local x% = (80 + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale, y% = opt\GraphicHeight - ((15 + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale)
 	Local Width% = 200 * MenuScale, Height% = 20 * MenuScale
 	Local WalkIconID%, BlinkIconID%
-	Local i%
-	Local PlayerPosY# = EntityY(me\Collider)
 	Local IconColoredRectSize% = 36 * MenuScale
 	Local IconColoredRectSpaceX% = 53 * MenuScale
 	Local IconColoredRectSpaceY% = 3 * MenuScale
@@ -5121,10 +5118,9 @@ Function RenderGUI%()
 	CatchErrors("RenderGUI()")
 	
 	Local e.Events, it.Items, a_it.Items
-	Local Temp%, x%, y%, z%, i%, YawValue#, PitchValue#
+	Local Temp%, x%, y%, z%, i%
 	Local x1#, x2#, x3#, y1#, y2#, y3#, z2#, ProjY#, Scale#, Pvt%
 	Local n%, xTemp%, yTemp%
-	Local SqrValue#
 	
 	If MenuOpen Lor InvOpen Lor ConsoleOpen Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor me\EndingTimer < 0.0
 		ShowPointer()
@@ -5230,7 +5226,6 @@ Function RenderGUI%()
 	EndIf
 	
 	Local IsMouseOn%
-	Local ClosedInv%
 	Local INVENTORY_GFX_SIZE% = 70 * MenuScale
 	Local INVENTORY_GFX_SPACING% = 35 * MenuScale
 	Local InvImgSize% = (64 * MenuScale) / 2
@@ -5467,7 +5462,7 @@ End Function
 Function RenderUseItem%(item.Items)
 	Local Width% = 300 * MenuScale, Height% = 20 * MenuScale
 	Local InvImgSizeHalf% = (64 * MenuScale) / 2
-	Local x%, y%, Temp%, StrTemp$, i%, j%
+	Local x%, y%, StrTemp$, i%, j%
 	
 	Color(255, 255, 255)
 	Select item\ItemTemplate\ID
@@ -5679,7 +5674,7 @@ Function RenderUseItem%(item.Items)
 							EndIf
 							
 							If item\ItemTemplate\ID = it_navulti
-								Local np.NPCs, r.Rooms
+								Local r.Rooms
 								Local RoomsAmount% = 0, RoomsFound% = 0
 								
 								For r.Rooms = Each Rooms
@@ -5888,8 +5883,6 @@ Function UpdateCameraCheck%()
 End Function
 
 Function UpdateExplosion%()
-	Local i%
-	
 	; ~ This here is necessary because the SCP-294's drinks with explosion effect didn't worked anymore -- ENDSHN
 	If me\ExplosionTimer > 0.0
 		me\ExplosionTimer = me\ExplosionTimer + fps\Factor[0]
@@ -6687,7 +6680,7 @@ End Type
 Global I_427.SCP427
 
 Function Update427%()
-	Local de.Decals, e.Events
+	Local de.Decals
 	Local i%, Pvt%, TempCHN%
 	Local PrevI427Timer# = I_427\Timer
 	

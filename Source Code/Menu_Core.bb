@@ -736,8 +736,6 @@ Function UpdateMainMenu%()
 						
 						y = y + (30 * MenuScale)
 						
-						Local PrevEnableSubtitles% = opt\EnableSubtitles
-						
 						opt\EnableSubtitles = UpdateMenuTick(x, y, opt\EnableSubtitles)
 						
 						If PrevEnableUserTracks <> 1 Then ShouldDeleteGadgets = PrevEnableUserTracks <> opt\UserTrackMode
@@ -2026,8 +2024,8 @@ Global MenuOpen%
 Function UpdatePauseMenu%()
 	CatchErrors("UpdatePauseMenu()")
 	
-	Local r.Rooms, sc.SecurityCams, amsg.AchievementMsg, shdw.Shadows, it.Items, n.NPCs
-	Local z%, i%
+	Local sc.SecurityCams, amsg.AchievementMsg, shdw.Shadows, it.Items, n.NPCs
+	Local i%
 	
 	If MenuOpen
 		If (Not (IsPlayerOutsideFacility() Lor me\Terminated Lor me\Zombie))

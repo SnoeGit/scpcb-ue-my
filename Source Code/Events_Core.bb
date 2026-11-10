@@ -546,7 +546,7 @@ Function QuickLoadEvents%() ; ~ Get rid of this shit - Jabka
 	CatchErrors("QuickLoadEvents()")
 	
 	Local e.Events = QuickLoad_CurrEvent
-	Local r.Rooms, sc.SecurityCams, sc2.SecurityCams, n.NPCs
+	Local r.Rooms, sc.SecurityCams, n.NPCs
 	Local i%, x#, y#, z#
 	
 	; ~ Might be a good idea to use QuickLoadPercent to determine the "steps" of the loading process 

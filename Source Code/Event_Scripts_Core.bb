@@ -4781,7 +4781,7 @@ Function UpdateEvent_Cont1_895%(e.Events)
 					If fDir < 275.0 And e\room\NPC[0]\Frame >= 275.0
 						PlaySoundEx(LoadTempSound("SFX\Character\BodyFall.ogg"), Camera, e\room\NPC[0]\Collider)
 						
-						Local de.Decals, it.Items
+						Local de.Decals
 						
 						de.Decals = CreateDecal(DECAL_BLOOD_2, e\room\x, e\room\y - 1531.0 * RoomScale, e\room\z, 90.0, Rnd(360.0), 0.0, 0.4)
 						EntityParent(de\OBJ, e\room\OBJ)
@@ -5535,7 +5535,7 @@ Function UpdateEvent_Room2_Servers_HCZ%(e.Events)
 				
 				Local CosValue# = Cos(e\room\Angle) * RoomScale
 				Local SinValue# = Sin(e\room\Angle) * RoomScale
-				Local de.Decals, it.Items
+				Local de.Decals
 				Local Temp2#
 				
 				For i = 0 To 6
@@ -6061,7 +6061,6 @@ End Function
 Function UpdateEvent_Cont2_409%(e.Events)
 	If PlayerRoom = e\room
 		If EntityY(me\Collider) < (-3758.0) * RoomScale
-			Local it.Items
 			Local i%
 			
 			CurrentZone = 1
@@ -6514,7 +6513,7 @@ Function UpdateEvent_Cont3_966%(e.Events)
 					EndIf
 				EndIf
 				If e\room\RoomDoors[0]\Open Lor e\room\RoomDoors[1]\Open
-					Local it.Items, de.Decals
+					Local de.Decals
 					
 					For i = 0 To 1
 						CreateNPC(NPCType966, EntityX(e\room\Objects[i], True), EntityY(e\room\Objects[i], True), EntityZ(e\room\Objects[i], True))
@@ -9957,7 +9956,7 @@ End Function
 
 Function UpdateEvent_Broken_Tesla%(e.Events)
 	If e\room\Dist < 16.0
-		Local n.NPCs, e2.Events
+		Local n.NPCs
 		Local i%, x1#, y1#, z1#, x2#, y2#, z2#
 		
 		If PlayerRoom = e\room

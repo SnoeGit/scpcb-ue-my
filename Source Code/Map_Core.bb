@@ -6209,7 +6209,7 @@ Function UpdateChunks%(ChunkPartAmount%, SpawnNPCs% = True)
 	Local x# = (-ChunkMaxDistance) + (ChunkX * 40.0)
 	Local z# = (-ChunkMaxDistance) + (ChunkZ * 40.0)
 	Local ChunkMaxDistEx# = PowTwo(ChunkMaxDistance)
-	Local CurrChunkData% = 0, MaxChunks% = JsonGetArraySize(SCP1499Chunks)
+	Local CurrChunkData% = 0
 	
 	Repeat
 		Local ChunkFound% = False

@@ -76,7 +76,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 	CatchErrors("CreateNPC(" + NPCType + ", " + x + ", " + y + ", " + z)
 	
 	Local n.NPCs, n2.NPCs
-	Local Temp#, i%, j%, Tex%
+	Local Temp#, i%, Tex%
 	Local MeshW#, MeshH#, MeshD#
 	
 	n.NPCs = New NPCs
@@ -1845,7 +1845,6 @@ Function IsPlayerOutsideFacility%()
 End Function
 
 Function PlayerInReachableRoom%(CanSpawnIn049Chamber% = False, Intro% = False)
-	Local e.Events
 	
 	; ~ Player is in these rooms, returning false
 	If PlayerRoom\RoomTemplate\RoomID = r_dimension_106 Lor PlayerRoom\RoomTemplate\RoomID = r_dimension_1499 Lor (PlayerRoom\RoomTemplate\RoomID = r_cont1_173_intro And (Not Intro)) Lor IsPlayerOutsideFacility() Then Return(False)

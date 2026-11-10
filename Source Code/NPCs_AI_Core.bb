@@ -3614,7 +3614,6 @@ Function UpdateNPCType939%(n.NPCs)
 	
 	; ~ n\TempState = Variable for anims
 	
-	Local n2.NPCs
 	Local Dist#, Temp%, Visible%
 	Local PrevFrame# = n\Frame
 	Local AnimShift#
