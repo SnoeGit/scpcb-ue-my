@@ -469,7 +469,7 @@ Function RemoveSoundEmitter%(se.SoundEmitters)
 	Delete(se)
 End Function
 
-Const RMESH_MAX_VERSION = 2
+Const RMESH_MAX_VERSION% = 2
 
 Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	CatchErrors("LoadRMesh(" + File + ")")
@@ -481,24 +481,33 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	
 	ClsColor(0, 0, 0)
 	
-	Local mat.Materials
-	Local i%, j%, k%, x#, y#, z#
+	Local i%, j%
+	Local x#, y#, z#
 	Local Vertex%
 	Local Temp1i% = 0, Temp2i% = 0, Temp3i% = 0
-	Local Temp1s$
 	Local CollisionMeshes% = CreatePivot()
 	Local IsRMesh$ = ReadString(f)
 	Local Version% = -1
 
 	Select IsRMesh
-		Case "RoomMesh" ; ~ Continue
-		Case "RoomMesh.HasTriggerBox" RuntimeErrorEx("Trigger boxes are not supported!")
-		Case "RM" Version = ReadByte(f)
-		Default RuntimeErrorEx(Format(Format(GetLocalString("runerr", "notrmesh"), File, "{0}"), IsRMesh, "{1}"))
+		Case "RoomMesh"
+			;[Block]
+			; ~ Continue
+			;[End Block]
+		Case "RoomMesh.HasTriggerBox"
+			;[Block]
+			RuntimeErrorEx("Trigger boxes are not supported!")
+			;[End Block]
+		Case "RM"
+			;[Block]
+			Version = ReadByte(f)
+			;[End Block]
+		Default
+			;[Block]
+			RuntimeErrorEx(Format(Format(GetLocalString("runerr", "notrmesh"), File, "{0}"), IsRMesh, "{1}"))
+			;[End Block]
 	End Select
-
-	DebugLog(File + " " + IsRMesh + " " + Version)
-
+	
 	If Version > RMESH_MAX_VERSION Then RuntimeErrorEx("Unsupported RMesh version!")
 	
 	Local FilePath$ = StripFileName(File)
@@ -506,185 +515,20 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	; ~ Drawn meshes
 	Local Opaque% = CreateMesh(), Alpha% = CreateMesh()
 	
-	Local ChildMesh%
-	Local Surf%, Tex%[2], Brush%
-	Local IsAlpha%
-	Local u#, v#
+	Local Surf%, Brush%
 	
 	Local Count% = ReadInt(f)
 	Local Count2%
 	
 	For i = 1 To Count ; ~ Drawn mesh
-		ChildMesh = CreateMesh()
-		
-		Surf = CreateSurface(ChildMesh)
-		
-		Brush = CreateBrush()
-		
-		Tex[0] = 0 : Tex[1] = 0
-		
-		IsAlpha = 0
-		
-		For j = 0 To 1
-			Temp1i = ReadByte(f)
-			If Temp1i <> 0
-				Temp1s = ReadString(f)
-				If FileType(FilePath + Temp1s) = 1 ; ~ Check if texture is existing in original path
-					If Temp1i < 3
-						If Instr(Lower(Temp1s), "_lm") <> 0
-							Tex[j] = LoadTextureCheckingIfInCache(FilePath + Temp1s, 1 + 256, DeleteMapTextures)
-						Else
-							Tex[j] = LoadTextureCheckingIfInCache(FilePath + Temp1s)
-						EndIf
-					Else
-						Tex[j] = LoadTextureCheckingIfInCache(FilePath + Temp1s, 3)
-					EndIf
-				ElseIf FileType(MapTexturesFolder + Temp1s) = 1 ; ~ If not, check the MapTexturesFolder
-					If Temp1i < 3
-						If Instr(Lower(Temp1s), "_lm") <> 0
-							Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s, 1 + 256, DeleteMapTextures)
-						Else
-							Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s)
-						EndIf
-					Else
-						Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s, 3)
-					EndIf
-				EndIf
-				If Tex[j] <> 0
-					If Temp1i = 1 Then TextureBlend(Tex[j], 5)
-					If Instr(Lower(Temp1s), "_lm") <> 0 Then TextureBlend(Tex[j], 3)
-					IsAlpha = 2
-					If Temp1i = 3 Then IsAlpha = 1
-					TextureCoords(Tex[j], 1 - j)
-				EndIf
-			EndIf
-		Next
-		
-		If IsAlpha = 1
-			If Tex[1] <> 0
-				TextureBlend(Tex[1], 2)
-				BrushTexture(Brush, Tex[1], 0, 0)
-			Else
-				BrushTexture(Brush, MissingTexture, 0, 0)
-			EndIf
-		Else
-			Local BumpTex% = 0
-			
-			If Tex[0] <> 0 And Tex[1] <> 0
-				If opt\BumpEnabled
-					Local Temp$ = StripPath(TextureName(Tex[1]))
-					
-					For mat.Materials = Each Materials
-						If mat\Name = Temp
-							BumpTex = mat\Bump
-							Exit
-						EndIf
-					Next
-				Else
-					BumpTex = 0
-				EndIf
-				BrushTexture(Brush, AmbientLightRoomTex, 0, 0)
-				If BumpTex = 0
-					For j = 0 To 1
-						BrushTexture(Brush, Tex[j], 0, j + 1)
-					Next
-				Else
-					BrushTexture(Brush, BumpTex, 0, 1)
-					For j = 0 To 1
-						BrushTexture(Brush, Tex[j], 0, j + 2)
-					Next
-				EndIf
-			Else
-				If opt\BumpEnabled
-					If Tex[1] <> 0
-						Temp = StripPath(TextureName(Tex[1]))
-						For mat.Materials = Each Materials
-							If mat\Name = Temp
-								BumpTex = mat\Bump
-								Exit
-							EndIf
-						Next
-					EndIf
-				Else
-					BumpTex = 0
-				EndIf
-				BrushTexture(Brush, AmbientLightRoomTex, 0, 0)
-				If BumpTex = 0
-					For j = 0 To 1
-						If Tex[j] <> 0
-							BrushTexture(Brush, Tex[j], 0, j + 1)
-						Else
-							BrushTexture(Brush, MissingTexture, 0, j + 1)
-						EndIf
-					Next
-				Else
-					BrushTexture(Brush, BumpTex, 0, 1)
-					For j = 0 To 1
-						If Tex[j] <> 0
-							BrushTexture(Brush, Tex[j], 0, j + 2)
-						Else
-							BrushTexture(Brush, MissingTexture, 0, j + 2)
-						EndIf
-					Next
-				EndIf
-			EndIf
-		EndIf
-		
-		If IsAlpha > 0 Then PaintSurface(Surf, Brush)
-		
-		FreeBrush(Brush) : Brush = 0
-		
-		Count2 = ReadInt(f) ; ~ Vertices
-		
-		For j = 1 To Count2
-			; ~ World coords
-			x = ReadFloat(f) : y = ReadFloat(f) : z = ReadFloat(f)
-			Vertex = AddVertex(Surf, x, y, z)
-			
-			; ~ Texture coords
-			For k = 0 To 1
-				u = ReadFloat(f) : v = ReadFloat(f)
-				VertexTexCoords(Surf, Vertex, u, v, 0.0, k)
-			Next
-			
-			; ~ Colors
-			Temp1i = ReadByte(f)
-			Temp2i = ReadByte(f)
-			Temp3i = ReadByte(f)
-			VertexColor(Surf, Vertex, Temp1i, Temp2i, Temp3i, 1.0)
-		Next
-		
-		Count2 = ReadInt(f) ; ~ Polys
-		For j = 1 To Count2
-			Temp1i = ReadInt(f) : Temp2i = ReadInt(f) : Temp3i = ReadInt(f)
-			AddTriangle(Surf, Temp1i, Temp2i, Temp3i)
-		Next
-		
-		If IsAlpha = 1
-			AddMesh(ChildMesh, Alpha)
-			EntityAlpha(ChildMesh, 0.0)
-		Else
-			AddMesh(ChildMesh, Opaque)
-			EntityParent(ChildMesh, CollisionMeshes)
-			EntityAlpha(ChildMesh, 0.0)
-			EntityType(ChildMesh, HasCollision) ; ~ NOTICE: Const HIT_MAP% = 1
-			EntityPickMode(ChildMesh, 2)
-			
-			; ~ Make collision double-sided
-			If HasCollision
-				Local FlipChild% = CopyMesh(ChildMesh)
-				
-				FlipMesh(FlipChild)
-				AddMesh(FlipChild, ChildMesh)
-				FreeEntity(FlipChild) : FlipChild = 0
-			EndIf
-		EndIf
+		EntityParent(ReadMesh(FilePath, f, MissingTexture, Alpha, Opaque, HasCollision), CollisionMeshes)
 	Next
 	
-	If version >= 0 Then
+	If Version >= 0
 		Count = ReadInt(f) ; ~ Drawn no collision mesh
-		DebugLog("drawn: " + Count)
-		If Count <> 0 Then RuntimeErrorEx("Drawn no collision meshes are not supported!")
+		For i = 1 To Count
+			ReadMesh(FilePath, f, MissingTexture, Alpha, Opaque, False)
+		Next
 	EndIf
 
 	Local HiddenMesh% = CreateMesh()
@@ -707,24 +551,23 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 		Next
 	Next
 
-	If Version >= 0 Then
+	If Version >= 0
 		Count = ReadInt(f) ; ~ Trigger boxes
 		If Count <> 0 Then RuntimeErrorEx("Trigger boxes are not supported!")
 	EndIf
-	
 	
 	If rt <> Null ; ~ TEMPORARY SOLUTION
 		Local ts.TempScreens, twp.TempWayPoints, tl.TempLights, tse.TempSoundEmitters, tp.TempProps
 		Local lColor$, Intensity#
 		Local Angles$
-		Local EntityPath$
-		Local EntityName$
+		Local PointEntityPath$
+		Local PointEntityName$
 		
 		Count = ReadInt(f) ; ~ Point entities
 		
 		For i = 1 To Count
-			EntityName = ReadString(f)
-			Select EntityName
+			PointEntityName = ReadString(f)
+			Select PointEntityName
 				Case "screen"
 					;[Block]
 					; ~ Skip coordinates
@@ -732,8 +575,8 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					ReadFloat(f)
 					ReadFloat(f)
 					
-					EntityPath = ReadString(f)
-					RuntimeErrorEx(Format(Format(GetLocalString("runerr", "screen.support"), rt\RoomID), "GFX\Map\Screens\" + EntityPath))
+					PointEntityPath = ReadString(f)
+					RuntimeErrorEx(Format(Format(GetLocalString("runerr", "screen.support"), rt\RoomID), "GFX\Map\Screens\" + PointEntityPath))
 					;[End Block]
 				Case "save_screen"
 					;[Block]
@@ -770,7 +613,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					tl.TempLights = New TempLights
 					tl\RoomTemplate = rt
 					
-					If Version >= 2 Then
+					If Version >= 2
 						tl\HasSprite = ReadByte(f)
 					EndIf
 					
@@ -791,7 +634,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					tl.TempLights = New TempLights
 					tl\RoomTemplate = rt
 					
-					If Version >= 2 Then
+					If Version >= 2
 						tl\HasSprite = ReadByte(f)
 					EndIf
 					
@@ -832,7 +675,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					tp.TempProps = New TempProps
 					tp\RoomTemplate = rt
 					
-					EntityPath = ReadString(f)
+					PointEntityPath = ReadString(f)
 					
 					tp\x = ReadFloat(f) * RoomScale
 					tp\y = ReadFloat(f) * RoomScale
@@ -847,10 +690,10 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					tp\ScaleZ = ReadFloat(f)
 					
 					; ~ A hacky way to use .b3d format
-					If FileExtension(EntityPath) = "b3d" Then EntityPath = Left(EntityPath, Len(EntityPath) - 4)
-					tp\Name = EntityPath + ".b3d"
+					If FileExtension(PointEntityPath) = "b3d" Then PointEntityPath = Left(PointEntityPath, Len(PointEntityPath) - 4)
+					tp\Name = PointEntityPath + ".b3d"
 					
-					If Version >= 2 Then
+					If Version >= 2
 						tp\HasCollision = ReadByte(f)
 						tp\FX = ReadInt(f)
 						tp\Texture = ReadString(f)
@@ -890,6 +733,182 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	CatchErrors("Uncaught: LoadRMesh(" + File + ")")
 	
 	Return(OBJ)
+End Function
+
+Function ReadMesh%(File$, f%, Texture%, Alpha%, Opaque%, HasCollision% = True)
+	Local mat.Materials
+	Local j%, k%
+	
+	Local Temp1i% = 0, Temp2i% = 0, Temp3i% = 0
+	
+	Local ChildMesh% = CreateMesh()
+	
+	Local Surf% = CreateSurface(ChildMesh)
+	
+	Local Brush% = CreateBrush()
+	
+	Local Tex%[2]
+	Tex[0] = 0 : Tex[1] = 0
+	
+	Local IsAlpha% = 0
+	
+	; ~ Texture management
+	For j = 0 To 1
+		Temp1i = ReadByte(f)
+		If Temp1i <> 0
+			Local Temp1s$ = ReadString(f)
+			If FileType(File + Temp1s) = 1 ; ~ Check if texture is existing in original path
+				If Temp1i < 3
+					If Instr(Lower(Temp1s), "_lm") <> 0
+						Tex[j] = LoadTextureCheckingIfInCache(File + Temp1s, 1 + 256, DeleteMapTextures)
+					Else
+						Tex[j] = LoadTextureCheckingIfInCache(File + Temp1s)
+					EndIf
+				Else
+					Tex[j] = LoadTextureCheckingIfInCache(File + Temp1s, 3)
+				EndIf
+			ElseIf FileType(MapTexturesFolder + Temp1s) = 1 ; ~ If not, check the MapTexturesFolder
+				If Temp1i < 3
+					If Instr(Lower(Temp1s), "_lm") <> 0
+						Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s, 1 + 256, DeleteMapTextures)
+					Else
+						Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s)
+					EndIf
+				Else
+					Tex[j] = LoadTextureCheckingIfInCache(MapTexturesFolder + Temp1s, 3)
+				EndIf
+			EndIf
+			If Tex[j] <> 0
+				If Temp1i = 1 Then TextureBlend(Tex[j], 5)
+				If Instr(Lower(Temp1s), "_lm") <> 0 Then TextureBlend(Tex[j], 3)
+				IsAlpha = 2
+				If Temp1i = 3 Then IsAlpha = 1
+				TextureCoords(Tex[j], 1 - j)
+			EndIf
+		EndIf
+	Next
+	
+	If IsAlpha = 1
+		If Tex[1] <> 0
+			TextureBlend(Tex[1], 2)
+			BrushTexture(Brush, Tex[1], 0, 0)
+		Else
+			BrushTexture(Brush, Texture, 0, 0)
+		EndIf
+	Else
+		Local BumpTex% = 0
+		
+		If Tex[0] <> 0 And Tex[1] <> 0
+			If opt\BumpEnabled
+				Local Temp$ = StripPath(TextureName(Tex[1]))
+				
+				For mat.Materials = Each Materials
+					If mat\Name = Temp
+						BumpTex = mat\Bump
+						Exit
+					EndIf
+				Next
+			Else
+				BumpTex = 0
+			EndIf
+			BrushTexture(Brush, AmbientLightRoomTex, 0, 0)
+			If BumpTex = 0
+				For j = 0 To 1
+					BrushTexture(Brush, Tex[j], 0, j + 1)
+				Next
+			Else
+				BrushTexture(Brush, BumpTex, 0, 1)
+				For j = 0 To 1
+					BrushTexture(Brush, Tex[j], 0, j + 2)
+				Next
+			EndIf
+		Else
+			If opt\BumpEnabled
+				If Tex[1] <> 0
+					Temp = StripPath(TextureName(Tex[1]))
+					For mat.Materials = Each Materials
+						If mat\Name = Temp
+							BumpTex = mat\Bump
+							Exit
+						EndIf
+					Next
+				EndIf
+			Else
+				BumpTex = 0
+			EndIf
+			BrushTexture(Brush, AmbientLightRoomTex, 0, 0)
+			If BumpTex = 0
+				For j = 0 To 1
+					If Tex[j] <> 0
+						BrushTexture(Brush, Tex[j], 0, j + 1)
+					Else
+						BrushTexture(Brush, Texture, 0, j + 1)
+					EndIf
+				Next
+			Else
+				BrushTexture(Brush, BumpTex, 0, 1)
+				For j = 0 To 1
+					If Tex[j] <> 0
+						BrushTexture(Brush, Tex[j], 0, j + 2)
+					Else
+						BrushTexture(Brush, Texture, 0, j + 2)
+					EndIf
+				Next
+			EndIf
+		EndIf
+	EndIf
+	
+	If IsAlpha > 0 Then PaintSurface(Surf, Brush)
+	
+	FreeBrush(Brush) : Brush = 0
+	
+	Local Count2% = ReadInt(f) ; ~ Vertices
+	
+	For j = 1 To Count2
+		; ~ World coords
+		Local x# = ReadFloat(f), y# = ReadFloat(f), z# = ReadFloat(f)
+		Local Vertex% = AddVertex(Surf, x, y, z)
+		
+		; ~ Texture coords
+		For k = 0 To 1
+			Local u# = ReadFloat(f), v# = ReadFloat(f)
+			VertexTexCoords(Surf, Vertex, u, v, 0.0, k)
+		Next
+		
+		; ~ Colors
+		Temp1i = ReadByte(f)
+		Temp2i = ReadByte(f)
+		Temp3i = ReadByte(f)
+		VertexColor(Surf, Vertex, Temp1i, Temp2i, Temp3i, 1.0)
+	Next
+	
+	Count2 = ReadInt(f) ; ~ Polys
+	For j = 1 To Count2
+		Temp1i = ReadInt(f) : Temp2i = ReadInt(f) : Temp3i = ReadInt(f)
+		AddTriangle(Surf, Temp1i, Temp2i, Temp3i)
+	Next
+	
+	If IsAlpha = 1
+		AddMesh(ChildMesh, Alpha)
+		EntityAlpha(ChildMesh, 0.0)
+	Else
+		AddMesh(ChildMesh, Opaque)
+		EntityAlpha(ChildMesh, 0.0)
+		
+		If HasCollision
+			EntityType(ChildMesh, HasCollision) ; ~ NOTICE: Const HIT_MAP% = 1
+			EntityPickMode(ChildMesh, 2)
+			
+			; ~ Make collision double-sided
+			Local FlipChild% = CopyMesh(ChildMesh)
+			
+			FlipMesh(FlipChild)
+			AddMesh(FlipChild, ChildMesh)
+			FreeEntity(FlipChild) : FlipChild = 0
+		EndIf
+	EndIf
+	
+	Return(ChildMesh)
 End Function
 
 Const ForestGridSize% = 12
