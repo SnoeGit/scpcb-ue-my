@@ -2683,8 +2683,8 @@ Function LoadHUDIcons%()
 	; ~ Arrow icons
 	For i = ICON_ARROW_1 To ICON_ARROW_4
 		t\IconID[i] = ResizeImageEx(LoadImage_Strict("GFX\HUD\arrow_symbol.png"), MenuScale, MenuScale)
-		HandleImage(t\IconID[i], 0, 0)
 		RotateImage(t\IconID[i], (i - 11) * 90.0)
+		HandleImage(t\IconID[i], 0, 0)
 	Next
 End Function
 
