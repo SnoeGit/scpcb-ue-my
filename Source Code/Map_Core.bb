@@ -229,7 +229,7 @@ Type Lights
 End Type
 
 Function AddLight.Lights(room.Rooms, x#, y#, z#, Type_%, Range#, R%, G%, B%, HasSprite% = True)
-	Local l.Lights, l2.Lights
+	Local l.Lights
 	
 	l.Lights = New Lights
 	l\room = room
@@ -309,7 +309,7 @@ Function UpdateLightVolume%()
 End Function
 
 Function UpdateLights%(Cam%)
-	Local l.Lights, i%, Random#, Alpha#
+	Local l.Lights, Random#, Alpha#
 	Local TotalAmbientColor# = (fog\AmbientR + fog\AmbientG + fog\AmbientB) / 255.0 / 3.0
 	
 	For l.Lights = Each Lights
@@ -715,7 +715,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	
 	If rt <> Null ; ~ TEMPORARY SOLUTION
 		Local ts.TempScreens, twp.TempWayPoints, tl.TempLights, tse.TempSoundEmitters, tp.TempProps
-		Local Range#, lColor$, Intensity#
+		Local lColor$, Intensity#
 		Local Angles$
 		Local EntityPath$
 		Local EntityName$
@@ -2500,7 +2500,7 @@ Const ONE_SIDED_DOOR_DEPTH# = 15.0 * RoomScale / 1.05749 ; ~ MeshDepth(d_I\DoorM
 ;[End Block]
 
 Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorType% = DEFAULT_DOOR, Keycard% = KEY_MISC, Code% = 0, CustomParent% = 0)
-	Local d.Doors, d2.Doors
+	Local d.Doors
 	Local Parent%, i%
 	Local FrameScaleX#, FrameScaleY#, FrameScaleZ#
 	Local DoorScaleX#, DoorScaleY#, DoorScaleZ#
@@ -4024,7 +4024,7 @@ Type SecurityCams
 End Type
 
 Function CreateSecurityCam.SecurityCams(room.Rooms, x1#, y1#, z1#, Pitch1#, Screen% = False, x2# = 0.0, y2# = 0.0, z2# = 0.0, Pitch2# = 0.0, Yaw2# = 0.0, Roll2# = 0.0)
-	Local sc.SecurityCams, sc2.SecurityCams
+	Local sc.SecurityCams
 	
 	sc.SecurityCams = New SecurityCams
 	sc\room = room
@@ -5004,7 +5004,6 @@ Function UpdateRooms%()
 	
 	opttimer\RoomsTimer = opttimer\RoomsTimer - fps\Factor[0]
 	If opttimer\RoomsTimer <= 0.0
-		Local BoundingBoxDistance#
 		
 		For r.Rooms = Each Rooms
 			r\Dist = Max(Abs(r\x - PlayerX), Abs(r\z - PlayerZ))
@@ -5275,7 +5274,7 @@ Global I_Zone.MapZones
 
 Function CreateMap%()
 	Local r.Rooms, r2.Rooms, d.Doors
-	Local x%, y%, Temp%, Temp2%
+	Local x%, y%, Temp%
 	Local i%, x2%, y2%
 	Local Width%, Height%, TempHeight%, yHallways%
 	Local ShouldSpawnDoor%, Zone%
@@ -6200,7 +6199,7 @@ Const ChunkMaxDistance# = 120.0
 
 Function UpdateChunks%(ChunkPartAmount%, SpawnNPCs% = True)
 	Local ch.Chunk, ch2.Chunk, n.NPCs
-	Local StrTemp$, i%, j%
+	Local StrTemp$
 	Local PlayerPosX# = EntityX(me\Collider)
 	Local y# = EntityY(PlayerRoom\OBJ)
 	Local PlayerPosZ# = EntityZ(me\Collider)

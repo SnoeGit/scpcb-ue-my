@@ -3076,8 +3076,8 @@ End Function
 Function InitNewGame%()
 	CatchErrors("InitNewGame()")
 	
-	Local de.Decals, d.Doors, it.Items, r.Rooms, sc.SecurityCams, e.Events, rt.RoomTemplates, p.Props
-	Local i%, Tex%
+	Local de.Decals, d.Doors, it.Items, r.Rooms, sc.SecurityCams, e.Events, rt.RoomTemplates
+	Local i%
 	
 	LoadEntities()
 	LoadSounds()

@@ -532,7 +532,6 @@ Function UpdateLanguageSelector%()
 	
 	Local lan.ListLanguage
 	Local File% = JsonParseFromFile(BasePath + "languages.json")
-	Local l$
 	
 	If (Not JsonHasParseError(File))
 		Local Languages% = JsonGetArray(File)
