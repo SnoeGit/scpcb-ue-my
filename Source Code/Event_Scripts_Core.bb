@@ -7547,7 +7547,7 @@ Function UpdateEvent_Room2_EZ_035%(e.Events)
 	If Is035Released
 		If e\room\Dist < 8.0
 			If e\EventState = 0.0
-				n.NPCs = CreateNPC(NPCTypeD, e\room\x, e\room\y + 52.0 * RoomScale, e\room\z)
+				n.NPCs = CreateNPC(NPCTypeD, e\room\x, e\room\y + 76.8 * RoomScale, e\room\z)
 				n\State3 = -1.0 : n\IsDead = True
 				SetNPCFrame(n, 19.0)
 				RotateEntity(n\Collider, 0.0, e\room\Angle + 180.0, 0.0)
