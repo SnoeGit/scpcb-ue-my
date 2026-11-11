@@ -332,7 +332,7 @@ Function UpdateEvent_Cont1_173%(e.Events)
 			If e\EventState2 = 0.0
 				If e\EventState > 900.0 And e\room\RoomDoors[3]\Open
 					If e\EventState - fps\Factor[0] <= 900.0 
-						TeleportEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.32, e\room\z + 3184.0 * RoomScale, n_I\Curr173\CollRadius + 0.12, True)
+						TeleportEntity(n_I\Curr173\Collider, e\room\x + 32.0 * RoomScale, e\room\y + 0.42, e\room\z + 3184.0 * RoomScale, n_I\Curr173\CollRadius + 0.12, True)
 						n_I\Curr173\CurrentRoom = e\room
 						RotateEntity(n_I\Curr173\Collider, 0.0, 190.0, 0.0)
 						e\room\NPC[7]\State3 = 2.0
@@ -382,7 +382,7 @@ Function UpdateEvent_Cont1_173%(e.Events)
 							PlaySoundEx(snd_I\StoneDragSFX, Camera, n_I\Curr173\Collider)
 							PointEntity(n_I\Curr173\Collider, e\room\NPC[2]\Collider)
 						EndIf
-						PositionEntity(n_I\Curr173\Collider, e\room\x - 96.0 * RoomScale, e\room\y + 0.32, e\room\z + 2640.0 * RoomScale, True)
+						PositionEntity(n_I\Curr173\Collider, e\room\x - 96.0 * RoomScale, e\room\y + 0.42, e\room\z + 2640.0 * RoomScale, True)
 						ResetEntity(n_I\Curr173\Collider)
 						RotateEntity(n_I\Curr173\Collider, 0.0, 190.0, 0.0)
 						
