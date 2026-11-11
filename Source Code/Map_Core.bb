@@ -613,9 +613,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					tl.TempLights = New TempLights
 					tl\RoomTemplate = rt
 					
-					If Version >= 2
-						tl\HasSprite = ReadByte(f)
-					EndIf
+					If Version >= 2 Then tl\HasSprite = ReadByte(f)
 					
 					tl\x = ReadFloat(f) * RoomScale
 					tl\y = ReadFloat(f) * RoomScale
@@ -634,9 +632,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 					tl.TempLights = New TempLights
 					tl\RoomTemplate = rt
 					
-					If Version >= 2
-						tl\HasSprite = ReadByte(f)
-					EndIf
+					If Version >= 2 Then tl\HasSprite = ReadByte(f)
 					
 					tl\x = ReadFloat(f) * RoomScale
 					tl\y = ReadFloat(f) * RoomScale
