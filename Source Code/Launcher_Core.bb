@@ -52,7 +52,7 @@ Type ListLanguage ; ~ Languages in the list
 	Field Flag$
 	Field MajorOnly%
 	Field Full%
-	Field FileSize%
+	Field SizeOfFile%
 	Field Compatible$
 End Type
 
@@ -549,7 +549,7 @@ Function UpdateLanguageSelector%()
 			lan\MajorOnly = JsonIsNull(JsonGetValue(LanguageIt, "size")) ; ~ local.ini only?
 			lan\Full = JsonGetBool(JsonGetValue(LanguageIt, "perfect")) ; ~ Full complete translation
 			lan\Flag = JsonGetString(JsonGetValue(LanguageIt, "flag")) ; ~ Flag of country
-			lan\FileSize = JsonGetInt(JsonGetValue(LanguageIt, "size")) ; ~ Size of localization
+			lan\SizeOfFile = JsonGetInt(JsonGetValue(LanguageIt, "size")) ; ~ Size of localization
 			lan\Compatible = JsonGetString(JsonGetValue(LanguageIt, "compatible")) ; ~ Compatible version
 			If FileType(BasePath + "flags/" + lan\Flag) <> 1 Then DownloadFile(ServerURL + "flags/" + lan\Flag, BasePath + "flags/" + lan\Flag) ; ~ Flags of languages
 			
@@ -724,9 +724,9 @@ Function UpdateLanguageSelector%()
 			Case LANGUAGE_STATUS_DOWNLOADING
 				;[Block]
 				If (Not opt\NoProgressBar)
-					InfoBoxContent = Format(Format(GetLocalString("language", "downloading.filesize"), SimpleFileSize(GetDownloadFileThreadSize()), "{0}"), SimpleFileSize(RequestLanguage\FileSize), "{1}")
-					UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, Str(Int(Ceil((Float(GetDownloadFileThreadSize()) / Float(RequestLanguage\FileSize)) * 100))) + "%", Font_Default, False, True)
-					If GetDownloadFileThreadSize() >= RequestLanguage\FileSize Then CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
+					InfoBoxContent = Format(Format(GetLocalString("language", "downloading.filesize"), SimpleFileSize(GetDownloadFileThreadSize()), "{0}"), SimpleFileSize(RequestLanguage\SizeOfFile), "{1}")
+					UpdateLauncherButton(LauncherWidth - 161, LauncherHeight - 165, 155, 30, Str(Int(Ceil((Float(GetDownloadFileThreadSize()) / Float(RequestLanguage\SizeOfFile)) * 100))) + "%", Font_Default, False, True)
+					If GetDownloadFileThreadSize() >= RequestLanguage\SizeOfFile Then CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
 				Else
 					CurrentStatus = LANGUAGE_STATUS_UNPACK_REQUEST
 				EndIf
@@ -835,7 +835,7 @@ Function UpdateLanguageSelector%()
 				If MouseHoverLanguage\MajorOnly
 					Height = FontHeightVal * 8
 				Else
-					Size = Format(GetLocalString("language", "size"), SimpleFileSize(MouseHoverLanguage\FileSize))
+					Size = Format(GetLocalString("language", "size"), SimpleFileSize(MouseHoverLanguage\SizeOfFile))
 					LastMod = Format(GetLocalString("language", "lastmod"), MouseHoverLanguage\LastModify)
 					Height = FontHeightVal * 13
 				EndIf
