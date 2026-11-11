@@ -732,7 +732,6 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 End Function
 
 Function ReadMesh%(File$, f%, Texture%, Alpha%, Opaque%, HasCollision% = True)
-	Local mat.Materials
 	Local j%, k%
 	
 	Local Temp1i% = 0, Temp2i% = 0, Temp3i% = 0
@@ -793,6 +792,7 @@ Function ReadMesh%(File$, f%, Texture%, Alpha%, Opaque%, HasCollision% = True)
 		EndIf
 	Else
 		Local BumpTex% = 0
+		Local mat.Materials
 		
 		If Tex[0] <> 0 And Tex[1] <> 0
 			If opt\BumpEnabled
