@@ -521,13 +521,13 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	Local Count2%
 	
 	For i = 1 To Count ; ~ Drawn mesh
-		EntityParent(ReadMesh(FilePath, f, MissingTexture, Alpha, Opaque, HasCollision), CollisionMeshes)
+		EntityParent(ReadRMesh(FilePath, f, MissingTexture, Alpha, Opaque, HasCollision), CollisionMeshes)
 	Next
 	
 	If Version >= 0
 		Count = ReadInt(f) ; ~ Drawn no collision mesh
 		For i = 1 To Count
-			ReadMesh(FilePath, f, MissingTexture, Alpha, Opaque, False)
+			ReadRMesh(FilePath, f, MissingTexture, Alpha, Opaque, False)
 		Next
 	EndIf
 
@@ -731,7 +731,7 @@ Function LoadRMesh%(File$, rt.RoomTemplates, HasCollision% = True)
 	Return(OBJ)
 End Function
 
-Function ReadMesh%(File$, f%, Texture%, Alpha%, Opaque%, HasCollision% = True)
+Function ReadRMesh%(File$, f%, Texture%, Alpha%, Opaque%, HasCollision% = True)
 	Local j%, k%
 	
 	Local Temp1i% = 0, Temp2i% = 0, Temp3i% = 0
