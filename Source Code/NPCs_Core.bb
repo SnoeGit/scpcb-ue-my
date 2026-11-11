@@ -83,7 +83,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 	n\NPCType = NPCType
 	n\GravityMult = 1.0
 	n\MaxGravity = 0.2
-	n\CollRadius = 0.2
+	n\CollRadius = 0.3
 	n\FallingPickDistance = 10.0
 	n\HasAnim = True
 	Select NPCType
@@ -94,7 +94,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\HP = 100
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_008_1_SURGEON_MODEL])
@@ -113,7 +113,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\HP = 100
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_008_1_MODEL])
@@ -131,7 +131,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\HP = 400
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_035_TENTACLE_MODEL])
@@ -147,7 +147,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = 0.0175
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_049_MODEL])
@@ -163,7 +163,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\HP = 150
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_049_2_MODEL])
@@ -194,8 +194,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = 0.06
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.23
-			EntityRadius(n\Collider, n\CollRadius)
+			n\CollRadius = 0.42
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_096_MODEL])
@@ -245,7 +245,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = 0.38
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius, n\CollRadius + 0.12)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius + 0.12)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_173_MODEL])
@@ -297,11 +297,11 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 		Case NPCType457
 			;[Block]
 			n\NVGName = "SCP-457"
-			n\CollRadius = 0.16
+			n\CollRadius = 0.24
 			n\Speed = 0.025
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_CLASS_D_MODEL])
@@ -469,8 +469,8 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = 0.01
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.17
-			EntityRadius(n\Collider, n\CollRadius)
+			n\CollRadius = 0.24
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_966_MODEL])
@@ -485,7 +485,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\State2 = 1.0
 			
 			n\Collider = CreatePivot()
-			n\CollRadius = 0.15
+			n\CollRadius = 0.2
 			EntityRadius(n\Collider, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
@@ -527,9 +527,9 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			;[Block]
 			n\NVGName = GetLocalString("npc", "undefine")
 			n\Speed = 0.015 * Rnd(0.9, 1.1)
-			n\CollRadius = 0.26
+			n\CollRadius = 0.46
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_1499_1_MODEL])
@@ -598,7 +598,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = 0.02
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[ModelID])
@@ -630,7 +630,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = 0.02
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_GUARD_MODEL])
@@ -647,7 +647,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\MaxGravity = 0.03
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_MTF_MODEL])
