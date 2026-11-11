@@ -2392,7 +2392,7 @@ Function UpdateNPCType106%(n.NPCs)
 					EndIf
 					n\Reload = Max(0.0, n\Reload - fps\Factor[0])
 				Else
-					n\State2 = Max(0.0, n\State2 - (fps\Factor[0] * 2.5))
+					n\State2 = Max(0.0, n\State2 - (fps\Factor[0] * 3.0))
 				EndIf
 				If n\State2 =< 0.0
 					If (Not EntityInView(n\OBJ, Camera)) And Dist > 25.0
