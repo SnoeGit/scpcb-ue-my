@@ -2018,21 +2018,6 @@ Function UpdateGUI%()
 	If (Not (MenuOpen Lor me\Terminated Lor ConsoleOpen))
 		If I_294\Using Then Update294()
 		If (Not (MenuOpen Lor InvOpen Lor ConsoleOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor me\Terminated))
-			If SelectedDifficulty\Name <> difficulties[DIFFICULTY_APOLLYON]\Name And opt\HUDEnabled
-				If ClosestItem <> Null
-					Update3DHandIcon(HandIcon_ClosestItem, ClosestItem\Collider)
-				ElseIf d_I\ClosestButton <> 0
-					Update3DHandIcon(HandIcon_ClosestButton, d_I\ClosestButton)
-				EndIf
-				
-				If HandEntity <> 0
-					Update3DHandIcon(HandIcon_Default, HandEntity)
-					For i = HandIcon_Up To HandIcon_Left
-						If DrawArrowIcon[i - HandIcon_Up] Then Update3DHandIcon(i, HandEntity)
-					Next
-				EndIf
-			EndIf
-			
 			If d_I\ClosestButton <> 0
 				If mo\MouseUp1
 					mo\MouseUp1 = False
@@ -5056,7 +5041,7 @@ Function AdaptScreenGamma%()
 	opt\ScreenGamma = 1.0
 End Function
 
-Function Update3DHandIcon%(HandIconID%, OBJ%)
+Function Render3DHandIcon%(IconID%, OBJ%, HandIconID%)
 	If HandIcon[HandIconID] = Null Then HandIcon[HandIconID] = New HandIcons
 	
 	Local CoordEx% = 32 * MenuScale
@@ -5087,10 +5072,16 @@ Function Update3DHandIcon%(HandIconID%, OBJ%)
 	Local x# = mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3) - CoordEx
 	Local y# = mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - CoordEx
 	
-	If HandIconID > HandIcon_ClosestItem
+	If HandIconID > HandIcon_ClosestButton
 		Local ArrowCoord% = 69 * MenuScale
 		
 		Select HandIconID
+			Case HandIcon_ClosestItem
+				;[Block]
+				Color(255, 255, 255)
+				SetFontEx(fo\FontID[Font_Default])
+				TextEx(mo\Viewport_Center_X + Sin(YawValue) * (opt\GraphicWidth / 3), mo\Viewport_Center_Y - Sin(PitchValue) * (opt\GraphicHeight / 3) - ArrowCoord, ClosestItem\ItemTemplate\DisplayName, True)
+				;[End Block]
 			Case HandIcon_Up
 				;[Block]
 				y = y - ArrowCoord
@@ -5111,9 +5102,6 @@ Function Update3DHandIcon%(HandIconID%, OBJ%)
 	EndIf
 	HandIcon[HandIconID]\x = x
 	HandIcon[HandIconID]\y = y
-End Function
-
-Function Render3DHandIcon%(IconID%, HandIconID%)
 	If HandIcon[HandIconID] <> Null Then DrawBlock(t\IconID[IconID], HandIcon[HandIconID]\x, HandIcon[HandIconID]\y)
 End Function
 
@@ -5168,15 +5156,15 @@ Function RenderGUI%()
 	If SelectedDifficulty\Name <> difficulties[DIFFICULTY_APOLLYON]\Name And opt\HUDEnabled
 		If (Not (MenuOpen Lor InvOpen Lor ConsoleOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor me\Terminated))
 			If ClosestItem <> Null
-				Render3DHandIcon(ICON_HAND_2, HandIcon_ClosestItem)
+				Render3DHandIcon(ICON_HAND_2, ClosestItem\Collider, HandIcon_ClosestItem)
 			ElseIf d_I\ClosestButton <> 0
-				Render3DHandIcon(ICON_HAND_1, HandIcon_ClosestButton)
+				Render3DHandIcon(ICON_HAND_1, d_I\ClosestButton, HandIcon_ClosestButton)
 			EndIf
 			
 			If HandEntity <> 0
-				Render3DHandIcon(ICON_HAND_1, HandIcon_Default)
+				Render3DHandIcon(ICON_HAND_1, HandEntity, HandIcon_Default)
 				For i = HandIcon_Up To HandIcon_Left
-					If DrawArrowIcon[i - HandIcon_Up] Then Render3DHandIcon(i + 8, i)
+					If DrawArrowIcon[i - HandIcon_Up] Then Render3DHandIcon(i + 8, HandEntity, i)
 				Next
 			EndIf
 		EndIf
