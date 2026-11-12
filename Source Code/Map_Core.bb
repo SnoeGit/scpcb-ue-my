@@ -2778,7 +2778,7 @@ Function UpdateDoors%()
 			Local FindButton% = (1 - (d\Open And d\HasOneSide))
 			If ((d\OpenState >= 180.0 Lor d\OpenState <= 0.0) And FindButton) And GrabbedEntity = 0
 				For i = 0 To 1
-					If d\Buttons[i] <> 0
+					If d\Buttons[i] <> 0 And ClosestItem = Null
 						If IsEqual(EntityX(me\Collider), EntityX(d\Buttons[i], True), 1.0) And IsEqual(EntityZ(me\Collider, True), EntityZ(d\Buttons[i], True), 1.0) And UpdateButton(d\Buttons[i])
 							d_I\ClosestDoor = d
 							; ~ Determine and save animate door and button
