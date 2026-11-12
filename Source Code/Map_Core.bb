@@ -3500,7 +3500,6 @@ Function UseDoor%(PlaySFX% = True)
 							EndIf
 						EndIf
 					EndIf
-					SelectedItem = Null
 				EndIf
 				If (d_I\ClosestDoor\Locked <> 1) And (((Temp > KEY_MISC) And (Temp <> KEY_CARD_6) And (Temp >= d_I\ClosestDoor\KeyCard)) Lor (Temp = KEY_005))
 					PlaySoundEx(snd_I\KeyCardSFX[0], Camera, d_I\ClosestButton)
@@ -3542,7 +3541,6 @@ Function UseDoor%(PlaySFX% = True)
 							EndIf
 						EndIf
 					EndIf
-					SelectedItem = Null
 				EndIf
 				If (d_I\ClosestDoor\Locked = 0) And ((Temp = d_I\ClosestDoor\KeyCard) Lor (Temp = KEY_005))
 					PlaySoundEx(snd_I\ScannerSFX[0], Camera, d_I\ClosestButton)
@@ -3570,7 +3568,6 @@ Function UseDoor%(PlaySFX% = True)
 					EndIf
 				EndIf
 				If SelectedItem\ItemTemplate\ID = it_coarse005 Then BreakTheDoor = True
-				SelectedItem = Null
 				
 				If (d_I\ClosestDoor\Locked = 0) And (d_I\ClosestDoor\Code <> CODE_LOCKED) And (Temp = KEY_005)
 					PlaySoundEx(snd_I\ScannerSFX[0], Camera, d_I\ClosestButton)
@@ -3638,7 +3635,6 @@ Function UseDoor%(PlaySFX% = True)
 								CreateConsoleMsg("")
 							EndIf
 						EndIf
-						SelectedItem = Null
 					EndIf
 					If (Temp > KEY_860) And (Temp <> KEY_005)
 						If d_I\ClosestDoor\DoorType = OFFICE_DOOR Lor d_I\ClosestDoor\DoorType = FENCE_DOOR

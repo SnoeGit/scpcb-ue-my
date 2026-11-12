@@ -5460,35 +5460,41 @@ Function RenderGUI%()
 End Function
 
 Function RenderUseItem%(item.Items)
-	Local Width% = 300 * MenuScale, Height% = 20 * MenuScale
+	Local Width% = 200 * MenuScale, Height% = 20 * MenuScale
 	Local InvImgSizeHalf% = (64 * MenuScale) / 2
 	Local x%, y%, StrTemp$, i%, j%
+	Local SELECTED_GFX_SIZE%
 	
 	Color(255, 255, 255)
 	Select item\ItemTemplate\ID
 		Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_scp1499, it_fine1499, it_helmet, it_cap, it_scp268, it_fine268, it_firstaid, it_finefirstaid, it_firstaid2, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_cup, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops
 			;[Block]
 			If item\UsageTimer > 0.0
-				DrawBlock(item\InvImg, mo\Viewport_Center_X - InvImgSizeHalf, mo\Viewport_Center_Y - InvImgSizeHalf)
+				SELECTED_GFX_SIZE = 70 * MenuScale
+				RenderFrame(opt\GraphicWidth - 132 * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
+				DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - 128 * MenuScale, opt\GraphicHeight - 128 * MenuScale)
 				
-				x = mo\Viewport_Center_X - (Width / 2)
-				y = mo\Viewport_Center_Y + (80 * MenuScale)
+				TextEx(opt\GraphicWidth - 360 * MenuScale, opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 				
-				RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, x, y, Width, Height, item\UsageTimer)
+				RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, opt\GraphicWidth - 360 * MenuScale, opt\GraphicHeight - 86 * MenuScale, Width, Height, item\UsageTimer)
 			EndIf
 			;[End Block]
 		Case it_vest, it_finevest, it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
 			;[Block]
-			DrawBlock(item\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSizeHalf, mo\Viewport_Center_Y - InvImgSizeHalf)
+			SELECTED_GFX_SIZE = 70 * MenuScale
+			RenderFrame(opt\GraphicWidth - 132 * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
+			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - 128 * MenuScale, opt\GraphicHeight - 128 * MenuScale)
 			
-			x = mo\Viewport_Center_X - (Width / 2)
-			y = mo\Viewport_Center_Y + (80 * MenuScale)
+			TextEx(opt\GraphicWidth - (144 + StringWidth(item\DisplayName)) * MenuScale, opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 			
-			RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, x, y, Width, Height, item\UsageTimer)
+			RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, opt\GraphicWidth - 360 * MenuScale, opt\GraphicHeight - 86 * MenuScale, Width, Height, item\UsageTimer)
 			;[End Block]
 		Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_lostkey, it_coin, it_mastercard, it_mastercard_golden
 			;[Block]
-			DrawBlock(item\ItemTemplate\InvImg, mo\Viewport_Center_X - InvImgSizeHalf, mo\Viewport_Center_Y - InvImgSizeHalf)
+			SELECTED_GFX_SIZE = 70 * MenuScale
+			RenderFrame(opt\GraphicWidth - 132 * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
+			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - 128 * MenuScale, opt\GraphicHeight - 128 * MenuScale)
+			TextEx(opt\GraphicWidth - (144 + StringWidth(item\DisplayName)) * MenuScale, opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 			;[End Block]
 		Case it_paper, it_oldpaper, it_scp1025, it_fine1025, it_badge
 			;[Block]
