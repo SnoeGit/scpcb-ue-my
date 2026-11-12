@@ -9013,10 +9013,10 @@ Function UpdateEvent_Dimension_1499%(e.Events)
 				e\room\NPC[2]\Target = e\room\NPC[3]
 				e\room\NPC[3]\Target = e\room\NPC[2]
 				; ~ More guards
-				e\room\NPC.NPCs[4] = CreateNPC(NPCType1499_1, e\room\x - 1877.0 * RoomScale, e\room\y + 192.0 * RoomScale, e\room\z + 1071.0 * RoomScale)
+				e\room\NPC.NPCs[4] = CreateNPC(NPCType1499_1, e\room\x - 1877.0 * RoomScale, e\room\y + 256.0 * RoomScale, e\room\z + 1071.0 * RoomScale)
 				e\room\NPC[4]\PrevState = 3 : e\room\NPC[4]\Angle = 270.0
 				RotateEntity(e\room\NPC[4]\Collider, 0.0, e\room\NPC[4]\Angle, 0.0)
-				e\room\NPC.NPCs[5] = CreateNPC(NPCType1499_1, e\room\x - 1877.0 * RoomScale, e\room\y + 192.0 * RoomScale, e\room\z + 3503.0 * RoomScale)
+				e\room\NPC.NPCs[5] = CreateNPC(NPCType1499_1, e\room\x - 1877.0 * RoomScale, e\room\y + 256.0 * RoomScale, e\room\z + 3503.0 * RoomScale)
 				e\room\NPC[5]\PrevState = 3 : e\room\NPC[5]\Angle = 270.0
 				RotateEntity(e\room\NPC[5]\Collider, 0.0, e\room\NPC[5]\Angle, 0.0)
 				e\room\NPC[4]\Target = e\room\NPC[5]
@@ -9069,7 +9069,7 @@ Function UpdateEvent_Dimension_1499%(e.Events)
 			EndIf
 			
 			For i = 0 To 14
-				n.NPCs = CreateNPC(NPCType1499_1, EntityX(me\Collider) + Rnd(-20.0, 20.0), EntityY(me\Collider) + 0.1, EntityZ(me\Collider) + Rnd(-20.0, 20.0))
+				n.NPCs = CreateNPC(NPCType1499_1, EntityX(me\Collider) + Rnd(-20.0, 20.0), EntityY(me\Collider) + 0.2, EntityZ(me\Collider) + Rnd(-20.0, 20.0))
 				n\Angle = Rnd(360.0) : n\State2 = 0.0
 				If EntityDistanceSquared(n\Collider, me\Collider) < 100.0 Then n\State = 2.0
 			Next
