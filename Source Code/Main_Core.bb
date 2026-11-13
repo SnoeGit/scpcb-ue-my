@@ -2021,7 +2021,7 @@ Function UpdateGUI%()
 			If d_I\ClosestButton <> 0
 				If mo\MouseUp1
 					mo\MouseUp1 = False
-					If d_I\ClosestDoor <> Null And ClosestItem <> Null
+					If d_I\ClosestDoor <> Null
 						If d_I\ClosestDoor\Code <> 0
 							d_I\SelectedDoor = d_I\ClosestDoor
 						ElseIf me\Playable = 2
@@ -5155,11 +5155,8 @@ Function RenderGUI%()
 	If I_294\Using Then Render294()
 	If SelectedDifficulty\Name <> difficulties[DIFFICULTY_APOLLYON]\Name And opt\HUDEnabled
 		If (Not (MenuOpen Lor InvOpen Lor ConsoleOpen Lor I_294\Using Lor OtherOpen <> Null Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor me\Terminated))
-			If ClosestItem <> Null
-				Render3DHandIcon(ICON_HAND_2, ClosestItem\Collider, HandIcon_ClosestItem)
-			ElseIf d_I\ClosestButton <> 0
-				Render3DHandIcon(ICON_HAND_1, d_I\ClosestButton, HandIcon_ClosestButton)
-			EndIf
+			If ClosestItem <> Null Then Render3DHandIcon(ICON_HAND_2, ClosestItem\Collider, HandIcon_ClosestItem)
+			If d_I\ClosestButton <> 0 Then Render3DHandIcon(ICON_HAND_1, d_I\ClosestButton, HandIcon_ClosestButton)
 			
 			If HandEntity <> 0
 				Render3DHandIcon(ICON_HAND_1, HandEntity, HandIcon_Default)
