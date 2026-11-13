@@ -30,6 +30,7 @@
 - Keycards and hands are no longer deselected upon use.
 - Rmeshes are now using Rmesh V2.
 - «showmap» command added. Displays a map of the facility that can be used to teleport to rooms quickly.
+- Made going into inventory seamless with one click when an item is currently selected.
 
 [Items]
 - SCP-427 cures SCP-009 and 008 faster.
