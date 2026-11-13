@@ -77,7 +77,7 @@
  
 - Added SCP-457
  - A dangerous fast moving threat that lurks within the Maintenance Tunnels.
- - Deals high damage over time at mid-range.
+ - Deals high damage over time at mid-range. Causes player to be set of fire, taking damage over time even after running from SCP-457.
  - Deals massive damage over time on contact.
  
 - Added more voicelines from SCP-079.
@@ -100,6 +100,10 @@
  - SCP-008-1 roam speed: 0.98 -> 0.96
  - SCP-049-2 roam speed: 1.0 -> 0.7
  - SCP-999 roam speed: 0.8 -> 0.9
+ 
+- Change damage of enemies:
+ - SCP-008-1 max damage: 0.7 -> 0.6
+ - SCP-966 max damge: 0.75 -> 0.65
  
 - Minor AI improvements to SCP-999.
 - SCP-008-1 and SCP-049-2's spawntimer scales with «AggressiveNPCs».
