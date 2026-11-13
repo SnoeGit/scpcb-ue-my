@@ -24,6 +24,12 @@
 - Removed the opt\LightingQuality option.
 - Increase warning time of SCP-079 displaying SCP-096 on screens.
 - Improve options descriptions.
+- Add item descriptions when hovering over an item in inventory.
+- Improve the HUD when an item is selected or being equipped.
+- Closest items now have their name over the pickup icon.
+- Keycards and hands are no longer deselected upon use.
+- Rmeshes are now using Rmesh V2.
+- «showmap» command added. Displays a map of the facility that can be used to teleport to rooms quickly.
 
 [Items]
 - SCP-427 cures SCP-009 and 008 faster.
@@ -46,6 +52,7 @@
 - Change the level 1 key card color.
 - Increased Fine Eyedrops duration by 10 seconds.
 - Increased Very Fine Eyedrops duration by 30 seconds.
+- SCP-1499 no longer despawns SCP-106 immediately and instead causes his timer to run down 3x times faster.
 
 [Rooms]
 - Added Level 5 Key Card to «room2_office_3» with a new way to obtain it. (Make a deal with SCP-079)
@@ -75,10 +82,15 @@
  
 - Added more voicelines from SCP-079.
 - Reduced max damage from SCP-966 and SCP-008-1.
+- Improved attack ranges for some SCPs.
 - Increased SCP-106's spawnrate once the player has entered the next zone. 1.5x increase(HCZ) -> 2.0x increase(EZ)
 - Increased SCP-106's speed in Labyrinth.
-- Improved attack ranges for some SCPs.
 - SCP-106 spawns sooner from random escapes from Pocket Dimension.
+
+- Increased SCP-106's default spawn timer.
+ - Min: 22000.0 -> 23500.0
+ - Max: 27000.0 -> 29000.0
+ 
 - New animations for SCP-049.
 - Increase spawnrate chance of SCP-049 on Keter.
 - Changed speed of enemies:
@@ -95,6 +107,7 @@
 - Shrink SCP-066's collider size.
 - Nerfed MTF's sight on the surface down from triple to double range.
 - Slightly increased stun time from Fine SCP-513 on MTF and SCP-049.
+- Shrunk the width of most NPCs colliders.
 
 [Bug Fixes]
 - Fixed SCP-106's finicky AI hopefully.
