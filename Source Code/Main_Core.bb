@@ -5476,7 +5476,7 @@ Function RenderUseItem%(item.Items)
 			RenderFrame(opt\GraphicWidth - 132 * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
 			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - 128 * MenuScale, opt\GraphicHeight - 128 * MenuScale)
 			
-			TextEx(opt\GraphicWidth - (144 + StringWidth(item\DisplayName)) * MenuScale, opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
+			TextEx(opt\GraphicWidth - 144 * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 			
 			RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, opt\GraphicWidth - 360 * MenuScale, opt\GraphicHeight - 86 * MenuScale, Width, Height, item\UsageTimer)
 			;[End Block]
@@ -5485,7 +5485,7 @@ Function RenderUseItem%(item.Items)
 			SELECTED_GFX_SIZE = 70 * MenuScale
 			RenderFrame(opt\GraphicWidth - 132 * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
 			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - 128 * MenuScale, opt\GraphicHeight - 128 * MenuScale)
-			TextEx(opt\GraphicWidth - (144 + StringWidth(item\DisplayName)) * MenuScale, opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
+			TextEx(opt\GraphicWidth - 144 * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 			;[End Block]
 		Case it_paper, it_oldpaper, it_scp1025, it_fine1025, it_badge
 			;[Block]
