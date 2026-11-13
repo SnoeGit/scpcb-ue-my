@@ -4337,6 +4337,14 @@ Function RenderItemTooltip%(x%, y%, Width%, Height%, Desc%, ItName$)
 			;[Block]
 			Txt = "Gas Mask that teleports you to another dimension."
 			;[End Block]
+		Case it_scp268, it_fine268
+			;[Block]
+			Txt = "Newsboy cap that renders those who wear it invisible."
+			;[End Block]
+		Case it_cap
+			;[Block]
+			Txt = "A tweed-wool newsboy cap."
+			;[End Block]
 		Case it_scp2022pill
 			;[Block]
 			Txt = "Small glowing pill that heals the consumer."
