@@ -1987,12 +1987,12 @@ Function RemoveSoundInstances%()
 		EndIf
 		If i < 4
 			snd_I\DecaySFX[i] = 0
-			snd_I\PickSFX[i] = 0
 			snd_I\DripSFX[i] = 0
 			snd_I\OpenDecayDoorSFX[i] = 0
 			snd_I\CloseDecayDoorSFX[i] = 0
 		EndIf
 		If i < 5
+			snd_I\PickSFX[i] = 0
 			BreathSFX(0, i) = 0
 			BreathSFX(1, i) = 0
 		EndIf
