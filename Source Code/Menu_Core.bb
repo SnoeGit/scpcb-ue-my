@@ -85,11 +85,6 @@ Function ChangePage%(Page%)
 	ShouldDeleteGadgets = True
 End Function
 
-If opt\DisplayMode <> 0
-	opt\AntiAliasing = False
-	IniWriteInt(OptionFile, "Graphics", "Anti-Aliasing", opt\AntiAliasing)
-EndIf
-
 Function UpdateMainMenu%()
 	CatchErrors("UpdateMainMenu()")
 	
