@@ -117,7 +117,7 @@ Function UpdateMainMenu%()
 		EndIf
 		
 		mm\BlinkTimer = mm\BlinkTimer - fps\Factor[0]
-
+		
 		If mm\BlinkTimer <= 0.0
 			If mm\Show173
 				mm\Show173 = False
@@ -850,7 +850,7 @@ Function UpdateMainMenu%()
 						
 						y = y + (30 * MenuScale)
 						
-						opt\HUDOffset = UpdateMenuSlideBar(x, y, 150 * MenuScale, opt\HUDOffset * 200.0, 1)
+						opt\HUDOffset = UpdateMenuSlideBar(x, y, 150 * MenuScale, opt\HUDOffset * 100.0, 1) / 100.0
 						
 						y = y + 30 * MenuScale
 						
@@ -964,6 +964,7 @@ Function UpdateMainMenu%()
 							UserTrackCheck = 0
 							UserTrackCheck2 = 0
 							
+							UpdateHUDOffsets()
 							mm\MainMenuTab = MainMenuTab_Default
 							;[End Block]
 						Case MainMenuTab_Options_Graphics, MainMenuTab_Options_Audio, MainMenuTab_Options_Controls, MainMenuTab_Options_Advanced ; ~ Save the options
@@ -2406,7 +2407,8 @@ Function UpdatePauseMenu%()
 						
 						y = y + (30 * MenuScale)
 						
-						opt\HUDOffset = UpdateMenuSlideBar(x, y, 100 * MenuScale, opt\HUDOffset * 200.0, 1)
+						opt\HUDOffset = UpdateMenuSlideBar(x, y, 100 * MenuScale, opt\HUDOffset * 100.0, 1) / 100.0
+						UpdateHUDOffsets()
 						
 						y = y + (30 * MenuScale)
 						

@@ -111,6 +111,22 @@ mo\Viewport_Center_Y = opt\GraphicHeight / 2
 
 SetBuffer(BackBuffer())
 
+Global HUDStartX%, HUDEndX%, HUDStartY%, HUDEndY%
+
+UpdateHUDOffsets()
+
+Function UpdateHUDOffsets%()
+	If opt\GraphicWidth > opt\GraphicHeight
+		HUDStartY = 0 : HUDEndY = opt\GraphicHeight
+		HUDStartX = Int(opt\HUDOffset * mo\Viewport_Center_X)
+		HUDEndX = opt\GraphicWidth - HUDStartX
+	Else
+		HUDStartX = 0 : HUDEndX = opt\GraphicWidth
+		HUDStartY = Int(opt\HUDOffset * mo\Viewport_Center_Y)
+		HUDEndY = opt\GraphicHeight - HUDStartY
+	EndIf
+End Function
+
 SeedRnd(MilliSecs())
 
 Function LoadFonts%()
@@ -4713,7 +4729,7 @@ End Function
 Function RenderHUD%()
 	If me\Terminated Lor me\FallTimer < 0.0 Lor me\Playable < 2 Then Return
 	
-	Local x% = (80 + opt\HUDOffset + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale, y% = opt\GraphicHeight - ((15 + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale)
+	Local x% = (80 + HUDStartX + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale, y% = opt\GraphicHeight - ((15 + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale)
 	Local Width% = 200 * MenuScale, Height% = 20 * MenuScale
 	Local WalkIconID%, BlinkIconID%
 	Local IconColoredRectSize% = 36 * MenuScale
@@ -5465,30 +5481,30 @@ Function RenderUseItem%(item.Items)
 			;[Block]
 			If item\UsageTimer > 0.0
 				SELECTED_GFX_SIZE = 70 * MenuScale
-				RenderFrame(opt\GraphicWidth - (132 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
-				DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - (128 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 128 * MenuScale)
+				RenderFrame(opt\GraphicWidth - (132 + HUDEndX) * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
+				DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - (128 + HUDEndX) * MenuScale, opt\GraphicHeight - 128 * MenuScale)
 				
-				TextEx(opt\GraphicWidth - (160 + opt\HUDOffset) * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
+				TextEx(opt\GraphicWidth - (160 + HUDEndX) * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 				
-				RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, opt\GraphicWidth - (360 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 86 * MenuScale, Width, Height, item\UsageTimer)
+				RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, opt\GraphicWidth - (360 + HUDEndX) * MenuScale, opt\GraphicHeight - 86 * MenuScale, Width, Height, item\UsageTimer)
 			EndIf
 			;[End Block]
 		Case it_vest, it_finevest, it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
 			;[Block]
 			SELECTED_GFX_SIZE = 70 * MenuScale
-			RenderFrame(opt\GraphicWidth - (132 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
-			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - (128 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 128 * MenuScale)
+			RenderFrame(opt\GraphicWidth - (132 + HUDEndX) * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
+			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - (128 + HUDEndX) * MenuScale, opt\GraphicHeight - 128 * MenuScale)
 			
-			TextEx(opt\GraphicWidth - (160 + opt\HUDOffset) * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
+			TextEx(opt\GraphicWidth - (160 + HUDEndX) * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 			
-			RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, opt\GraphicWidth - (360 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 86 * MenuScale, Width, Height, item\UsageTimer)
+			RenderBar(BlinkMeterIMG, BlinkMeterSmoothIMG, opt\GraphicWidth - (360 + HUDEndX) * MenuScale, opt\GraphicHeight - 86 * MenuScale, Width, Height, item\UsageTimer)
 			;[End Block]
 		Case it_key0, it_key1, it_key2, it_key3, it_key4, it_key5, it_key6, it_keyomni, it_scp860, it_fine860, it_hand, it_hand2, it_hand3, it_25ct, it_scp005, it_coarse005, it_crystal005, it_key_white, it_key_yellow, it_lostkey, it_coin, it_mastercard, it_mastercard_golden
 			;[Block]
 			SELECTED_GFX_SIZE = 70 * MenuScale
-			RenderFrame(opt\GraphicWidth - (132 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
-			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - (128 + opt\HUDOffset) * MenuScale, opt\GraphicHeight - 128 * MenuScale)
-			TextEx(opt\GraphicWidth - (160 + opt\HUDOffset) * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
+			RenderFrame(opt\GraphicWidth - (132 + HUDEndX) * MenuScale, opt\GraphicHeight - 132 * MenuScale, SELECTED_GFX_SIZE, SELECTED_GFX_SIZE)
+			DrawBlock(item\ItemTemplate\InvImg, opt\GraphicWidth - (128 + HUDEndX) * MenuScale, opt\GraphicHeight - 128 * MenuScale)
+			TextEx(opt\GraphicWidth - (160 + HUDEndX) * MenuScale - StringWidth(item\DisplayName), opt\GraphicHeight - 128 * MenuScale, item\DisplayName)
 			;[End Block]
 		Case it_paper, it_oldpaper, it_scp1025, it_fine1025, it_badge
 			;[Block]
