@@ -4312,8 +4312,11 @@ Function RenderItemTooltip%(x%, y%, Width%, Height%, Desc%, ItName$)
 			;[Block]
 			Txt = "An anomalous item similar in function to level 5 security clearance."
 			;[End Block]
-			
-		Case it_paper
+		Case it_key_yellow, it_key_white
+			;[Block]
+			Txt = "Basic key used for doors with mechanical locks."
+			;[End Block]
+		Case it_paper, it_oldpaper
 			;[Block]
 			Txt = "Used to gain knowledge throughout the facility."
 			;[End Block]
@@ -4427,6 +4430,42 @@ Function RenderItemTooltip%(x%, y%, Width%, Height%, Desc%, ItName$)
 		Case it_hazmatsuit, it_veryfinehazmatsuit
 			;[Block]
 			Txt = "Protective gear over the whole body that is worn to protect against enviromental hazards."
+			;[End Block]
+		Case it_hazmatsuit148
+			;[Block]
+			Txt = "Enhanced protective gear over the whole body that is worn to protect against enviromental hazards. Can be used to protect oneself from many cognitohazardous effects."
+			;[End Block]
+		Case it_vest, it_finevest
+			;[Block]
+			Txt = "Bulletproof body armor worn over the user's chest that protects against bullets and other various forms of physical attacks."
+			;[End Block]
+		Case it_origami
+			;[Block]
+			Txt = "A folded piece of paper in the shape of a bird."
+			;[End Block]
+		Case it_badge, it_badge2
+			;[Block]
+			Txt = "Foundation Identification badge belonging to personnel."
+			;[End Block]
+		Case it_ticket
+			;[Block]
+			Txt = "An old movie ticket."
+			;[End Block]
+		Case it_scp420j
+			;[Block]
+			Txt = "Some good ass shit!"
+			;[End Block]
+		Case it_cigarette
+			;[Block]
+			Txt = "A thin roll of finely cut tobacco for smoking."
+			;[End Block]
+		Case it_joint, it_joint_smelly
+			;[Block]
+			Txt = "Rolled cannabis wrap."
+			;[End Block]
+		Case it_scp427
+			;[Block]
+			Txt = "Ornately carved locket with regenerative properties on the wearer."
 			;[End Block]
 		Default
 			;[Block]
