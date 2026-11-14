@@ -215,6 +215,7 @@ Type Options
 	Field AchvMsgEnabled%
 	Field CanOpenConsole%
 	Field HUDEnabled%
+	Field HUDOffset#
 	Field SpeedrunMode%
 	Field ShowFPS%
 	Field FrameLimit%, CurrFrameLimit#
@@ -399,6 +400,8 @@ Function LoadOptionsINI%()
 	;[Block]
 	opt\HUDEnabled = IniGetInt(OptionFile, "Advanced", "Enable HUD", True)
 	
+	opt\HUDOffset = IniGetFloat(OptionFile, "Advanced", "HUD Offset", 0.0)
+	
 	opt\SpeedrunMode = IniGetInt(OptionFile, "Advanced", "Speedrun Mode", False)
 	
 	opt\CanOpenConsole = IniGetInt(OptionFile, "Advanced", "Enable Console", False)
@@ -520,6 +523,8 @@ Function SaveOptionsINI%(SaveGlobal% = False)
 	;[Block]
 	IniWriteInt(OptionFile, "Advanced", "Enable HUD", opt\HUDEnabled)
 	
+	IniWriteFloat(OptionFile, "Advanced", "HUD Offset", opt\HUDOffset)
+	
 	IniWriteInt(OptionFile, "Advanced", "Speedrun Mode", opt\SpeedrunMode)
 	
 	IniWriteInt(OptionFile, "Advanced", "Enable Console", opt\CanOpenConsole)
@@ -636,6 +641,8 @@ Function ResetOptionsINI%()
 	; ~ [ADVANCED]
 	;[Block]
 	opt\HUDEnabled = True
+	
+	opt\HUDOffset = 0.0
 	
 	opt\SpeedrunMode = False
 	

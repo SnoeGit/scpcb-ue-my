@@ -848,6 +848,10 @@ Function UpdateMainMenu%()
 						
 						opt\HUDEnabled = UpdateMenuTick(x, y, opt\HUDEnabled)
 						
+						y = y + (30 * MenuScale)
+						
+						opt\HUDOffset = UpdateMenuSlideBar(x, y, 150 * MenuScale, opt\HUDOffset * 200.0, 1)
+						
 						y = y + 30 * MenuScale
 						
 						opt\SpeedrunMode = UpdateMenuTick(x, y, opt\SpeedrunMode)
@@ -873,7 +877,7 @@ Function UpdateMainMenu%()
 						Local PrevCurrFrameLimit% = opt\CurrFrameLimit > 0.0
 						
 						If UpdateMenuTick(x, y, opt\CurrFrameLimit > 0.0)
-							opt\CurrFrameLimit = UpdateMenuSlideBar(x - (160 * MenuScale), y + (40 * MenuScale), 150 * MenuScale, opt\CurrFrameLimit * 99.0, 1) / 99.0
+							opt\CurrFrameLimit = UpdateMenuSlideBar(x - (160 * MenuScale), y + (40 * MenuScale), 150 * MenuScale, opt\CurrFrameLimit * 99.0, 2) / 99.0
 							opt\CurrFrameLimit = Max(opt\CurrFrameLimit, 0.01)
 							opt\FrameLimit = 19 + (opt\CurrFrameLimit * 100.0)
 							
@@ -1621,6 +1625,11 @@ Function RenderMainMenu%()
 					SetFontEx(fo\FontID[Font_Default])
 					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "hud"))
 					If MouseOn(x + (290 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUD)
+					
+					y = y + (30 * MenuScale)
+					
+					TextEx(x, y + (5 * MenuScale), GetLocalString("options", "hudoffset"))
+					If (MouseOn(x + (290 * MenuScale), y, MouseOnCoord * 8.2, MouseOnCoord) And OnSliderID = 0) Lor OnSliderID = 1 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUDOffset)
 					
 					y = y + (30 * MenuScale)
 					
@@ -2397,6 +2406,10 @@ Function UpdatePauseMenu%()
 						
 						y = y + (30 * MenuScale)
 						
+						opt\HUDOffset = UpdateMenuSlideBar(x, y, 100 * MenuScale, opt\HUDOffset * 200.0, 1)
+						
+						y = y + (30 * MenuScale)
+						
 						opt\SpeedrunMode = UpdateMenuTick(x, y, opt\SpeedrunMode)
 						
 						y = y + (30 * MenuScale)
@@ -2420,7 +2433,7 @@ Function UpdatePauseMenu%()
 						Local PrevCurrFrameLimit% = opt\CurrFrameLimit > 0.0
 						
 						If UpdateMenuTick(x, y, opt\CurrFrameLimit > 0.0)
-							opt\CurrFrameLimit = UpdateMenuSlideBar(x - (120 * MenuScale), y + (40 * MenuScale), 100 * MenuScale, opt\CurrFrameLimit * 99.0, 1) / 99.0
+							opt\CurrFrameLimit = UpdateMenuSlideBar(x - (120 * MenuScale), y + (40 * MenuScale), 100 * MenuScale, opt\CurrFrameLimit * 99.0, 2) / 99.0
 							opt\CurrFrameLimit = Max(opt\CurrFrameLimit, 0.01)
 							opt\FrameLimit = 19 + (opt\CurrFrameLimit * 100.0)
 							
@@ -2906,6 +2919,11 @@ Function RenderPauseMenu%()
 						;[Block]
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "hud"))
 						If MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUD)
+						
+						y = y + (30 * MenuScale)
+						
+						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "hudoffset"))
+						If (MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0) Lor OnSliderID = 1 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUDOffset)
 						
 						y = y + (30 * MenuScale)
 						
@@ -4534,6 +4552,7 @@ Enum OptionTooltips
 	Tooltip_ControlConfiguration
 	; ~ Advanced Tooltips Constants
 	Tooltip_HUD
+	Tooltip_HUDOffset
 	Tooltip_SpeedrunMode
 	Tooltip_Console
 	Tooltip_AchievementPopups
@@ -4703,6 +4722,10 @@ Function RenderOptionsTooltip%(x%, y%, Width%, Height%, Option%, Value# = 0.0)
 		Case Tooltip_HUD
 			;[Block]
 			Txt = GetLocalString("tooltip", "hud")
+			;[End Block]
+		Case Tooltip_HUDOffset
+			;[Block]
+			Txt = GetLocalString("tooltip", "hudoffset")
 			;[End Block]
 		Case Tooltip_SpeedrunMode
 			;[Block]
