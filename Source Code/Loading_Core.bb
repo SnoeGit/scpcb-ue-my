@@ -1554,10 +1554,10 @@ Function LoadItems%()
 	CreateItemTemplate(GetLocalString("items", "key6"), "Level 6 Key Card", it_key6, "key_card.b3d", "INV_key_card_lvl_6.png", "", 0.00037, ITEM_SOUND_PLASTIC, "key_card_lvl_6.png")
 	CreateItemTemplate(GetLocalString("items", "keyomni"), "Key Card Omni", it_keyomni, "key_card.b3d", "INV_key_card_lvl_omni.png", "", 0.00037, ITEM_SOUND_PLASTIC, "key_card_lvl_omni.png")
 	
-	CreateItemTemplate(GetLocalString("items", "hand"), "White Severed Hand", it_hand, "severed_hand.b3d", "INV_severed_hand_white.png", "", 0.033, ITEM_SOUND_CLOTH)
-	it.ItemTemplates = CreateItemTemplate(GetLocalString("items", "hand"), "Black Severed Hand", it_hand2, "severed_hand.b3d", "INV_severed_hand_black.png", "", 0.033, ITEM_SOUND_CLOTH)
+	CreateItemTemplate(GetLocalString("items", "hand"), "White Severed Hand", it_hand, "severed_hand.b3d", "INV_severed_hand_white.png", "", 0.033, ITEM_SOUND_FLESH)
+	it.ItemTemplates = CreateItemTemplate(GetLocalString("items", "hand"), "Black Severed Hand", it_hand2, "severed_hand.b3d", "INV_severed_hand_black.png", "", 0.033, ITEM_SOUND_FLESH)
 	EntityColor(it\OBJ, 96.0, 67.0, 46.0)
-	it.ItemTemplates = CreateItemTemplate(GetLocalString("items", "hand"), "Yellow Severed Hand", it_hand3, "severed_hand.b3d", "INV_severed_hand_yellow.png", "", 0.033, ITEM_SOUND_CLOTH)
+	it.ItemTemplates = CreateItemTemplate(GetLocalString("items", "hand"), "Yellow Severed Hand", it_hand3, "severed_hand.b3d", "INV_severed_hand_yellow.png", "", 0.033, ITEM_SOUND_FLESH)
 	EntityColor(it\OBJ, 200.0, 176.0, 146.0)
 	
 	CreateItemTemplate(GetLocalString("items", "key.simple"), "White Key", it_key_white, "key.b3d", "INV_key.png", "", 0.0027, ITEM_SOUND_METAL)
@@ -1677,7 +1677,7 @@ Type SoundInstance
 	Field SCRAMBLESFX%
 	Field LowBatterySFX%[2]
 	Field ElevatorBeepSFX%, ElevatorMoveSFX%
-	Field PickSFX%[4]
+	Field PickSFX%[5]
 	Field SCP106SFX%[8]
 	Field SCP173SFX%[3]
 	Field HorrorSFX%[14]
@@ -1845,8 +1845,6 @@ Function LoadSounds%()
 			
 			snd_I\DripSFX[i] = LoadSound_Strict("SFX\Character\D9341\BloodDrip" + i + ".ogg")
 			
-			snd_I\PickSFX[i] = LoadSound_Strict("SFX\Interact\PickItem" + i + ".ogg")
-			
 			snd_I\Step2SFX[i + 3] = LoadSound_Strict("SFX\Step\NPCs\939_966\StepMetal" + i + ".ogg")
 			If i < 3
 				snd_I\Step2SFX[i] = LoadSound_Strict("SFX\Step\NPCs\MTF\StepMetal" + i + ".ogg")
@@ -1855,6 +1853,7 @@ Function LoadSounds%()
 			EndIf
 		EndIf
 		If i < 5
+			snd_I\PickSFX[i] = LoadSound_Strict("SFX\Interact\PickItem" + i + ".ogg")
 			BreathSFX(0, i) = LoadSound_Strict("SFX\Character\D9341\Breath" + i + ".ogg")
 			BreathSFX(1, i) = LoadSound_Strict("SFX\Character\D9341\Breath" + i + "Gas.ogg")
 		EndIf

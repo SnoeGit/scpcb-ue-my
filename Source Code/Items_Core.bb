@@ -139,6 +139,7 @@ Const ITEM_SOUND_PAPER% = 0
 Const ITEM_SOUND_PLASTIC% = 1
 Const ITEM_SOUND_CLOTH% = 2
 Const ITEM_SOUND_METAL% = 3
+Const ITEM_SOUND_FLESH% = 4
 ;[End Block]
 
 Function CreateItemTemplate.ItemTemplates(DisplayName$, Name$, ID%, OBJPath$, InvImgPath$, ImgPath$, Scale#, SoundID%, TexturePath$ = "", InvImgPath2$ = "", HasAnim% = False, TexFlags% = 1)
