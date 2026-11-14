@@ -402,6 +402,3 @@ End Function
 Function TextEx%(x%, y%, Txt$, AlignX% = False, AlignY% = False)
 	Text(x, y + TextOffset, Txt, AlignX, AlignY)
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

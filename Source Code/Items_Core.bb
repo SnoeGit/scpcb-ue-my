@@ -2705,6 +2705,3 @@ Function CreateRandomBattery.Items(x#, y#, z#)
 	EndIf
 	Return(CreateItem(BatteryName, BatteryID, x, y, z))
 End Function
-
-;~IDEal Editor Parameters:
-;~C#BlitzX3D

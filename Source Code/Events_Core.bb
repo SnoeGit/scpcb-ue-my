@@ -1280,6 +1280,3 @@ Function UpdateTeslaGate%(e.Events)
 		e\EventState2 = -70.0 - (70.0 * (e\EventID = e_broken_tesla) * 4.0)
 	EndIf
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

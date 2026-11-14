@@ -115,6 +115,3 @@ Function UpdateBreathSteam%()
 		BreathSteamTimer = 0.0
 	EndIf
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

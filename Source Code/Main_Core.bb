@@ -7095,5 +7095,3 @@ Function GetDummyPivot%(x#, y#, z#, IsGlobal% = False)
 	RotateEntity(DummyPivot, 0.0, 0.0, 0.0) ; ~ Reset rotation
 	Return(DummyPivot)
 End Function
-
-;~C#BlitzX3D

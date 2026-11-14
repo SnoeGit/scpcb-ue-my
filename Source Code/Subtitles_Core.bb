@@ -340,6 +340,3 @@ Function DeInitSubtitlesAssets%()
 	
 	Delete(subassets) : subassets = Null
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

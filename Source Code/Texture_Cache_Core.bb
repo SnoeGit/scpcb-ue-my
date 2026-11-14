@@ -168,6 +168,3 @@ Function CheckForTexture%(Tex%, TexFlags% = 1)
 	If Texture <> 0 Then TextureBlend(Texture, 1 + 4 * (((TexFlags Shr 1) Mod 2) = 0))
 	Return(Texture)
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

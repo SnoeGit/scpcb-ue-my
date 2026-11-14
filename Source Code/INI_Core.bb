@@ -675,6 +675,3 @@ Function ResetOptionsINI%()
 	opt\Language = "en"
 	;[End Block]
 End Function
-
-;~IDEal Editor Parameters:
-;~C#BlitzX3D

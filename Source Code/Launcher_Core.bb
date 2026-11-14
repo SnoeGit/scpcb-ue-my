@@ -1108,6 +1108,3 @@ Function DualColorText%(x%, y%, Txt1$, Txt2$, ColorR1%, ColorG1%, ColorB1%, Colo
 	TextEx(x + StringWidth(Txt1), y, Txt2)
 	Color(OldR, OldG, OldB)
 End Function
-
-;~IDEal Editor Parameters:
-;~C#BlitzX3D

@@ -173,4 +173,3 @@ Function UpdateForestCam%(prtl.PortalRender, fr.Forest, i%)
 	If EntityExist(prtl\Cam) Then PositionEntity(prtl\Cam, TFormedX(), TFormedY(), TFormedZ(), True)
 	Return(FlipAngle)
 End Function
-

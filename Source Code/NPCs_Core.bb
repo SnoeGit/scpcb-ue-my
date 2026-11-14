@@ -2041,6 +2041,3 @@ Function UpdateNPCIce%(n.NPCs)
 		If n\NPCType <> NPCType096 Then n\Speed = Max(n\Speed - (fps\Factor[0] * 0.000005), 0.0)
 	EndIf
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

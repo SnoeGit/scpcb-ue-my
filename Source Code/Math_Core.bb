@@ -347,6 +347,3 @@ Function IsInFacility%(y#)
 	EndIf
 	Return(NullFloor)
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

@@ -1908,4 +1908,3 @@ Function ClearConsole%()
 	CreateConsoleMsg(" - disable966 / enable966")
 	CreateConsoleMsg(" - spawn [NPC type]")
 End Function
-

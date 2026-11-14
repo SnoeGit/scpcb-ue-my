@@ -7374,6 +7374,3 @@ Function UpdateNPCTypeMTF%(n.NPCs)
 	PositionEntity(n\OBJ, EntityX(n\Collider, True), EntityY(n\Collider, True) - n\CollRadius, EntityZ(n\Collider, True), True)
 	RotateEntity(n\OBJ, -90.0, n\Angle, 0.0, True)
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

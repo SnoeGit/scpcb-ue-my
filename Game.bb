@@ -61,6 +61,3 @@ IniWriteBuffer(FontsFile)
 
 Include "Source Code\Launcher_Core.bb"
 Include "Source Code\Main_Core.bb"
-
-;~IDEal Editor Parameters:
-;~C#BlitzX3D

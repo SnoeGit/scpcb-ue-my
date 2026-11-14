@@ -3761,6 +3761,3 @@ Function NullGame%(PlayButtonSFX% = True)
 	
 	CatchErrors("Uncaught: NullGame()")
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

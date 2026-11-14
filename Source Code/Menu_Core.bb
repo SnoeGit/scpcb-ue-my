@@ -4866,6 +4866,3 @@ Function RenderMapCreatorTooltip%(x%, y%, Width%, Height%, MapName$)
 	TextEx(fX, fY + ((StringHeightTxt0 * 2) + StringHeightTxt2 * Lines + CoordEx), Txt[3])
 	TextEx(fX, fY + ((StringHeightTxt0 * 3) + StringHeightTxt2 * Lines + CoordEx), Txt[4])
 End Function
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS

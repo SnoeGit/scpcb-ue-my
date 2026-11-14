@@ -17,6 +17,3 @@ Function ApplyBumpMap%(Texture%)
 End Function
 
 Const MaterialsFile$ = "Data\materials.ini"
-
-;~IDEal Editor Parameters:
-;~C#Blitz3D TSS
