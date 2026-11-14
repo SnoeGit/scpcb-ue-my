@@ -4383,9 +4383,17 @@ Function RenderItemTooltip%(x%, y%, Width%, Height%, Desc%, ItName$)
 			;[Block]
 			Txt = "A debit card used to purchase items."
 			;[End Block]
-		Case it_bat, it_coarsebat, it_finebat
+		Case it_bat
 			;[Block]
-			Txt = "Can be used to recharge electronic devices."
+			Txt = "Standard voltage battery tha can be used to recharge electronic devices."
+			;[End Block]
+		Case it_coarsebat
+			;[Block]
+			Txt = "Low voltage battery that can be used to recharge electronic devices at a lower capability."
+			;[End Block]
+		Case it_finebat
+			;[Block]
+			Txt = "High voltage battery that can be used to recharge advanced electronic devices."
 			;[End Block]
 		Case it_nav, it_nav310, it_nav3000
 			;[Block]
@@ -4466,6 +4474,26 @@ Function RenderItemTooltip%(x%, y%, Width%, Height%, Desc%, ItName$)
 		Case it_scp427
 			;[Block]
 			Txt = "Ornately carved locket with regenerative properties on the wearer."
+			;[End Block]
+		Case it_headphones
+			;[Block]
+			Txt = "Noise-canceling ear protection equipment."
+			;[End Block]
+		Case it_nvg, it_finenvg, it_veryfinenvg
+			;[Block]
+			Txt = "Optical device used to see in the dark."
+			;[End Block]
+		Case it_scramble, it_finescramble
+			;[Block]
+			Txt = "Optical device used to block visual cognitohazardous material."
+			;[End Block]
+		Case it_emptycup
+			;[Block]
+			Txt = "An empty cup containing no liquids."
+			;[End Block]
+		Case it_cup
+			;[Block]
+			Txt = "A cup full of liquids."
 			;[End Block]
 		Default
 			;[Block]
