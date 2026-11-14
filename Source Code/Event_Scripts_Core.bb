@@ -657,7 +657,7 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 			ChangeNPCTextureID(e\room\NPC[10], NPC_CLASS_D_D9341_TEXTURE)
 			HideEntity(e\room\NPC[10]\OBJ)
 			
-			TFormPoint(-7208.0, -512.4, -3104.0, e\room\OBJ, 0)
+			TFormPoint(-7208.0, -470.0, -3104.0, e\room\OBJ, 0)
 			e\room\NPC[11] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 			e\room\NPC[11]\State = 4.0
 			CreateNPCAsset(e\room\NPC[11], 3)

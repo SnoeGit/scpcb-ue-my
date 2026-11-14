@@ -815,12 +815,14 @@ Function CreateNPCAsset%(n.NPCs, AssetID% = 0)
 					PrevY = EntityY(n\OBJ)
 					PrevZ = EntityZ(n\OBJ)
 					
+					EntityRadius(n\Collider, 0.8)
+					
 					n\OBJ2 = CopyEntity(n_I\NPCModelID[NPC_VEHICLE_MODEL])
 					Temp = 1.796 / MeshWidth(n\OBJ2)
 					ScaleEntity(n\OBJ2, Temp, Temp, Temp)
 					
 					HideEntity(n\OBJ2)
-					PositionEntity(n\OBJ2, PrevX - 0.42, PrevY, PrevZ + 1.75)
+					PositionEntity(n\OBJ2, PrevX - 0.42, PrevY - 0.5, PrevZ + 1.75)
 					RotateEntity(n\OBJ2, 0.0, PrevYaw + 180.0, 0.0)
 					EntityParent(n\OBJ2, n\OBJ)
 					;[End Block]
