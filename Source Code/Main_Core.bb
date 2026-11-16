@@ -4972,6 +4972,8 @@ Function RenderDebugHUD%()
 			;[Block]
 			TFormPoint(EntityX(me\Collider), EntityY(me\Collider), EntityZ(me\Collider), 0, PlayerRoom\OBJ)
 			TextEx(x, y, Format(Format(Format(GetLocalString("console", "debug_2.ppos"), FloatToString(TFormedX(), 1), "{0}"), FloatToString(TFormedY(), 1), "{1}"), FloatToString(TFormedZ(), 1), "{2}"))
+			y = y + (20 * MenuScale)
+			TextEx(x, y, Format(Format(Format(GetLocalString("console", "debug_2.pposglobal"), FloatToString(EntityX(me\Collider), 2), "{0}"), FloatToString(EntityY(me\Collider), 2), "{1}"), FloatToString(EntityZ(me\Collider), 2), "{2}"))
 			TextEx(x, y + (20 * MenuScale), Format(Format(Format(GetLocalString("console", "debug_2.pcampos"), FloatToString(EntityX(Camera), 1), "{0}"), FloatToString(EntityY(Camera), 1), "{1}"), FloatToString(EntityZ(Camera), 1), "{2}"))
 			TextEx(x, y + (40 * MenuScale), Format(Format(Format(GetLocalString("console", "debug_2.prot"), FloatToString(EntityPitch(me\Collider), 1), "{0}"), FloatToString(EntityYaw(me\Collider), 1), "{1}"), FloatToString(EntityRoll(me\Collider), 1), "{2}"))
 			
@@ -4999,6 +5001,7 @@ Function RenderDebugHUD%()
 			TextEx(x, y + (500 * MenuScale), Format(GetLocalString("console", "debug_2.sanity"), me\Sanity))
 			
 			x = x + (700 * MenuScale)
+			y = y - (20 * MenuScale)
 			
 			TextEx(x, y, Format(GetLocalString("console", "debug_2.terminated"), me\Terminated))
 			

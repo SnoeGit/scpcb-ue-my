@@ -2444,16 +2444,25 @@ Function LoadWayPoints%(LoadingStart% = 55)
 	For w.WayPoints = Each WayPoints
 		EntityRadius(w\OBJ, 0.0)
 		EntityPickMode(w\OBJ, 0, False)
+
+		Local tSphere% = CreateSphere()
+		EntityFX(tSphere, 1)
+		EntityColor(tSphere, 200.0, 0.0, 0.0)
+		EntityParent(tSphere, w\OBJ, False)
+		ScaleEntity(tSphere, 0.02, 0.02, 0.02, True)
+		EntityPickMode(tSphere, 0, False)
+		NameEntity(tSphere, "debug_waypoint_marker")
+		HideEntity(tSphere)
 		
-		;For i = 0 To MaxConnectedWaypoints - 1
-		;	If w\connected[i] <> Null
-		;		Local tLine% = CreateLine(EntityX(w\OBJ, True), EntityY(w\OBJ, True), EntityZ(w\OBJ, True), EntityX(w\connected[i]\OBJ, True), EntityY(w\connected[i]\OBJ, True), EntityZ(w\connected[i]\OBJ, True))
-		;		
-		;		EntityFX(tLine, 1)
-		;		EntityColor(tLine, 0.0, 200.0, 0.0)
-		;		EntityParent(tLine, w\OBJ)
-		;	EndIf
-		;Next
+		For i = 0 To MaxConnectedWaypoints - 1
+			If w\connected[i] <> Null
+				Local tLine% = CreateLine(EntityX(w\OBJ, True), EntityY(w\OBJ, True), EntityZ(w\OBJ, True), EntityX(w\connected[i]\OBJ, True), EntityY(w\connected[i]\OBJ, True), EntityZ(w\connected[i]\OBJ, True))
+				
+				EntityFX(tLine, 1)
+				EntityColor(tLine, 0.0, 200.0, 0.0)
+				EntityParent(tLine, w\OBJ)
+			EndIf
+		Next
 	Next
 End Function
 

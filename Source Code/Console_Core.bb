@@ -1022,11 +1022,20 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 					WireFrameState = (Not WireFrameState)
 					;[End Block]
 			End Select
-			
+
+			Local wp_debug_paint.WayPoints, tSphere_debug_paint%
 			If WireFrameState
 				CreateConsoleMsg(GetLocalString("console", "wf.on"))
+				For wp_debug_paint.WayPoints = Each WayPoints
+					tSphere_debug_paint = FindChild(wp_debug_paint\OBJ, "debug_waypoint_marker")
+					If tSphere_debug_paint <> 0 Then ShowEntity(tSphere_debug_paint)
+				Next
 			Else
 				CreateConsoleMsg(GetLocalString("console", "wf.off"))
+				For wp_debug_paint.WayPoints = Each WayPoints
+					tSphere_debug_paint = FindChild(wp_debug_paint\OBJ, "debug_waypoint_marker")
+					If tSphere_debug_paint <> 0 Then HideEntity(tSphere_debug_paint)
+				Next
 			EndIf
 			
 			WireFrame(WireFrameState)
