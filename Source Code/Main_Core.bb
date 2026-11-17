@@ -227,7 +227,9 @@ Repeat
 	If (ElapsedMilliSecs > 0 And ElapsedMilliSecs < 500) Then fps\Accumulator = fps\Accumulator + Max(0.0, Float(ElapsedMilliSecs) * 70.0 / 1000.0)
 	fps\PrevTime = fps\CurrTime
 	
-	If opt\FrameLimit
+	If MainMenuOpen
+		CapFPS(60)
+	ElseIf opt\FrameLimit > 0.0
 		CapFPS(opt\FrameLimit)
 	Else
 		UncapFPS()
