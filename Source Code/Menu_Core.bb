@@ -4440,6 +4440,10 @@ Function RenderItemTooltip%(x%, y%, Width%, Height%, Desc%, ItName$)
 			;[Block]
 			Txt = "Medicated eye drops used to reduce the strain of keeping the eyes open."
 			;[End Block]
+		Case it_lavenderspray
+			;[Block]
+			Txt = "Canister with lavender scented aerosol. A scent known for calming."
+			;[End Block]
 		Case it_gasmask, it_finegasmask, it_veryfinegasmask
 			;[Block]
 			Txt = "Protective face gear used to protect the eyes and prevent suffocation from decontamination gas."

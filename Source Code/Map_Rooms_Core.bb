@@ -2968,10 +2968,14 @@ Function FillRoom%(r.Rooms)
 			PositionEntity(r\Objects[6], r\x - 492.0 * RoomScale, r\y - 3280.0 * RoomScale, r\z - 819.0 * RoomScale)
 			EntityParent(r\Objects[6], r\OBJ)
 			
-			it.Items = CreateItem("Document SCP-049", it_paper, r\x - 841.0 * RoomScale, r\y - 3404.0 * RoomScale, r\z - 866.0 * RoomScale)
+			it.Items = CreateItem("Document SCP-049", it_paper, r\x - 821.0 * RoomScale, r\y - 3404.0 * RoomScale, r\z - 866.0 * RoomScale)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("Level 4 Key Card", it_key4, r\x - 564.0 * RoomScale, r\y - 3412.0 * RoomScale, r\z + 698.0 * RoomScale)
+			EntityParent(it\Collider, r\OBJ)
+			
+			it.Items = CreateItem("Lavender Spray", it_lavenderspray, r\x - 928.0 * RoomScale, r\y - 3404.0 * RoomScale, r\z - 873.0 * RoomScale)
+			it\State = Rand(2, 3)
 			EntityParent(it\Collider, r\OBJ)
 			
 			it.Items = CreateItem("First Aid Kit", it_firstaid, r\x + 385.0 * RoomScale, r\y - 3412.0 * RoomScale, r\z + 271.0 * RoomScale)

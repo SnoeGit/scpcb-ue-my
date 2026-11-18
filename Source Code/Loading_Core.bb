@@ -121,7 +121,7 @@ Enum ParticleID
 	PARTICLE_SNOW_SHINE
 End Enum
 
-Global ParticleEffect%[37]
+Global ParticleEffect%[38]
 
 Function LoadParticles%()
 	p_I.ParticleInstance = New ParticleInstance
@@ -600,6 +600,18 @@ Function LoadParticles%()
 	SetTemplateAlphaVel(ParticleEffect[36], True)
 	SetTemplateSize(ParticleEffect[36], 0.08, 0.08, 0.5, 1.0)
 	SetTemplateSizeVel(ParticleEffect[36], 0.01, 1.01)
+	
+	; ~ Lavender spray
+	ParticleEffect[37] = CreateTemplate()
+	SetTemplateEmitterBlend(ParticleEffect[37], 1)
+	SetTemplateEmitterLifeTime(ParticleEffect[37], 10)
+	SetTemplateParticleLifeTime(ParticleEffect[37], 7, 10)
+	SetTemplateTexture(ParticleEffect[37], PARTICLE_WHITE_SMOKE)
+	SetTemplateOffset(ParticleEffect[37], -0.03, 0.03, 0.0, 0.0, -0.03, 0.03)
+	SetTemplateVelocity(ParticleEffect[37], -0.02, 0.02, 0.007, 0.005, -0.02, -0.4)
+	SetTemplateAlphaVel(ParticleEffect[37], True)
+	SetTemplateSize(ParticleEffect[37], 0.18, 0.2, 0.5, 1.5)
+	SetTemplateSizeVel(ParticleEffect[37], 0.02, 1.01)
 End Function
 
 Function RemoveParticleInstances%()
@@ -1479,6 +1491,8 @@ Function LoadItems%()
 	CreateItemTemplate(GetLocalString("items", "eyedrops"), "ReVision Eyedrops", it_eyedrops, "eye_drops.b3d", "INV_eye_drops.png", "", 0.0011, ITEM_SOUND_PLASTIC)
 	CreateItemTemplate(GetLocalString("items", "eyedrops.red"), "RedVision Eyedrops", it_eyedrops2, "eye_drops.b3d", "INV_eye_drops_red.png", "", 0.0011, ITEM_SOUND_PLASTIC, "eye_drops_red.png")
 	CreateItemTemplate(GetLocalString("items", "eyedrops_2"), "Fine Eyedrops", it_fineeyedrops, "eye_drops.b3d", "INV_eye_drops.png", "", 0.0012, ITEM_SOUND_PLASTIC)
+	
+	CreateItemTemplate(GetLocalString("items", "spray"), "Lavender Spray", it_lavenderspray, "lavender_spray_can.b3d", "INV_eye_drops.png", "", 0.002, ITEM_SOUND_PLASTIC)
 	
 	CreateItemTemplate(GetLocalString("items", "syringe"), "Syringe", it_syringe, "syringe.b3d", "INV_syringe.png", "", 0.005, ITEM_SOUND_CLOTH)
 	CreateItemTemplate(GetLocalString("items", "syringe"), "Fine Syringe", it_finesyringe, "syringe.b3d", "INV_syringe.png", "", 0.005, ITEM_SOUND_CLOTH)

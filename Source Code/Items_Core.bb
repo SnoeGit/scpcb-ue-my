@@ -75,6 +75,7 @@ Enum ItemList
 	it_eyedrops2
 	it_fineeyedrops
 	it_veryfineeyedrops
+	it_lavenderspray
 	it_firstaid
 	it_firstaid2
 	it_finefirstaid

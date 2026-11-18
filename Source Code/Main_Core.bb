@@ -3712,6 +3712,34 @@ Function UpdateUseItem%(item.Items)
 				EndIf
 			EndIf
 			;[End Block]
+		Case it_lavenderspray
+			;[Block]
+			me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+			
+			item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (0.5 * (1.0 + (I_1025\State[6] > 0.0)))), 100.0)
+			If item\UsageTimer = 100.0
+				
+				CreateMsg(GetLocalString("msg", "spray"))
+				PlaySound_Strict(LoadTempSound("SFX\Interact\Spray.ogg"))
+				
+				If n_I\Curr049 <> Null
+					If EntityDistanceSquared(n_I\Curr049\Collider, me\Collider) < 25.0 And EntityInView(n_I\Curr049\OBJ, Camera)
+						If n_I\Curr049\State < 5.0 Then n_I\Curr049\State = 6.0
+					EndIf
+				EndIf
+				
+				Local emit.Emitter = SetEmitter(Null, EntityX(Camera, True), EntityY(Camera, True) - 0.1, EntityZ(Camera, True), 37)
+				EntityParent(emit\Owner, Camera)
+				
+				item\State = item\State - 1.0
+				If item\State > 0.0
+					item\UsageTimer = 0.0
+					SelectedItem = Null
+				Else
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
 		Case it_scp1025
 			;[Block]
 			GiveAchievement("1025")
@@ -4667,7 +4695,7 @@ Function UpdateUseItem%(item.Items)
 	
 	If (Not (MenuOpen Lor ConsoleOpen)) And (mo\MouseHit2 Lor InvPressed) Lor me\Terminated Lor me\FallTimer < 0.0 Lor me\Playable < 2 Lor me\Zombie
 		Select item\ItemTemplate\ID
-			Case it_firstaid, it_finefirstaid, it_firstaid2, it_cap, it_scp268, it_fine268, it_scp1499, it_fine1499, it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_helmet, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_cup, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops
+			Case it_firstaid, it_finefirstaid, it_firstaid2, it_cap, it_scp268, it_fine268, it_scp1499, it_fine1499, it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_helmet, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_cup, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops, it_lavenderspray
 				;[Block]
 				item\UsageTimer = 0.0
 				;[End Block]
@@ -5487,7 +5515,7 @@ Function RenderUseItem%(item.Items)
 	
 	Color(255, 255, 255)
 	Select item\ItemTemplate\ID
-		Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_scp1499, it_fine1499, it_helmet, it_cap, it_scp268, it_fine268, it_firstaid, it_finefirstaid, it_firstaid2, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_cup, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops
+		Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_scp1499, it_fine1499, it_helmet, it_cap, it_scp268, it_fine268, it_firstaid, it_finefirstaid, it_firstaid2, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_cup, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops, it_lavenderspray
 			;[Block]
 			If item\UsageTimer > 0.0
 				SELECTED_GFX_SIZE = 70 * MenuScale
