@@ -612,6 +612,7 @@ Function LoadParticles%()
 	SetTemplateAlphaVel(ParticleEffect[37], True)
 	SetTemplateSize(ParticleEffect[37], 0.18, 0.2, 0.5, 1.5)
 	SetTemplateSizeVel(ParticleEffect[37], 0.02, 1.01)
+	SetTemplateColors(ParticleEffect[37], $FF70FF, $FF80FF)
 End Function
 
 Function RemoveParticleInstances%()
