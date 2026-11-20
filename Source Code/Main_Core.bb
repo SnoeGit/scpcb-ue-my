@@ -4913,7 +4913,7 @@ Function RenderDebugHUD%()
 	Local ev.Events, ch.Chunk, r.Rooms
 	Local x% = 20 * MenuScale, y% = 40 * MenuScale
 	Local i%
-	Local tempItem.Items, tempIndex%
+	Local tempItem.Items
 	
 	Color(255, 255, 255)
 	SetFontEx(fo\FontID[Font_Console])
@@ -4970,21 +4970,14 @@ Function RenderDebugHUD%()
 			TextEx(x, y + (480 * MenuScale), Format(GetLocalString("console", "debug_1.acttex"), ActiveTextures()))
 
 			If ClosestItem <> Null
-				tempIndex = 0
-				For tempItem.Items = Each Items
-					tempIndex = tempIndex + 1
-					If (tempItem = ClosestItem)
-						TextEx(x, y + (520 * MenuScale), Format(GetLocalString("console", "debug_1.looking_at_item"), tempIndex))
-						Exit
-					EndIf
-				Next
+				TextEx(x, y + (520 * MenuScale), Format(GetLocalString("console", "debug_1.looking_at_item"), ClosestItem\ID))
 			EndIf
 
 			x = x + (700 * MenuScale)
 
 			If ConsoleTrackedItem <> Null
 				TextEx(x - (40 * MenuScale), y, GetLocalString("console", "debug_1.trackitem.tracking"))
-				TextEx(x, y + (20 * MenuScale), Format(Format(GetLocalString("console", "debug_1.trackitem.name_number"), ConsoleTrackedItem\Name, "{0}"), lastItemIDArg, "{1}"))
+				TextEx(x, y + (20 * MenuScale), Format(Format(Format(GetLocalString("console", "debug_1.trackitem.name_number"), ConsoleTrackedItem\Name, "{0}"), ConsoleTrackedItem\ItemTemplate\ID, "{1}"), ConsoleTrackedItem\ID, "{2}"))
 				Local boolString0$ = "False"
 				Local boolString1$ = ConsoleTrackedItem_DroppedString
 				Local boolString2$ = "False"

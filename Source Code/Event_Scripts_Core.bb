@@ -5849,6 +5849,11 @@ Function UpdateEvent_Cont2_049%(e.Events)
 	If PlayerRoom = e\room
 		Local n.NPCs, it.Items
 		Local x1#, y1#, z1#
+
+		Local tempItem0.Items = Null
+		Local tempItem1.Items = Null
+		Local xi2#, yi2#, zi2#
+		Local xi3#, yi3#, zi3#
 		
 		
 		If EntityY(me\Collider) > (-2848.0) * RoomScale
@@ -5879,6 +5884,38 @@ Function UpdateEvent_Cont2_049%(e.Events)
 				Else
 					TFormPoint(-2720.0, -3516.0, -1824.0, e\room\OBJ, 0)
 					CreateItem("Research Sector-02 Scheme", it_paper, TFormedX(), TFormedY(), TFormedZ())
+				EndIf
+
+				TFormPoint(-841.0, -3404.0, -866.0,  e\room\OBJ, 0)
+				xi2 = TFormedX()
+				yi2 = TFormedY()
+				zi2 = TFormedZ()
+				;CreateConsoleMsg("For adding lavender spray, the document scp-049 needs to be around: " + Str(xi2) + " " + Str(yi2) + " " + Str(zi2))
+				TFormPoint(-928.0, -3404.0, -873.0,  e\room\OBJ, 0)
+				xi3 = TFormedX()
+				yi3 = TFormedY()
+				zi3 = TFormedZ()
+
+				For it.Items = Each Items
+					If it\Name = "Document SCP-049" And it\ItemTemplate\ID = it_paper
+						;CreateConsoleMsg("A document scp-049 found at: " + Str(EntityX(it\Collider, True)) + " " + Str(EntityY(it\Collider, True)) + " " + Str(EntityZ(it\Collider, True)))
+						If (IsEqual(EntityX(it\Collider, True), xi2, 0.01) And IsEqual(EntityZ(it\Collider, True), zi2, 0.01) And IsEqual(EntityY(it\Collider, True), yi2, 0.2))
+							;CreateConsoleMsg("Found the document at the right position.")
+							tempItem0 = it
+						EndIf
+					EndIf
+					If ((it\Name = "Lavender Spray") And (it\ItemTemplate\ID = it_lavenderspray) And IsEqual(EntityX(it\Collider, True), xi3, 0.01) And IsEqual(EntityZ(it\Collider, True), zi3, 0.01) And IsEqual(EntityY(it\Collider, True), yi3, 0.2))
+						tempItem1 = it
+						;CreateConsoleMsg("Already got lavender spray.")
+					EndIf
+				Next
+
+				If (tempItem0 <> Null And tempItem1 = Null)
+					;CreateConsoleMsg("Will now do update.")
+					TFormPoint(-821.0, -3404.0, -866.0,  e\room\OBJ, 0)
+					PositionEntity(tempItem0\Collider, TFormedX(), TFormedY(), TFormedZ(), True)
+					tempItem1.Items = CreateItem("Lavender Spray", it_lavenderspray, xi3, yi3, zi3)
+					tempItem1\State = Rand(2, 3)
 				EndIf
 				
 				e\EventState = 1.0

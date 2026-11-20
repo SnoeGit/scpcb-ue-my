@@ -18,7 +18,6 @@ Enum FallStateType
 	YES
 End Enum
 
-Global lastItemIDArg% = -1
 Global ConsoleTrackedItem.Items
 Global ConsoleTrackedItem_LastFallState% = NO_BY_NULL_ITEM
 Global ConsoleTrackedItem_LastGravThreshold# = 0.0
@@ -85,7 +84,6 @@ Function ClearCheats%()
 	If chs\ShowMap <> 2 Then chs\ShowMap = False
 	chs\debugDisableGravity = False
 	chs\debugInstantUsage = False
-	lastItemIDArg% = -1
 	ConsoleTrackedItem.Items = Null
 	ConsoleTrackedItem_LastFallState = NO_BY_NULL_ITEM
 	ConsoleTrackedItem_LastGravThreshold = 0.0
@@ -451,7 +449,7 @@ End Function
 Function ExecuteConsoleCommand%(ConsoleMessage$)
 	Local e.Events, e2.Events, r.Rooms, it.Items, n.NPCs, snd.Sound, itt.ItemTemplates, rt.RoomTemplates
 	Local Tex%, Tex2%, Temp%, i%
-	Local IntTemp%, counter%, found%, tempBool%
+	Local IntTemp%, found%, tempBool%
 	Local Args$, StrTemp$, StrTemp2$, StrTemp3$, StrTemp4$
 	
 	If Instr(ConsoleInput, " ") <> 0
@@ -937,9 +935,8 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			;[Block]
 			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 			IntTemp = Int(StrTemp)
-			If (IntTemp <= 0)
-				CreateConsoleMsg(GetLocalString("console", "trackitem.invalid_id"))
-				lastItemIDArg = -1
+			If (StrTemp = "clear" Lor StrTemp = "stop" Lor StrTemp = "cease" Lor StrTemp = "discard")
+				CreateConsoleMsg(GetLocalString("console", "trackitem.untracked"))
 				ConsoleTrackedItem = Null
 				ConsoleTrackedItem_LastFallState = NO_BY_NULL_ITEM
 				ConsoleTrackedItem_LastGravThreshold = 0.0
@@ -947,13 +944,10 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 				ConsoleTrackedItem_DroppedString = "Invalid"
 			Else
 				found = False
-				counter = 0
 				For it.Items = Each Items
-					counter = counter + 1
-					If (counter = IntTemp)
+					If (it\ID = IntTemp)
 						CreateConsoleMsg(Format(Format(GetLocalString("console", "trackitem.success"), IntTemp, "{0}"), it\Name, "{1}"))
 						found = True
-						lastItemIDArg = IntTemp
 						ConsoleTrackedItem = it
 						ConsoleTrackedItem_LastFallState = NO_BY_NULL_ITEM
 						ConsoleTrackedItem_LastGravThreshold = 0.0
