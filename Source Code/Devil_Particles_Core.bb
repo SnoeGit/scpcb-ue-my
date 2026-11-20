@@ -461,6 +461,14 @@ Function UpdateParticles_Devil()
 				p\x = p\x + (p\XV * CosValue + p\ZV * SinValue)
 				p\y = p\y + p\YV
 				p\z = p\z + (p\XV * SinValue + p\ZV * CosValue)
+			ElseIf p\emitter\ParticleID = 37
+				Local PlayerYaw# = -EntityYaw(Camera)
+				Local SinValue2# = Sin(PlayerYaw)
+				Local CosValue2# = Cos(PlayerYaw)
+				
+				p\x = p\x + (p\XV * CosValue2 + p\ZV * SinValue2)
+				p\y = p\y + p\YV
+				p\z = p\z + (p\XV * SinValue2 + p\ZV * CosValue2)
 			Else
 				p\x = p\x + p\XV
 				p\y = p\y + p\YV
