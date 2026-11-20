@@ -7,6 +7,25 @@ Global ConsoleReissue.ConsoleMsg = Null
 Global ConsoleR%, ConsoleG%, ConsoleB%
 Global ConsoleInBox% = False, ConsoleInBar% = False
 
+Enum FallStateType
+	NO_BY_NULL_ITEM
+	NO_BY_PICKED_UP
+	NO_BY_PLAYER_AWAY
+	NO_BY_GRAV_OFF
+	NO_BY_DISTANCE_TINY
+	NO_BY_NO_GROUND
+	NO_BY_COLLISION
+	YES
+End Enum
+
+Global lastItemIDArg% = -1
+Global ConsoleTrackedItem.Items
+Global ConsoleTrackedItem_LastFallState% = NO_BY_NULL_ITEM
+Global ConsoleTrackedItem_LastGravThreshold# = 0.0
+Global ConsoleTrackedItem_LastYDiff# = -999999
+Global PrintoutTrackedItemStat% = 0
+Global ConsoleTrackedItem_DroppedString$ = "Invalid"
+
 Type ConsoleMsg
 	Field Txt$
 	Field IsCommand%
@@ -48,6 +67,8 @@ Type Cheats
 	Field SuperMan%, SuperManTimer#
 	Field DebugHUD%
 	Field ShowMap%
+	Field debugDisableGravity%
+	Field debugInstantUsage%
 End Type
 
 Global chs.Cheats
@@ -62,6 +83,14 @@ Function ClearCheats%()
 	chs\SuperManTimer = 0.0
 	chs\DebugHUD = 0
 	If chs\ShowMap <> 2 Then chs\ShowMap = False
+	chs\debugDisableGravity = False
+	chs\debugInstantUsage = False
+	lastItemIDArg% = -1
+	ConsoleTrackedItem.Items = Null
+	ConsoleTrackedItem_LastFallState = NO_BY_NULL_ITEM
+	ConsoleTrackedItem_LastGravThreshold = 0.0
+	ConsoleTrackedItem_LastYDiff = -999999
+	PrintoutTrackedItemStat = False
 End Function
 
 Function InitCheats%()
@@ -422,6 +451,7 @@ End Function
 Function ExecuteConsoleCommand%(ConsoleMessage$)
 	Local e.Events, e2.Events, r.Rooms, it.Items, n.NPCs, snd.Sound, itt.ItemTemplates, rt.RoomTemplates
 	Local Tex%, Tex2%, Temp%, i%
+	Local IntTemp%, counter%, found%, tempBool%
 	Local Args$, StrTemp$, StrTemp2$, StrTemp3$, StrTemp4$
 	
 	If Instr(ConsoleInput, " ") <> 0
@@ -517,6 +547,10 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 					CreateConsoleMsg("- sanic")
 					CreateConsoleMsg("- weed")
 					CreateConsoleMsg("- showmap")
+					CreateConsoleMsg("- nogravity")
+					CreateConsoleMsg("- instantusage")
+					CreateConsoleMsg("- trackitem")
+					CreateConsoleMsg("- trackeditemprintout")
 					CreateConsoleMsg("******************************")
 					CreateConsoleMsg(GetLocalString("console", "help.command"))
 					CreateConsoleMsg("******************************")
@@ -808,11 +842,158 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 					CreateConsoleMultiMsg(GetLocalString("console", "help.codes"))
 					CreateConsoleMsg("******************************")
 					;[End Block]
+				Case "nogravity"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "nogravity"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.nograv"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "instantusage"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "instantusage"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.instuse"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "trackitem"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "trackitem"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.trackitem"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
+				Case "trackeditemprintout"
+					;[Block]
+					CreateConsoleMsg(Format(GetLocalString("console", "help.title"), "trackeditemprintout"))
+					CreateConsoleMsg("******************************")
+					CreateConsoleMultiMsg(GetLocalString("console", "help.trackeditemprintout"))
+					CreateConsoleMsg("******************************")
+					;[End Block]
 				Default
 					;[Block]
 					CreateConsoleMsg(GetLocalString("console", "help.no"), 255, 150, 0)
 					;[End Block]
 			End Select
+			;[End Block]
+		Case "nogravity"
+			;[Block]
+			tempBool = chs\debugDisableGravity
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					tempBool = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					tempBool = False
+					;[End Block]
+				Default
+					;[Block]
+					tempBool = (Not tempBool)
+					;[End Block]
+			End Select
+
+			If (tempBool)
+				CreateConsoleMsg(GetLocalString("console", "nograv.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "nograv.off"))
+			EndIf
+
+			chs\debugDisableGravity = tempBool
+			ShouldEntitiesFall = Not tempBool
+			;[End Block]
+		Case "instantusage"
+			;[Block]
+			tempBool = chs\debugInstantUsage
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					tempBool = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					tempBool = False
+					;[End Block]
+				Default
+					;[Block]
+					tempBool = (Not tempBool)
+					;[End Block]
+			End Select
+
+			If (tempBool)
+				CreateConsoleMsg(GetLocalString("console", "instuse.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "instuse.off"))
+			EndIf
+
+			chs\debugInstantUsage = tempBool
+			;[End Block]
+		Case "trackitem"
+			;[Block]
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			IntTemp = Int(StrTemp)
+			If (IntTemp <= 0)
+				CreateConsoleMsg(GetLocalString("console", "trackitem.invalid_id"))
+				lastItemIDArg = -1
+				ConsoleTrackedItem = Null
+				ConsoleTrackedItem_LastFallState = NO_BY_NULL_ITEM
+				ConsoleTrackedItem_LastGravThreshold = 0.0
+				ConsoleTrackedItem_LastYDiff = -999999
+				ConsoleTrackedItem_DroppedString = "Invalid"
+			Else
+				found = False
+				counter = 0
+				For it.Items = Each Items
+					counter = counter + 1
+					If (counter = IntTemp)
+						CreateConsoleMsg(Format(Format(GetLocalString("console", "trackitem.success"), IntTemp, "{0}"), it\Name, "{1}"))
+						found = True
+						lastItemIDArg = IntTemp
+						ConsoleTrackedItem = it
+						ConsoleTrackedItem_LastFallState = NO_BY_NULL_ITEM
+						ConsoleTrackedItem_LastGravThreshold = 0.0
+						ConsoleTrackedItem_LastYDiff = -999999
+						ConsoleTrackedItem_DroppedString = "Invalid"
+						Exit
+					EndIf
+				Next
+				If (Not found)
+					CreateConsoleMsg(Format(GetLocalString("console", "trackitem.notfound"), IntTemp))
+				EndIf
+			EndIf
+			;[End Block]
+		Case "trackeditemprintout"
+			;[Block]
+			tempBool = PrintoutTrackedItemStat
+			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
+			
+			Select StrTemp
+				Case "on", "1", "true"
+					;[Block]
+					tempBool = True
+					;[End Block]
+				Case "off", "0", "false"
+					;[Block]
+					tempBool = False
+					;[End Block]
+				Default
+					;[Block]
+					tempBool = (Not tempBool)
+					;[End Block]
+			End Select
+
+			If (tempBool)
+				CreateConsoleMsg(GetLocalString("console", "trackeditemprintout.on"))
+			Else
+				CreateConsoleMsg(GetLocalString("console", "trackeditemprintout.off"))
+			EndIf
+
+			PrintoutTrackedItemStat = tempBool
 			;[End Block]
 		Case "ending"
 			;[Block]

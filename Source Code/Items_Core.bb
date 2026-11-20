@@ -475,12 +475,24 @@ Function UpdateItems%()
 	Local PushDist# = HideDist * 0.04
 	Local DeletedItem% = False
 	Local RandomVal# = Rnd(-0.002, 0.002)
+	Local DistanceOffGround#
+
+	Local isTrackingItem%
+
+	If (chs\debugInstantUsage)
+		For i.Items = Each Items
+			If (i\UsageTimer > 0) Then i\UsageTimer = 100.0
+		Next
+		i = Null
+	EndIf
 	
 	opttimer\ItemsTimer = opttimer\ItemsTimer - fps\Factor[0]
 	If opttimer\ItemsTimer <= 0.0
+		;tempCount = 0
 		For i.Items = Each Items
+			;tempCount = tempCount + 1
 			If (Not i\Picked)
-				i\Dist = EntityDistanceSquared(Camera, i\Collider)
+				i\Dist = EntityDistanceSquared(me\Collider, i\Collider)
 				i\Nearby = (i\Dist < HideDist)
 			EndIf
 		Next
@@ -488,7 +500,26 @@ Function UpdateItems%()
 	EndIf
 	
 	ClosestItem = Null
+	ConsoleTrackedItem_LastGravThreshold = 0.01 * fps\Factor[0]
 	For i.Items = Each Items
+		isTrackingItem = (i = ConsoleTrackedItem)
+
+		Local boolString1$ = "False"
+		If isTrackingItem
+			If i\Dropped Then boolString1 = "True"
+			If i\Dropped = -1 Then boolString1 = "Invalid"
+			ConsoleTrackedItem_DroppedString = boolString1
+
+			EntityPickMode(me\Collider, 0)
+			Pick = LinePick(EntityX(i\Collider), EntityY(i\Collider), EntityZ(i\Collider), 0.0, -3.0, 0.0)
+			If Pick
+				ConsoleTrackedItem_LastYDiff = EntityY(i\Collider) - PickedY()
+			Else
+				ConsoleTrackedItem_LastYDiff = -999999
+			EndIf
+			EntityPickMode(me\Collider, 1)
+		EndIf
+
 		i\Dropped = 0
 		
 		If (Not i\Picked)
@@ -505,22 +536,32 @@ Function UpdateItems%()
 					i\DropSpeed = 0.0
 					AlignToVector(i\Collider, -i\TargetNX, -i\TargetNY, -i\TargetNZ, 3)
 					TurnEntity(i\Collider, -90.0, 0, 0.0)
+					If (isTrackingItem) Then ConsoleTrackedItem_LastFallState = NO_BY_COLLISION
 				Else
 					If ShouldEntitiesFall
 						EntityPickMode(me\Collider, 0)
 						Pick = LinePick(EntityX(i\Collider), EntityY(i\Collider), EntityZ(i\Collider), 0.0, -3.0, 0.0)
 						If Pick
-							i\DropSpeed = Max(i\DropSpeed - 0.0004 * fps\Factor[0], -0.03)
-							i\TargetNX = PickedNX()
-							i\TargetNY = PickedNY()
-							i\TargetNZ = PickedNZ()
-							TranslateEntity(i\Collider, 0.0, i\DropSpeed * fps\Factor[0], 0.0)
+							DistanceOffGround = EntityY(i\Collider) - PickedY()
+							If (DistanceOffGround > 0.01 * fps\Factor[0] Lor (i\DropSpeed < 0.0))
+								i\DropSpeed = Max(i\DropSpeed - 0.0004 * fps\Factor[0], -0.03)
+								i\TargetNX = PickedNX()
+								i\TargetNY = PickedNY()
+								i\TargetNZ = PickedNZ()
+								TranslateEntity(i\Collider, 0.0, Max(-DistanceOffGround, i\DropSpeed * fps\Factor[0]), 0.0)
+								If (isTrackingItem) Then ConsoleTrackedItem_LastFallState = YES
+							Else
+								i\DropSpeed = 0.0
+								If (isTrackingItem) Then ConsoleTrackedItem_LastFallState = NO_BY_DISTANCE_TINY
+							EndIf
 						Else
 							i\DropSpeed = 0.0
+							If (isTrackingItem) Then ConsoleTrackedItem_LastFallState = NO_BY_NO_GROUND
 						EndIf
 						EntityPickMode(me\Collider, 1)
 					Else
 						i\DropSpeed = 0.0
+						If (isTrackingItem) Then ConsoleTrackedItem_LastFallState = NO_BY_GRAV_OFF
 					EndIf
 				EndIf
 				
@@ -559,9 +600,65 @@ Function UpdateItems%()
 			Else
 				If (Not EntityHidden(i\Collider)) Then HideEntity(i\Collider)
 				i\DropSpeed = 0.0
+				If (isTrackingItem) Then ConsoleTrackedItem_LastFallState = NO_BY_PLAYER_AWAY
 			EndIf
 		Else
 			i\DropSpeed = 0.0
+			If (isTrackingItem) Then ConsoleTrackedItem_LastFallState = NO_BY_PICKED_UP
+		EndIf
+
+		If (isTrackingItem And PrintoutTrackedItemStat)
+			CreateConsoleMsg("~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+			Local boolString0$ = "False"
+			Local boolString2$ = "False"
+			Local boolString3$ = "False"
+			Local boolString4$ = "False"
+			If ConsoleTrackedItem\Picked Then boolString0 = "True"
+			If ConsoleTrackedItem\Nearby Then boolString2 = "True"
+			If SelectedItem = ConsoleTrackedItem Then boolString3 = "True"
+			If ClosestItem = ConsoleTrackedItem Then boolString4 = "True"
+			CreateConsoleMsg(Format(Format(Format(Format(Format(GetLocalString("console", "debug_1.trackitem.interact_state"), boolString0, "{0}"), boolString1, "{1}"), boolString2, "{2}"), boolString3, "{3}"), boolString4, "{4}"))
+			Select ConsoleTrackedItem_LastFallState
+				Case NO_BY_NULL_ITEM
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.no_data"))
+					;[End Block]
+				Case NO_BY_PICKED_UP
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.no_on_person"))
+					;[End Block]
+				Case NO_BY_PLAYER_AWAY
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.no_not_nearby"))
+					;[End Block]
+				Case NO_BY_GRAV_OFF
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.no_grav"))
+					;[End Block]
+				Case NO_BY_DISTANCE_TINY
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.insufficient_dist"))
+					;[End Block]
+				Case NO_BY_NO_GROUND
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.no_ground"))
+					;[End Block]
+				Case NO_BY_COLLISION
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.collided"))
+					;[End Block]
+				Case YES
+					;[Block]
+					CreateConsoleMsg(GetLocalString("console", "debug_1.trackitem.did_fall"))
+					;[End Block]
+			End Select
+			CreateConsoleMsg(Format(GetLocalString("console", "debug_1.trackitem.drop_speed"), ConsoleTrackedItem\DropSpeed))
+			CreateConsoleMsg(Format(GetLocalString("console", "debug_1.trackitem.gravthreshold"), ConsoleTrackedItem_LastGravThreshold))
+			If (ConsoleTrackedItem_LastYDiff > -999999)
+				CreateConsoleMsg(Format(GetLocalString("console", "debug_1.trackitem.ydiff"), ConsoleTrackedItem_LastYDiff))
+			Else
+				CreateConsoleMsg(Format(GetLocalString("console", "debug_1.trackitem.ydiff"), ">3.0"))
+			EndIf
 		EndIf
 		
 		If (Not DeletedItem)

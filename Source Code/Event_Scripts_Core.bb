@@ -9091,14 +9091,14 @@ Function UpdateEvent_Dimension_1499%(e.Events)
 				ResetEntity(me\Collider)
 			EndIf
 			; ~ A hacky fix to make items not fall that are in SCP-1499's dimension
-			For it.Items = Each Items
-				If EntityY(it\Collider) > 750.0
-					If EntityY(it\Collider) < 800.0
-						PositionEntity(it\Collider, EntityX(it\Collider), 800.5, EntityZ(it\Collider))
-						ResetEntity(it\Collider)
-					EndIf
-				EndIf
-			Next
+			;For it.Items = Each Items
+			;	If EntityY(it\Collider) > 750.0
+			;		If EntityY(it\Collider) < 800.0
+			;			PositionEntity(it\Collider, EntityX(it\Collider), 800.5, EntityZ(it\Collider))
+			;			ResetEntity(it\Collider)
+			;		EndIf
+			;	EndIf
+			;Next
 			For du.Dummy1499_1 = Each Dummy1499_1
 				If e\EventState3 < 70.0 * 30.0
 					If du\Anim

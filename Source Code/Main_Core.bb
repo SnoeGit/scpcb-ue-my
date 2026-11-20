@@ -307,7 +307,7 @@ Function UpdateGame%()
 			
 			me\SndVolume = CurveValue(0.0, me\SndVolume, 50.0)
 			me\RestoreSanity = True
-			ShouldEntitiesFall = True
+			if (Not chs\debugDisableGravity) Then ShouldEntitiesFall = True
 			
 			InFacility = IsInFacility(EntityY(me\Collider))
 			IsInsideForest = (forest_event <> Null And forest_event\room = PlayerRoom And forest_event\EventState = 1.0)
@@ -3040,7 +3040,7 @@ Function UpdateUseItem%(item.Items)
 								I_1499\PrevX = EntityX(me\Collider)
 								I_1499\PrevY = EntityY(me\Collider)
 								I_1499\PrevZ = EntityZ(me\Collider)
-								
+
 								If I_1499\x = 0.0 And I_1499\y = 0.0 And I_1499\z = 0.0
 									PositionEntity(me\Collider, r\x + 6086.0 * RoomScale, r\y + 128.0 * RoomScale, r\z + 2292.5 * RoomScale)
 									RotateEntity(me\Collider, 0.0, 90.0, 0.0, True)
@@ -4913,6 +4913,7 @@ Function RenderDebugHUD%()
 	Local ev.Events, ch.Chunk, r.Rooms
 	Local x% = 20 * MenuScale, y% = 40 * MenuScale
 	Local i%
+	Local tempItem.Items, tempIndex%
 	
 	Color(255, 255, 255)
 	SetFontEx(fo\FontID[Font_Console])
@@ -4967,6 +4968,81 @@ Function RenderDebugHUD%()
 			TextEx(x, y + (440 * MenuScale), Format(Format(GetLocalString("console", "debug_1.glomem"), (opt\TotalPhysMemory - (AvailPhys() / 1024)), "{0}"), opt\TotalPhysMemory, "{1}"))
 			TextEx(x, y + (460 * MenuScale), Format(GetLocalString("console", "debug_1.triamo"), CurrTrisAmount))
 			TextEx(x, y + (480 * MenuScale), Format(GetLocalString("console", "debug_1.acttex"), ActiveTextures()))
+
+			If ClosestItem <> Null
+				tempIndex = 0
+				For tempItem.Items = Each Items
+					tempIndex = tempIndex + 1
+					If (tempItem = ClosestItem)
+						TextEx(x, y + (520 * MenuScale), Format(GetLocalString("console", "debug_1.looking_at_item"), tempIndex))
+						Exit
+					EndIf
+				Next
+			EndIf
+
+			x = x + (700 * MenuScale)
+
+			If ConsoleTrackedItem <> Null
+				TextEx(x - (40 * MenuScale), y, GetLocalString("console", "debug_1.trackitem.tracking"))
+				TextEx(x, y + (20 * MenuScale), Format(Format(GetLocalString("console", "debug_1.trackitem.name_number"), ConsoleTrackedItem\Name, "{0}"), lastItemIDArg, "{1}"))
+				Local boolString0$ = "False"
+				Local boolString1$ = ConsoleTrackedItem_DroppedString
+				Local boolString2$ = "False"
+				Local boolString3$ = "False"
+				Local boolString4$ = "False"
+				If ConsoleTrackedItem\Picked Then boolString0 = "True"
+				If ConsoleTrackedItem\Nearby Then boolString2 = "True"
+				If SelectedItem = ConsoleTrackedItem Then boolString3 = "True"
+				If ClosestItem = ConsoleTrackedItem Then boolString4 = "True"
+				TextEx(x, y + (40 * MenuScale), Format(Format(Format(Format(Format(GetLocalString("console", "debug_1.trackitem.interact_state"), boolString0, "{0}"), boolString1, "{1}"), boolString2, "{2}"), boolString3, "{3}"), boolString4, "{4}"))
+				TextEx(x, y + (60 * MenuScale), Format(GetLocalString("console", "debug_1.trackitem.usage_timer"), ConsoleTrackedItem\UsageTimer))
+				TextEx(x, y + (80 * MenuScale), Format(Format(Format(GetLocalString("console", "debug_1.trackitem.itempos"), FloatToString(EntityX(ConsoleTrackedItem\Collider, True), 10), "{0}"), FloatToString(EntityY(ConsoleTrackedItem\Collider, True), 10), "{1}"), FloatToString(EntityZ(ConsoleTrackedItem\Collider, True), 10), "{2}"))
+				TextEx(x, y + (100 * MenuScale), Format(GetLocalString("console", "debug_1.trackitem.playerdist"), Sqr(ConsoleTrackedItem\Dist)))
+				TextEx(x, y + (120 * MenuScale), Format(Format(Format(GetLocalString("console", "debug_1.trackitem.states"), Str(ConsoleTrackedItem\State), "{0}"), Str(ConsoleTrackedItem\State2), "{1}"), Str(ConsoleTrackedItem\State3), "{2}"))
+				Select ConsoleTrackedItem_LastFallState
+					Case NO_BY_NULL_ITEM
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.no_data"))
+						;[End Block]
+					Case NO_BY_PICKED_UP
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.no_on_person"))
+						;[End Block]
+					Case NO_BY_PLAYER_AWAY
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.no_not_nearby"))
+						;[End Block]
+					Case NO_BY_GRAV_OFF
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.no_grav"))
+						;[End Block]
+					Case NO_BY_DISTANCE_TINY
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.insufficient_dist"))
+						;[End Block]
+					Case NO_BY_NO_GROUND
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.no_ground"))
+						;[End Block]
+					Case NO_BY_COLLISION
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.collided"))
+						;[End Block]
+					Case YES
+						;[Block]
+						TextEx(x, y + (140 * MenuScale), GetLocalString("console", "debug_1.trackitem.did_fall"))
+						;[End Block]
+				End Select
+				TextEx(x, y + (160 * MenuScale), Format(GetLocalString("console", "debug_1.trackitem.drop_speed"), ConsoleTrackedItem\DropSpeed))
+				TextEx(x, y + (180 * MenuScale), Format(GetLocalString("console", "debug_1.trackitem.gravthreshold"), ConsoleTrackedItem_LastGravThreshold))
+				If (ConsoleTrackedItem_LastYDiff > -999999)
+					TextEx(x, y + (200 * MenuScale), Format(GetLocalString("console", "debug_1.trackitem.ydiff"), ConsoleTrackedItem_LastYDiff))
+				Else
+					TextEx(x, y + (200 * MenuScale), Format(GetLocalString("console", "debug_1.trackitem.ydiff"), ">3.0", "%s"))
+				EndIf
+			Else
+				TextEx(x, y, GetLocalString("console", "debug_1.trackitem.no_item"))
+			EndIf
 			;[End Block]
 		Case 2
 			;[Block]
