@@ -1492,7 +1492,7 @@ Function LoadItems%()
 	CreateItemTemplate(GetLocalString("items", "eyedrops.red"), "RedVision Eyedrops", it_eyedrops2, "eye_drops.b3d", "INV_eye_drops_red.png", "", 0.0011, ITEM_SOUND_PLASTIC, "eye_drops_red.png")
 	CreateItemTemplate(GetLocalString("items", "eyedrops_2"), "Fine Eyedrops", it_fineeyedrops, "eye_drops.b3d", "INV_eye_drops.png", "", 0.0012, ITEM_SOUND_PLASTIC)
 	
-	CreateItemTemplate(GetLocalString("items", "spray"), "Lavender Spray", it_lavenderspray, "lavender_spray_can.b3d", "INV_eye_drops.png", "", 0.002, ITEM_SOUND_PLASTIC)
+	CreateItemTemplate(GetLocalString("items", "spray"), "Lavender Spray", it_lavenderspray, "lavender_spray_can.b3d", "INV_lavender_spray.png", "", 0.002, ITEM_SOUND_PLASTIC)
 	
 	CreateItemTemplate(GetLocalString("items", "syringe"), "Syringe", it_syringe, "syringe.b3d", "INV_syringe.png", "", 0.005, ITEM_SOUND_CLOTH)
 	CreateItemTemplate(GetLocalString("items", "syringe"), "Fine Syringe", it_finesyringe, "syringe.b3d", "INV_syringe.png", "", 0.005, ITEM_SOUND_CLOTH)
