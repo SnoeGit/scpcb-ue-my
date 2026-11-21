@@ -3650,9 +3650,14 @@ End Function
 
 Global PrevInputBoxCtrl%, InsertMode% = False
 
+Global CursorMovementCooldown# = 0.0
+Global CursorVelocity# = 0.0
+
 Function UpdateInput$(aString$, MaxChr%)
     Local Value% = GetKey()
     Local Length% = Len(aString)
+
+    CursorMovementCooldown = Max(0, CursorMovementCooldown - 0.1 * Abs(CursorVelocity))
 
     If (CursorPos < 0) And (CursorPos <> -1) Then CursorPos = Length
     CursorPos = Max(CursorPos, 0)
@@ -3677,12 +3682,33 @@ Function UpdateInput$(aString$, MaxChr%)
 	EndIf
 
 	; ~ Arrow keys
-    If Value = 30
-        CursorPos = Min(CursorPos + 1, Length)
+	If ((Not KeyDown(205)) And (Not KeyDown(203)))
+		CursorVelocity = 0.0
+		CursorMovementCooldown = 0.0
+	ElseIf KeyDown(205) And KeyDown(203)
+		CursorVelocity = 0.0
+		CursorMovementCooldown = 2.0
+	ElseIf KeyDown(205)
+    	If (CursorVelocity >= 0.0)
+    		CursorVelocity = CursorVelocity + 0.1
+    	Else
+    		CursorVelocity = 0.0
+    	EndIf
+    	If CursorMovementCooldown <= 0
+    		CursorPos = Min(CursorPos + 1, Length)
+    		CursorMovementCooldown = 2.0
+    	EndIf
 		Return(aString)
-    EndIf
-    If Value = 31
-        CursorPos = Max(CursorPos - 1, 0)
+    ElseIf KeyDown(203)
+       	If (CursorVelocity <= 0.0)
+       		CursorVelocity = CursorVelocity - 0.1
+       	Else
+    		CursorVelocity = 0.0
+    	EndIf
+    	If CursorMovementCooldown <= 0
+			CursorPos = Max(CursorPos - 1, 0)
+			CursorMovementCooldown = 2.0
+		EndIf
 		Return(aString)
     EndIf
 	
