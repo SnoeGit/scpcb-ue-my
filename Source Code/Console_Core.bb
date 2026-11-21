@@ -293,7 +293,6 @@ Function UpdateConsole%()
 			
 			If ConsoleReissue <> Null
 				ConsoleInput = ConsoleReissue\Txt
-				CursorPos = Len(ConsoleInput)
 				ConsoleScroll = ReissuePos + HeightHalf
 			EndIf
 		EndIf
@@ -332,7 +331,6 @@ Function UpdateConsole%()
 			
 			If ConsoleReissue <> Null
 				ConsoleInput = ConsoleReissue\Txt
-				CursorPos = Len(ConsoleInput)
 				ConsoleScroll = ReissuePos + HeightHalf
 			EndIf
 		EndIf
@@ -340,7 +338,6 @@ Function UpdateConsole%()
 		ConsoleScroll = Clamp(ConsoleScroll, (-ConsoleHeight) + Height, 0)
 		
 		SelectedInputBox = 19
-		CursorPos = Len(ConsoleInput)
 		
 		Local OldConsoleInput$ = ConsoleInput
 		
@@ -355,13 +352,6 @@ Function UpdateConsole%()
 			ExecuteConsoleCommand(ConsoleInput)
 			ConsoleInput = ""
 		EndIf
-		
-		Local Count% = 0
-		
-		For cm.ConsoleMsg = Each ConsoleMsg
-			Count = Count + 1
-			If Count > 1000 Then Delete(cm)
-		Next
 	EndIf
 	
 	CatchErrors("Uncaught: UpdateConsole()")
