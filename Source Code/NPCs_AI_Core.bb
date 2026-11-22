@@ -207,7 +207,7 @@ Function UpdateNPCType008_1_Surgeon%(n.NPCs)
 				n\Angle = CurveAngle(EntityYaw(n\Collider, True), n\Angle, 20.0)
 				If n\Frame >= 146.0 And PrevFrame < 146.0
 					If n\Target = Null
-						If EntityDistanceSquared(n\Collider, me\Collider) < 0.64
+						If EntityDistanceSquared(n\Collider, me\Collider) < 0.81
 							PlaySound_Strict(snd_I\DamageSFX[Rand(5, 8)])
 							InjurePlayer(Rnd(0.4, 0.6) * DifficultyDMGMult, 1.0, 0.0, 0.225 * DifficultyDMGMult, 0.0875 * DifficultyDMGMult)
 							me\CameraShake = 2.5 * (I_1025\FineState[4] = 0.0)
