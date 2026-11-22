@@ -106,8 +106,8 @@ Function ResetInput%(ResetTime# = 10.0)
 End Function
 
 ; ~ Viewport
-mo\Viewport_Center_X = opt\GraphicWidth / 2
-mo\Viewport_Center_Y = opt\GraphicHeight / 2
+mo\Viewport_Center_X = opt\GraphicWidth Shr 1
+mo\Viewport_Center_Y = opt\GraphicHeight Shr 1
 
 SetBuffer(BackBuffer())
 
