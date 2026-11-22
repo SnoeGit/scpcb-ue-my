@@ -5817,7 +5817,7 @@ Function UpdateEvent_Cont2_008%(e.Events)
 					
 					Local n.NPCs
 					
-					TFormPoint(-240.0, -5052.8, -635.0, e\room\OBJ, 0)
+					TFormPoint(-240.0, -5026.0, -635.0, e\room\OBJ, 0)
 					n.NPCs = CreateNPC(NPCType008_1, TFormedX(), TFormedY(), TFormedZ())
 					n\State = 3.0
 					
@@ -7816,7 +7816,7 @@ End Function
 Function UpdateEvent_Room2_Medibay%(e.Events)
 	If PlayerRoom = e\room
 		If e\EventState = 0.0
-			TFormPoint(-820.0, 200.0, -464.0, e\room\OBJ, 0)
+			TFormPoint(-820.0, 128.0, -464.0, e\room\OBJ, 0)
 			e\room\NPC[0] = CreateNPC(NPCType008_1_Surgeon, TFormedX(), TFormedY(), TFormedZ())
 			RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 270.0, 0.0, True)
 			
@@ -9461,7 +9461,7 @@ Function UpdateEvent_106_Victim_Wall%(e.Events)
 	If e\EventState = 5.0
 		If e\room\NPC[0] = Null
 			If Rand(200) = 1
-				TFormPoint(-245.0, 56.0, 0.0, e\room\OBJ, 0)
+				TFormPoint(-245.0, 81.0, 0.0, e\room\OBJ, 0)
 				e\room\NPC[0] = CreateNPC(NPCTypeD, TFormedX(), TFormedY(), TFormedZ())
 				e\room\NPC[0]\State = -1.0 : e\room\NPC[0]\State3 = -1.0 : e\room\NPC[0]\IsDead = True
 				RotateEntity(e\room\NPC[0]\Collider, 0.0, e\room\Angle + 270.0, 0.0)
