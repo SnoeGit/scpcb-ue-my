@@ -248,7 +248,7 @@ Function CreateNPC.NPCs(NPCType%, x#, y#, z#)
 			n\Speed = 0.38
 			
 			n\Collider = CreatePivot()
-			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius + 0.12)
+			EntityRadius(n\Collider, n\CollRadius * 0.5, n\CollRadius + 0.1)
 			EntityType(n\Collider, HIT_PLAYER)
 			
 			n\OBJ = CopyEntity(n_I\NPCModelID[NPC_173_MODEL])
@@ -1202,7 +1202,7 @@ Function TeleportCloser%(n.NPCs)
 			ShouldTeleport = True
 		EndIf
 		If ShouldTeleport
-			TeleportEntity(n\Collider, EntityX(ClosestWaypoint\OBJ, True), PosY + 0.22, EntityZ(ClosestWaypoint\OBJ, True), n\CollRadius + 0.12 * (n\NPCType = NPCType173), True, 4.0)
+			TeleportEntity(n\Collider, EntityX(ClosestWaypoint\OBJ, True), PosY + 0.22, EntityZ(ClosestWaypoint\OBJ, True), n\CollRadius + 0.1 * (n\NPCType = NPCType173), True, 4.0)
 			n\CurrentRoom = ClosestWaypoint\room
 			n\CurrSpeed = 0.0
 			n\PathStatus = PATH_STATUS_NO_SEARCH
