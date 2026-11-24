@@ -55,6 +55,7 @@
 - Increased Very Fine Eyedrops duration by 30 seconds.
 - Eyedrops are now multiuse.
 - SCP-1499 no longer despawns SCP-106 immediately and instead causes his timer to run down 3x times faster.
+- Added lavender spray.
 
 [Rooms]
 - Added Level 5 Key Card to «room2_office_3» with a new way to obtain it. (Make a deal with SCP-079)
