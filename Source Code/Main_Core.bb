@@ -2178,7 +2178,7 @@ Function UpdateGUI%()
 		
 		x = mo\Viewport_Center_X - ((INVENTORY_GFX_SIZE * 10 / 2) + (INVENTORY_GFX_SPACING * ((10 / 2) - 1))) / 2
 		y = mo\Viewport_Center_Y - (INVENTORY_GFX_SIZE * ((OtherOpen\InvSlots / 10 * 2) - 1)) - INVENTORY_GFX_SPACING
-		
+		Local CameraYaw#
 		IsMouseOn = -1
 		For n = 0 To OtherOpen\InvSlots - 1
 			If MouseOn(x, y, INVENTORY_GFX_SIZE, INVENTORY_GFX_SIZE) Then IsMouseOn = n
@@ -2204,6 +2204,19 @@ Function UpdateGUI%()
 								mo\DoubleClick = False
 								Return
 							EndIf
+						ElseIf mo\MouseHit2
+							CameraYaw = EntityYaw(Camera)
+							If OtherOpen\SecondInv[n]\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[OtherOpen\SecondInv[n]\ItemTemplate\SoundID])
+							ShowEntity(OtherOpen\SecondInv[n]\Collider)
+							PositionEntity(OtherOpen\SecondInv[n]\Collider, EntityX(Camera), EntityY(Camera), EntityZ(Camera))
+							RotateEntity(OtherOpen\SecondInv[n]\Collider, EntityPitch(Camera), CameraYaw + Rnd(-20.0, 20.0), 0.0)
+							MoveEntity(OtherOpen\SecondInv[n]\Collider, 0.0, -0.1, 0.1)
+							RotateEntity(OtherOpen\SecondInv[n]\Collider, 0.0, CameraYaw + Rnd(-110.0, 110.0), 0.0)
+							ResetEntity(OtherOpen\SecondInv[n]\Collider)
+							OtherOpen\SecondInv[n]\Dropped = 1
+							OtherOpen\SecondInv[n]\Picked = False
+							NullSecondINV(OtherOpen)
+							OtherOpen\SecondInv[n] = Null
 						EndIf
 					EndIf
 				EndIf
@@ -2232,9 +2245,9 @@ Function UpdateGUI%()
 		If mo\MouseHit1 Then mo\DoubleClickSlot = IsMouseOn
 		
 		If SelectedItem <> Null
-			If (Not mo\MouseDown1) Lor mo\MouseHit2
+			If (Not mo\MouseDown1)
 				If MouseSlot = 66
-					Local CameraYaw# = EntityYaw(Camera)
+					CameraYaw = EntityYaw(Camera)
 					
 					If SelectedItem\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[SelectedItem\ItemTemplate\SoundID])
 					ShowEntity(SelectedItem\Collider)
@@ -2248,11 +2261,9 @@ Function UpdateGUI%()
 					NullSecondINV(OtherOpen)
 					SelectedItem = Null
 					
-					If (Not mo\MouseHit2)
-						OtherOpen = Null
-						ClosedInv = True
-						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
-					EndIf
+					OtherOpen = Null
+					ClosedInv = True
+					MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
 				Else
 					If OtherOpen\SecondInv[MouseSlot] = Null
 						For z = 0 To OtherOpen\InvSlots - 1
