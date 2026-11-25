@@ -457,6 +457,98 @@ Function RemoveWearableItems%(item.Items)
 	End Select
 End Function
 
+Function CannotDropItems%(item.Items)
+	Local ShouldPreventDropping%
+	
+	Select Item\ItemTemplate\ID
+		Case it_vest, it_finevest, it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
+			;[Block]
+			ShouldPreventDropping = True
+			;[End Block]
+		Case it_gasmask
+			;[Block]
+			ShouldPreventDropping = (wi\GasMask = 1)
+			;[End Block]
+		Case it_finegasmask
+			;[Block]
+			ShouldPreventDropping = (wi\GasMask = 2)
+			;[End Block]
+		Case it_veryfinegasmask
+			;[Block]
+			ShouldPreventDropping = (wi\GasMask = 3)
+			;[End Block]
+		Case it_gasmask148
+			;[Block]
+			ShouldPreventDropping = (wi\GasMask = 4)
+			;[End Block]
+		Case it_headphones
+			;[Block]
+			ShouldPreventDropping = (wi\Headphones = 1)
+			;[End Block]
+		Case it_scp1499
+			;[Block]
+			ShouldPreventDropping = (I_1499\Using = 1)
+			;[End Block]
+		Case it_fine1499
+			;[Block]
+			ShouldPreventDropping = (I_1499\Using = 2)
+			;[End Block]
+		Case it_nvg
+			;[Block]
+			ShouldPreventDropping = (wi\NightVision = 1)
+			;[End Block]
+		Case it_veryfinenvg
+			;[Block]
+			ShouldPreventDropping = (wi\NightVision = 2)
+			;[End Block]
+		Case it_finenvg
+			;[Block]
+			ShouldPreventDropping = (wi\NightVision = 3)
+			;[End Block]
+		Case it_scramble
+			;[Block]
+			ShouldPreventDropping = (wi\SCRAMBLE = 1)
+			;[End Block]
+		Case it_finescramble
+			;[Block]
+			ShouldPreventDropping = (wi\SCRAMBLE = 2)
+			;[End Block]
+		Case it_helmet
+			;[Block]
+			ShouldPreventDropping = wi\BallisticHelmet
+			;[End Block] 
+		Case it_cap
+			;[Block]
+			ShouldPreventDropping = (I_268\Using = 1)
+			;[End Block]
+		Case it_scp268
+			;[Block]
+			ShouldPreventDropping = (I_268\Using = 2)
+			;[End Block]
+		Case it_fine268
+			;[Block]
+			ShouldPreventDropping = (I_268\Using = 3)
+			;[End Block]
+		Case it_scp714
+			;[Block]
+			ShouldPreventDropping = (I_714\Using = 2)
+			;[End Block]
+		Case it_coarse714
+			;[Block]
+			ShouldPreventDropping = (I_714\Using = 1)
+			;[End Block]
+		Case it_scp427
+			;[Block]
+			ShouldPreventDropping = I_427\Using
+			;[End Block]
+		Default
+			;[Block]
+			ShouldPreventDropping = False
+			;[End Block]
+	End Select
+	Return(ShouldPreventDropping)
+End Function
+
 Function ClearSecondInv%(item.Items, From% = 0)
 	Local i%
 	

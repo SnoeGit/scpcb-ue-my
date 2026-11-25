@@ -2308,6 +2308,12 @@ Function UpdateGUI%()
 								mo\DoubleClick = False
 								Return
 							EndIf
+						ElseIf mo\MouseHit2
+							If CannotDropItems(Inventory(n))
+								CreateHintMsg(GetLocalString("msg", "takeoff"))
+							Else
+								DropItem(Inventory(n))
+							EndIf
 						EndIf
 					EndIf
 				EndIf
@@ -2341,7 +2347,7 @@ Function UpdateGUI%()
 					If Inventory(z)\InvSlots > 0
 						Local FoundSecondInv% = False
 						Local sz%
-						
+						If IsMouseOn = z And mo\MouseHit2 Then DropItem(Inventory(z))
 						For sz = 0 To Inventory(z)\InvSlots - 1
 							If Inventory(z)\SecondInv[sz] = SelectedItem
 								SecondInvItem = Inventory(z)
@@ -2354,108 +2360,18 @@ Function UpdateGUI%()
 				EndIf
 			Next
 			
-			If (Not mo\MouseDown1) Lor mo\MouseHit2
+			If (Not mo\MouseDown1)
 				If MouseSlot = 66
-					Local ShouldPreventDropping%
-					
-					Select SelectedItem\ItemTemplate\ID
-						Case it_vest, it_finevest, it_hazmatsuit, it_finehazmatsuit, it_veryfinehazmatsuit, it_hazmatsuit148
-							;[Block]
-							ShouldPreventDropping = True
-							;[End Block]
-						Case it_gasmask
-							;[Block]
-							ShouldPreventDropping = (wi\GasMask = 1)
-							;[End Block]
-						Case it_finegasmask
-							;[Block]
-							ShouldPreventDropping = (wi\GasMask = 2)
-							;[End Block]
-						Case it_veryfinegasmask
-							;[Block]
-							ShouldPreventDropping = (wi\GasMask = 3)
-							;[End Block]
-						Case it_gasmask148
-							;[Block]
-							ShouldPreventDropping = (wi\GasMask = 4)
-							;[End Block]
-						Case it_headphones
-							;[Block]
-							ShouldPreventDropping = (wi\Headphones = 1)
-							;[End Block]
-						Case it_scp1499
-							;[Block]
-							ShouldPreventDropping = (I_1499\Using = 1)
-							;[End Block]
-						Case it_fine1499
-							;[Block]
-							ShouldPreventDropping = (I_1499\Using = 2)
-							;[End Block]
-						Case it_nvg
-							;[Block]
-							ShouldPreventDropping = (wi\NightVision = 1)
-							;[End Block]
-						Case it_veryfinenvg
-							;[Block]
-							ShouldPreventDropping = (wi\NightVision = 2)
-							;[End Block]
-						Case it_finenvg
-							;[Block]
-							ShouldPreventDropping = (wi\NightVision = 3)
-							;[End Block]
-						Case it_scramble
-							;[Block]
-							ShouldPreventDropping = (wi\SCRAMBLE = 1)
-							;[End Block]
-						Case it_finescramble
-							;[Block]
-							ShouldPreventDropping = (wi\SCRAMBLE = 2)
-							;[End Block]
-						Case it_helmet
-							;[Block]
-							ShouldPreventDropping = wi\BallisticHelmet
-							;[End Block] 
-						Case it_cap
-							;[Block]
-							ShouldPreventDropping = (I_268\Using = 1)
-							;[End Block]
-						Case it_scp268
-							;[Block]
-							ShouldPreventDropping = (I_268\Using = 2)
-							;[End Block]
-						Case it_fine268
-							;[Block]
-							ShouldPreventDropping = (I_268\Using = 3)
-							;[End Block]
-						Case it_scp714
-							;[Block]
-							ShouldPreventDropping = (I_714\Using = 2)
-							;[End Block]
-						Case it_coarse714
-							;[Block]
-							ShouldPreventDropping = (I_714\Using = 1)
-							;[End Block]
-						Case it_scp427
-							;[Block]
-							ShouldPreventDropping = I_427\Using
-							;[End Block]
-						Default
-							;[Block]
-							ShouldPreventDropping = False
-							;[End Block]
-					End Select
-					If ShouldPreventDropping
+					If CannotDropItems(SelectedItem)
 						CreateHintMsg(GetLocalString("msg", "takeoff"))
 					Else
 						If SecondInvItem <> Null Then NullSecondINV(SecondInvItem)
 						DropItem(SelectedItem)
-						InvOpen = mo\MouseHit2
+						InvOpen = False
 					EndIf
 					
-					If (Not mo\MouseHit2)
-						MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
-						StopMouseMovement()
-					EndIf
+					MoveMouse(mo\Viewport_Center_X, mo\Viewport_Center_Y)
+					StopMouseMovement()
 				Else
 					If Inventory(MouseSlot) = Null
 						For z = 0 To MaxItemAmount - 1
