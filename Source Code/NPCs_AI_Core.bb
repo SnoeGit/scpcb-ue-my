@@ -2750,7 +2750,7 @@ Function UpdateNPCType173%(n.NPCs)
 			
 			If EntityHidden(n\OBJ3) Then ShowEntity(n\OBJ3)
 			
-			PositionEntity(n\OBJ3, EntityX(n\Collider), EntityY(n\Collider) - SinValue, EntityZ(n\Collider))
+			PositionEntity(n\OBJ3, EntityX(n\Collider), EntityY(n\Collider) + SinValue, EntityZ(n\Collider))
 			RotateEntity(n\OBJ3, 0.0, EntityYaw(n\Collider) - 180.0, 0.0)
 		EndIf
 	EndIf
