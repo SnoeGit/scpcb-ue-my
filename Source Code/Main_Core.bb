@@ -2358,7 +2358,6 @@ Function UpdateGUI%()
 					If Inventory(z)\InvSlots > 0
 						Local FoundSecondInv% = False
 						Local sz%
-						If IsMouseOn = z And mo\MouseHit2 Then DropItem(Inventory(z))
 						For sz = 0 To Inventory(z)\InvSlots - 1
 							If Inventory(z)\SecondInv[sz] = SelectedItem
 								SecondInvItem = Inventory(z)
