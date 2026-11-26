@@ -2569,7 +2569,7 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 			FrameModelID = DOOR_DEFAULT_FRAME_MODEL
 			FrameScaleX = RoomScale : FrameScaleY = RoomScale : FrameScaleZ = RoomScale
 			;[End Block]
-		Case ONE_SIDED_DOOR, PRISON_DOOR
+		Case ONE_SIDED_DOOR, PRISON_DOOR, SCP_914_DOOR
 			;[Block]
 			DoorModelID_1 = DOOR_ONE_SIDED_MODEL
 			DoorModelID_2 = DoorModelID_1
@@ -2578,15 +2578,15 @@ Function CreateDoor.Doors(room.Rooms, x#, y#, z#, Angle#, Open% = False, DoorTyp
 			FrameModelID = DOOR_DEFAULT_FRAME_MODEL
 			FrameScaleX = RoomScale : FrameScaleY = RoomScale : FrameScaleZ = RoomScale
 			;[End Block]
-		Case SCP_914_DOOR
-			;[Block]
-			DoorModelID_1 = DOOR_914_MODEL_1
-			DoorModelID_2 = DOOR_914_MODEL_2
-			DoorScaleX = RoomScale : DoorScaleY = RoomScale : DoorScaleZ = RoomScale
-			
-			FrameModelID = DOOR_DEFAULT_FRAME_MODEL
-			FrameScaleX = RoomScale : FrameScaleY = RoomScale : FrameScaleZ = RoomScale
-			;[End Block]
+		;Case SCP_914_DOOR
+		;	;[Block]
+		;	DoorModelID_1 = DOOR_914_MODEL_1
+		;	DoorModelID_2 = DOOR_914_MODEL_2
+		;	DoorScaleX = RoomScale : DoorScaleY = RoomScale : DoorScaleZ = RoomScale
+		;	
+		;	FrameModelID = DOOR_DEFAULT_FRAME_MODEL
+		;	FrameScaleX = RoomScale : FrameScaleY = RoomScale : FrameScaleZ = RoomScale
+		;	;[End Block]
 		Case ELEVATOR_DOOR
 			;[Block]
 			DoorModelID_1 = DOOR_ELEVATOR_MODEL
@@ -2817,13 +2817,13 @@ Function UpdateDoors%()
 							MoveEntity(d\OBJ, SinValue * OpenFactor * fps\Factor[0] / 90.0, 0.0, 0.0)
 							If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, SinValue * OpenFactor * fps\Factor[0] / 155.0, 0.0, 0.0)
 							;[End Block]
-						Case SCP_914_DOOR
-							;[Block]
-							d\OpenState = Min(180.0, d\OpenState + (FPSFactorDoubled * OpenFactor))
-							FPSFactorEx = Sin(d\OpenState) * OpenFactor * fps\Factor[0] / 162.0
-							MoveEntity(d\OBJ, FPSFactorEx, 0.0, 0.0)
-							If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, FPSFactorEx, 0.0, 0.0)
-							;[End Block]
+						;Case SCP_914_DOOR
+						;	;[Block]
+						;	d\OpenState = Min(180.0, d\OpenState + (FPSFactorDoubled * OpenFactor))
+						;	FPSFactorEx = Sin(d\OpenState) * OpenFactor * fps\Factor[0] / 162.0
+						;	MoveEntity(d\OBJ, FPSFactorEx, 0.0, 0.0)
+						;	If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, FPSFactorEx, 0.0, 0.0)
+						;	;[End Block]
 						Case BIG_DOOR
 							;[Block]
 							d\OpenState = Min(180.0, d\OpenState + (fps\Factor[0] * 0.8 * OpenFactor))
@@ -2838,7 +2838,7 @@ Function UpdateDoors%()
 								RotateEntity(d\OBJ, 0.0, d\room\Angle + d\Angle + (d\OpenState / 2.5), 0.0)
 							EndIf
 							;[End Block]
-						Case ONE_SIDED_DOOR, WINDOWED_DOOR
+						Case ONE_SIDED_DOOR, WINDOWED_DOOR, SCP_914_DOOR
 							;[Block]
 							d\OpenState = Min(180.0, d\OpenState + (FPSFactorDoubled * OpenFactor))
 							FPSFactorEx = Sin(d\OpenState) * OpenFactor * fps\Factor[0] / 80.0
@@ -2891,13 +2891,13 @@ Function UpdateDoors%()
 							MoveEntity(d\OBJ, SinValue * OpenFactor * (-fps\Factor[0]) / 90.0, 0.0, 0.0)
 							If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, SinValue * OpenFactor * (-fps\Factor[0]) / 155.0, 0.0, 0.0)
 							;[End Block]
-						Case SCP_914_DOOR
-							;[Block]
-							d\OpenState = Max(0.0, d\OpenState - (FPSFactorDoubled * OpenFactor))
-							FPSFactorEx = Sin(d\OpenState) * OpenFactor * (-fps\Factor[0]) / 162.0
-							MoveEntity(d\OBJ, FPSFactorEx, 0.0, 0.0)
-							If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, FPSFactorEx, 0.0, 0.0)
-							;[End Block]
+						;Case SCP_914_DOOR
+						;	;[Block]
+						;	d\OpenState = Max(0.0, d\OpenState - (FPSFactorDoubled * OpenFactor))
+						;	FPSFactorEx = Sin(d\OpenState) * OpenFactor * (-fps\Factor[0]) / 162.0
+						;	MoveEntity(d\OBJ, FPSFactorEx, 0.0, 0.0)
+						;	If d\OBJ2 <> 0 Then MoveEntity(d\OBJ2, FPSFactorEx, 0.0, 0.0)
+						;	;[End Block]
 						Case BIG_DOOR
 							;[Block]
 							d\OpenState = Max(0.0, d\OpenState - (fps\Factor[0] * 0.8 * OpenFactor))
@@ -2911,7 +2911,7 @@ Function UpdateDoors%()
 							d\OpenState = 0.0
 							RotateEntity(d\OBJ, 0.0, EntityYaw(d\FrameOBJ), 0.0)
 							;[End Block]
-						Case ONE_SIDED_DOOR, WINDOWED_DOOR
+						Case ONE_SIDED_DOOR, WINDOWED_DOOR, SCP_914_DOOR
 							;[Block]
 							d\OpenState = Max(0.0, d\OpenState - (FPSFactorDoubled * OpenFactor))
 							FPSFactorEx = Sin(d\OpenState) * OpenFactor * fps\Factor[0] / 80.0
