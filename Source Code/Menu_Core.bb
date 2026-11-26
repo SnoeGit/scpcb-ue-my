@@ -3033,7 +3033,7 @@ Function RenderPauseMenu%()
 			RenderMenuButtons()
 			
 			SetFontEx(fo\FontID[Font_Default])
-			TextEx(x, y, GetLocalString("menu", "new.diff") + SelectedDifficulty\Name)
+			TextEx(x, y, GetLocalString("menu", "new.diff") + " " + SelectedDifficulty\Name)
 			If CurrSave = Null
 				TempStr = GetLocalString("menu", "dataredacted")
 			Else
