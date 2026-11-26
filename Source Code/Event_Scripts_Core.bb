@@ -822,7 +822,7 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 							CreateHintMsg(GetLocalString("msg", "paper"))
 						EndIf
 					ElseIf e\EventState2 < 40.0
-						If (Not InvOpen)
+						If InvOpen
 							CreateHintMsg(GetLocalString("msg", "doc.click"))
 						Else
 							CreateHintMsg(Format(GetLocalString("msg", "openinv"), key\Name[key\INVENTORY]))
