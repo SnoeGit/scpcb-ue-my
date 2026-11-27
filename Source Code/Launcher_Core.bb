@@ -197,6 +197,11 @@ Function UpdateLauncher%(lnchr.Launcher)
 		EndIf
 	Next
 	
+	Local AspectRatioBarWidth% = -5
+	For i = 0 To (AspectRatioCount - 1)
+		AspectRatioBarWidth = AspectRatioBarWidth + StringWidth(Str(AspectRatioWidths(i)) + ":" + Str(AspectRatioHeights(i))) + 15
+	Next
+	
 	If SelectedGfxMode = -1 Then SelectedGfxMode = NativeGfxMode : SelectedAspectRatio = NativeAspectRatio
 	
 	AppTitle(GetLocalString("launcher", "title"))
@@ -227,8 +232,10 @@ Function UpdateLauncher%(lnchr.Launcher)
 		
 		x = x + 130 : y = y - 105
 		
+		Color(255, 255, 255)
+		Rect(x, y, AspectRatioBarWidth, 20)
 		For i = 0 To AspectRatioCount - 1
-			Color(255, 255, 255)
+			Color(0, 0, 0)
 			Txt = Str(AspectRatioWidths(i)) + ":" + Str(AspectRatioHeights(i))
 			Local TxtW% = StringWidth(Txt)
 			TextEx(x + 5, y + 5, Txt)
@@ -905,7 +912,7 @@ End Function
 Function UpdateLauncherButton%(x%, y%, Width%, Height%, Txt$, FontID% = Font_Default, WaitForMouseUp% = False, Locked% = False, R% = 255, G% = 255, B% = 255)
 	Local Clicked% = False
 	
-	RenderFrame(x, y, Width, Height, 0, 0, Locked)
+	RenderFrame(x, y, Width, Height, (x Mod 256), (y Mod 256), Locked)
 	If MouseOn(x, y, Width, Height)
 		Color(30, 30, 30)
 		If (mo\MouseHit1 And (Not WaitForMouseUp)) Lor (mo\MouseUp1 And WaitForMouseUp)
