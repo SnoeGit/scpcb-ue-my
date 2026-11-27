@@ -4657,12 +4657,16 @@ Function RenderHUD%()
 	Local x% = (80 + opt\HUDOffset + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale, y% = opt\GraphicHeight - ((15 + ((me\Sanity < -200.0) * Rand(-2, 2))) * MenuScale)
 	Local Width% = 200 * MenuScale, Height% = 20 * MenuScale
 	Local WalkIconID%, BlinkIconID%
-	Local IconColoredRectSize% = 36 * MenuScale
-	Local IconColoredRectSpaceX% = 53 * MenuScale
-	Local IconColoredRectSpaceY% = 3 * MenuScale
-	Local IconRectSize% = 32 * MenuScale
-	Local IconRectSpace% = 51 * MenuScale
 	Local IconSpace% = 50 * MenuScale
+	Local IconSize% = ImageWidth(t\IconID[0])
+	Local IconRectThickness% = Max(1, MenuScale)
+	Local IconRectSize% = IconSize + 2 * IconRectThickness
+	Local IconRectSpace% = IconSpace + IconRectThickness
+	; ~ Needs to be at least 2 pixels to not be swallowed by the regular border.
+	Local IconColoredRectThickness% = Max(2, 3 * MenuScale)
+	Local IconColoredRectSpaceY% = IconColoredRectThickness - IconRectThickness
+	Local IconColoredRectSize% = IconSize + 2 * IconColoredRectThickness
+	Local IconColoredRectSpaceX% = IconSpace + IconColoredRectThickness
 	Local ySpace% = 40 * MenuScale
 	
 	If chs\ShowMap Then RenderMap()
@@ -4694,7 +4698,7 @@ Function RenderHUD%()
 	Else
 		WalkIconID = 3
 	EndIf
-	DrawBlock(t\IconID[WalkIconID], x - IconSpace, y + 1)
+	DrawBlock(t\IconID[WalkIconID], x - IconSpace, y + IconRectThickness)
 	
 	Color(255, 255, 255)
 	y = y - ySpace
@@ -4717,7 +4721,7 @@ Function RenderHUD%()
 	Else
 		BlinkIconID = 4
 	EndIf
-	DrawBlock(t\IconID[BlinkIconID], x - IconSpace, y + 1)
+	DrawBlock(t\IconID[BlinkIconID], x - IconSpace, y + IconRectThickness)
 	
 	If ProtectHUDX > -399 * MenuScale
 		If (I_714\Using > 0 And me\Remove714Timer < 500.0) Lor (wi\HazmatSuit > 0 And me\RemoveHazmatTimer < 500.0)
@@ -4745,7 +4749,7 @@ Function RenderHUD%()
 			EndIf
 			Color(255, 255, 255)
 			Rect(ProtectHUDX - IconRectSpace, y, IconRectSize, IconRectSize, False)
-			DrawBlock(t\IconID[ICON_SHIELD], ProtectHUDX - IconSpace, y + 1)
+			DrawBlock(t\IconID[ICON_SHIELD], ProtectHUDX - IconSpace, y + IconRectThickness)
 		EndIf
 	EndIf
 	
@@ -4767,7 +4771,7 @@ Function RenderHUD%()
 			EndIf
 			Color(255, 255, 255)
 			Rect(CapHUDX - IconRectSpace, y, IconRectSize, IconRectSize, False)
-			DrawBlock(t\IconID[ICON_268], CapHUDX - IconSpace, y + 1)
+			DrawBlock(t\IconID[ICON_268], CapHUDX - IconSpace, y + IconRectThickness)
 		EndIf
 	EndIf
 End Function
