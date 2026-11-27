@@ -2923,7 +2923,7 @@ Function RenderPauseMenu%()
 						y = y + (30 * MenuScale)
 						
 						TextEx(x, y + (5 * MenuScale), GetLocalString("options", "hudoffset"))
-						If (MouseOn(x + (270 * MenuScale), y, MouseOnCoord, MouseOnCoord) And OnSliderID = 0) Lor OnSliderID = 1 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUDOffset)
+						If (MouseOn(x + (270 * MenuScale), y, MouseOnCoord * 5.7, MouseOnCoord) And OnSliderID = 0) Lor OnSliderID = 1 Then RenderOptionsTooltip(tX, tY, tW, tH, Tooltip_HUDOffset)
 						
 						y = y + (30 * MenuScale)
 						
