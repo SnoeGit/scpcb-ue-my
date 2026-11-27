@@ -2,7 +2,7 @@
 
 [Global]
 - Removed Bob.
-- Update game's Graphics API to DirectX 9. (Previously DirectX 7)
+- Updated the game's Graphics API to DirectX 9. (Previously DirectX 7)
 - Title bar now uses Dark Mode!
 - Require SCP-714 to recontain SCP-895 now.
 - SCP-914 has a new Very Fine effect on the player.
@@ -10,7 +10,7 @@
 - Removed custom subtitle colors.
 - Added console commands for SCP-1025 called «givedisease», «removedisease», «givefinedisease», and «removefinedisease».
 - Slightly slowed infection speed of SCP-009.
-- New achievement "Frostbite".
+- New achievements: "Frostbite" and "Don't Blink"
 - Removed SCP-990 video.
 - Reduced blink timer by 1 second on all difficulties.
 - More stamina in Pocket Dimension to use.
