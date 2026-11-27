@@ -3405,61 +3405,56 @@ Function UpdateUseItem%(item.Items)
 		Case it_veryfinefirstaid
 			;[Block]
 			If CanUseItem(True)
-				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-				
-				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (0.5 * (1.0 + (I_1025\State[6] > 0.0)))), 100.0)
-				If item\UsageTimer = 100.0
-					Select Rand(7)
-						Case 1
-							;[Block]
-							me\Injuries = 3.5
+				Select Rand(7)
+					Case 1
+						;[Block]
+						me\Injuries = 3.5
+						CreateMsg(GetLocalString("msg", "bleed"))
+						;[End Block]
+					Case 2
+						;[Block]
+						ResetNegativeStats()
+						CreateMsg(GetLocalString("msg", "rapidly"))
+							;[End Block]
+					Case 3
+						;[Block]
+						me\BlurTimer = 10000.0
+						CreateMsg(GetLocalString("msg", "nausea"))
+						;[End Block]
+					Case 4
+						;[Block]
+						me\BlinkTimer = -10.0
+						
+						If (Not PlayerInReachableRoom(True))
+							me\Injuries = 2.5
 							CreateMsg(GetLocalString("msg", "bleed"))
-							;[End Block]
-						Case 2
-							;[Block]
-							ResetNegativeStats()
-							CreateMsg(GetLocalString("msg", "rapidly"))
-							;[End Block]
-						Case 3
-							;[Block]
-							me\BlurTimer = 10000.0
-							CreateMsg(GetLocalString("msg", "nausea"))
-							;[End Block]
-						Case 4
-							;[Block]
-							me\BlinkTimer = -10.0
-							
-							If (Not PlayerInReachableRoom(True))
-								me\Injuries = 2.5
-								CreateMsg(GetLocalString("msg", "bleed"))
-							Else
-								MoveToPocketDimension()
-								CreateMsg(GetLocalString("msg", "aid.106"))
-							EndIf
-							;[End Block]
-						Case 5
-							;[Block]
-							chs\SuperMan = True
-							CreateMsg(GetLocalString("msg", "aid.super"))
-							;[End Block]
-						Case 6
-							;[Block]
-							Kill()
-							msg\DeathMsg = GetLocalString("death", "kill_1")
-							;[End Block]
-						Case 7
-							;[Block]
-							me\BlurTimer = 1000.0
-							If Rand(2) = 1
-								If I_008\Timer = 0.0 Then I_008\Timer = 15.0
-							Else
-								If I_409\Timer = 0.0 Then I_409\Timer = 25.0
-							EndIf
-							;[End Block]
-					End Select
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
-					RemoveItem(SelectedItem)
-				EndIf
+						Else
+							MoveToPocketDimension()
+							CreateMsg(GetLocalString("msg", "aid.106"))
+						EndIf
+						;[End Block]
+					Case 5
+						;[Block]
+						chs\SuperMan = True
+						CreateMsg(GetLocalString("msg", "aid.super"))
+						;[End Block]
+					Case 6
+						;[Block]
+						Kill()
+						msg\DeathMsg = GetLocalString("death", "kill_1")
+						;[End Block]
+					Case 7
+						;[Block]
+						me\BlurTimer = 1000.0
+						If Rand(2) = 1
+							If I_008\Timer = 0.0 Then I_008\Timer = 15.0
+						Else
+							If I_409\Timer = 0.0 Then I_409\Timer = 25.0
+						EndIf
+						;[End Block]
+				End Select
+				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+				RemoveItem(SelectedItem)
 			EndIf
 			;[End Block]
 		Case it_firstaid, it_finefirstaid, it_firstaid2
@@ -3561,101 +3556,37 @@ Function UpdateUseItem%(item.Items)
 		Case it_eyedrops, it_eyedrops2
 			;[Block]
 			If CanUseItem()
-				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+				me\BlinkEffect = 0.6
+				me\BlinkEffectTimer = Rnd(25.0, 35.0)
+				me\BlurTimer = 200.0
+				me\BlinkTimer = Min(me\BlinkTimer + (me\BLINKFREQ / 2.0), me\BLINKFREQ)
 				
-				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (0.5 * (1.0 + (I_1025\State[6] > 0.0)))), 100.0)
-				If item\UsageTimer = 100.0
-					me\BlinkEffect = 0.6
-					me\BlinkEffectTimer = Rnd(25.0, 35.0)
-					me\BlurTimer = 200.0
-					me\BlinkTimer = Min(me\BlinkTimer + (me\BLINKFREQ / 2.0), me\BLINKFREQ)
-					
-					If item\ItemTemplate\ID = it_eyedrops2
-						me\Bloodloss = Max(me\Bloodloss - Rnd(5.0, 10.0), 0.0)
-						me\EyeIrritation = 0.0
-					EndIf
-					
-					CreateMsg(GetLocalString("msg", "eyedrop.moisturized"))
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
-					
-					item\State = item\State - 1.0
-					If item\State > 0.0
-						item\UsageTimer = 0.0
-						SelectedItem = Null
-					Else
-						RemoveItem(SelectedItem)
-					EndIf
+				If item\ItemTemplate\ID = it_eyedrops2
+					me\Bloodloss = Max(me\Bloodloss - Rnd(5.0, 10.0), 0.0)
+					me\EyeIrritation = 0.0
+				EndIf
+				
+				CreateMsg(GetLocalString("msg", "eyedrop.moisturized"))
+				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+				
+				item\State = item\State - 1.0
+				If item\State > 0.0
+					SelectedItem = Null
+				Else
+					RemoveItem(SelectedItem)
 				EndIf
 			EndIf
 			;[End Block]
 		Case it_fineeyedrops
 			;[Block]
 			If CanUseItem()
-				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
+				me\BlinkEffect = 0.4
+				me\BlinkEffectTimer = Rnd(50.0, 60.0)
+				me\BlurTimer = 200.0
+				me\BlinkTimer = me\BLINKFREQ
 				
-				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (0.5 * (1.0 + (I_1025\State[6] > 0.0)))), 100.0)
-				If item\UsageTimer = 100.0
-					me\BlinkEffect = 0.4
-					me\BlinkEffectTimer = Rnd(50.0, 60.0)
-					me\BlurTimer = 200.0
-					me\BlinkTimer = me\BLINKFREQ
-					
-					CreateMsg(GetLocalString("msg", "eyedrop.moisturized.very"))
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
-					
-					item\State = item\State - 1.0
-					If item\State > 0.0
-						item\UsageTimer = 0.0
-						SelectedItem = Null
-					Else
-						RemoveItem(SelectedItem)
-					EndIf
-				EndIf
-			EndIf
-			;[End Block]
-		Case it_veryfineeyedrops
-			;[Block]
-			If CanUseItem()
-				me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-				
-				item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (0.5 * (1.0 + (I_1025\State[6] > 0.0)))), 100.0)
-				If item\UsageTimer = 100.0
-					me\BlinkEffect = 0.0
-					me\BlinkEffectTimer = 90.0
-					me\EyeStuck = 8400.0
-					me\BlurTimer = 800.0
-					
-					CreateMsg(GetLocalString("msg", "eyedrop.moisturized.veryvery"))
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
-					
-					item\State = item\State - 1.0
-					If item\State > 0.0
-						item\UsageTimer = 0.0
-						SelectedItem = Null
-					Else
-						RemoveItem(SelectedItem)
-					EndIf
-				EndIf
-			EndIf
-			;[End Block]
-		Case it_lavenderspray
-			;[Block]
-			me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
-			
-			item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / (0.5 * (1.0 + (I_1025\State[6] > 0.0)))), 100.0)
-			If item\UsageTimer = 100.0
-				
-				CreateMsg(GetLocalString("msg", "spray"))
-				PlaySound_Strict(LoadTempSound("SFX\Interact\Spray.ogg"))
-				
-				If n_I\Curr049 <> Null
-					If EntityDistanceSquared(n_I\Curr049\Collider, me\Collider) < 25.0 And EntityInView(n_I\Curr049\OBJ, Camera)
-						If n_I\Curr049\State < 5.0 Then n_I\Curr049\State = 6.0
-					EndIf
-				EndIf
-				
-				Local emit.Emitter = SetEmitter(Null, EntityX(Camera, True), EntityY(Camera, True) - 0.1, EntityZ(Camera, True), 37)
-				EntityParent(emit\Owner, Camera)
+				CreateMsg(GetLocalString("msg", "eyedrop.moisturized.very"))
+				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 				
 				item\State = item\State - 1.0
 				If item\State > 0.0
@@ -3664,6 +3595,46 @@ Function UpdateUseItem%(item.Items)
 				Else
 					RemoveItem(SelectedItem)
 				EndIf
+			EndIf
+			;[End Block]
+		Case it_veryfineeyedrops
+			;[Block]
+			If CanUseItem()
+				me\BlinkEffect = 0.0
+				me\BlinkEffectTimer = 90.0
+				me\EyeStuck = 8400.0
+				me\BlurTimer = 800.0
+				
+				CreateMsg(GetLocalString("msg", "eyedrop.moisturized.veryvery"))
+				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
+				
+				item\State = item\State - 1.0
+				If item\State > 0.0
+					SelectedItem = Null
+				Else
+					RemoveItem(SelectedItem)
+				EndIf
+			EndIf
+			;[End Block]
+		Case it_lavenderspray
+			;[Block]
+			CreateMsg(GetLocalString("msg", "spray"))
+			PlaySound_Strict(LoadTempSound("SFX\Interact\Spray.ogg"))
+			
+			If n_I\Curr049 <> Null
+				If EntityDistanceSquared(n_I\Curr049\Collider, me\Collider) < 25.0 And EntityInView(n_I\Curr049\OBJ, Camera)
+					If n_I\Curr049\State < 5.0 Then n_I\Curr049\State = 6.0
+				EndIf
+			EndIf
+			
+			Local emit.Emitter = SetEmitter(Null, EntityX(Camera, True), EntityY(Camera, True) - 0.1, EntityZ(Camera, True), 37)
+			EntityParent(emit\Owner, Camera)
+			
+			item\State = item\State - 1.0
+			If item\State > 0.0
+				SelectedItem = Null
+			Else
+				RemoveItem(SelectedItem)
 			EndIf
 			;[End Block]
 		Case it_scp1025
@@ -3731,7 +3702,7 @@ Function UpdateUseItem%(item.Items)
 					If JsonIsNull(JsonGetValue(Drink, "refuse_message"))
 						me\CurrSpeed = CurveValue(0.0, me\CurrSpeed, 10.0)
 						
-						item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.6), 100.0)
+						item\UsageTimer = Min(item\UsageTimer + (fps\Factor[0] / 0.4), 100.0)
 						If item\UsageTimer = 100.0
 							Temp = JsonGetValue(Drink, "drink_message")
 							If (Not JsonIsNull(Temp)) Then CreateMsg(JsonGetString(Temp))
@@ -4621,7 +4592,7 @@ Function UpdateUseItem%(item.Items)
 	
 	If (Not (MenuOpen Lor ConsoleOpen)) And (mo\MouseHit2 Lor InvPressed) Lor me\Terminated Lor me\FallTimer < 0.0 Lor me\Playable < 2 Lor me\Zombie
 		Select item\ItemTemplate\ID
-			Case it_firstaid, it_finefirstaid, it_firstaid2, it_cap, it_scp268, it_fine268, it_scp1499, it_fine1499, it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_helmet, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_cup, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops, it_lavenderspray
+			Case it_firstaid, it_finefirstaid, it_firstaid2, it_cap, it_scp268, it_fine268, it_scp1499, it_fine1499, it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_helmet, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_cup
 				;[Block]
 				item\UsageTimer = 0.0
 				;[End Block]
@@ -5441,7 +5412,7 @@ Function RenderUseItem%(item.Items)
 	
 	Color(255, 255, 255)
 	Select item\ItemTemplate\ID
-		Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_scp1499, it_fine1499, it_helmet, it_cap, it_scp268, it_fine268, it_firstaid, it_finefirstaid, it_firstaid2, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_syringe, it_finesyringe, it_veryfinesyringe, it_syringeinf, it_cup, it_veryfinefirstaid, it_eyedrops, it_eyedrops2, it_fineeyedrops, it_veryfineeyedrops, it_lavenderspray
+		Case it_gasmask, it_finegasmask, it_veryfinegasmask, it_gasmask148, it_headphones, it_scp1499, it_fine1499, it_helmet, it_cap, it_scp268, it_fine268, it_firstaid, it_finefirstaid, it_firstaid2, it_nvg, it_veryfinenvg, it_finenvg, it_scramble, it_finescramble, it_cup
 			;[Block]
 			If item\UsageTimer > 0.0
 				SELECTED_GFX_SIZE = 70 * MenuScale
