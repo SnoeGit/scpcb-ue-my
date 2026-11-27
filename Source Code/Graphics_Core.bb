@@ -79,8 +79,10 @@ Function InitFastResize%()
 	MoveEntity(ResizeImageCamera, 0.0, 0.0, -10000.0)
 	HideEntity(ResizeImageCamera)
 
-	GammaEffect = LoadEffect("GFX\Shaders\Gamma.fx")
-	If GammaEffect = 0 Then RuntimeError("Failed to load Gamma.fx")
+	If GammaEffect = 0
+		GammaEffect = LoadEffect("GFX\Shaders\Gamma.fx")
+		If GammaEffect = 0 Then RuntimeErrorEx(Format(GetLocalString("runerr", "effect.failed.load"), "Gamma.fx"))
+	EndIf
 End Function
 
 Function Graphics3DEx%(Width%, Height%, Depth% = 32, Mode% = 2)

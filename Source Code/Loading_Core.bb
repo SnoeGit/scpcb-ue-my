@@ -3761,7 +3761,7 @@ Function NullGame%(PlayButtonSFX% = True)
 	ShouldDisableHUD = False
 	
 	ClearCollisions()
-	ClearWorld()
+	ClearWorld(True, True, True, False)
 	ResetTimingAccumulator()
 	InitFastResize()
 	
