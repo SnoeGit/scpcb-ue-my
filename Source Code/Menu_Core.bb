@@ -4329,6 +4329,10 @@ Function RenderItemTooltip%(x%, y%, Width%, Height%, Desc%, ItName$)
 			;[Block]
 			Txt = "Basic key used for doors with mechanical locks."
 			;[End Block]
+		Case it_hand, it_hand2, it_hand3
+			;[Block]
+			Txt = "Foundation staff hand cut from the rest of the body. Can be used to unlock DNA scanners scattered within the facility."
+			;[End Block]
 		Case it_paper, it_oldpaper
 			;[Block]
 			Txt = "Used to gain knowledge throughout the facility."
