@@ -2903,15 +2903,15 @@ Function FillRoom%(r.Rooms)
 			
 			; ~ Storage room doors
 			d.Doors = CreateDoor(r, r\x + 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 104.0 * RoomScale, 90.0, True)
-			d\AutoClose = False
+			d\AutoClose = False : d\Locked = 1
 			r\RoomDoors.Doors[4] = d
 			
 			d.Doors = CreateDoor(r, r\x + 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z - 1824.0 * RoomScale, 90.0)
-			d\AutoClose = False
+			d\AutoClose = False : d\Locked = 1
 			r\RoomDoors.Doors[5] = d
 			
 			d.Doors = CreateDoor(r, r\x - 272.0 * RoomScale, r\y - 3520.0 * RoomScale, r\z + 1824.0 * RoomScale, 90.0, True)
-			d\AutoClose = False
+			d\AutoClose = False : d\Locked = 1
 			r\RoomDoors.Doors[6] = d
 			
 			d.Doors = CreateDoor(r, r\x - 272.0 * RoomScale, r\y - 3552.0 * RoomScale, r\z + 98.0 * RoomScale, -90.0, False, BIG_DOOR, KEY_CARD_3)
