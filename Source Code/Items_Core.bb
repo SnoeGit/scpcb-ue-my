@@ -692,8 +692,8 @@ Function UpdateItems%()
 	EndIf
 End Function
 
-Function PickItem%(item.Items, PlayPickUpSound% = True)
-	If MenuOpen Lor ConsoleOpen Lor I_294\Using Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor me\Terminated Lor me\Playable <> 2 Then Return
+Function PickItem%(item.Items, PlayPickUpSound% = True, ForcePick% = False)
+	If (Not ForcePick) And (MenuOpen Lor ConsoleOpen Lor I_294\Using Lor d_I\SelectedDoor <> Null Lor SelectedScreen <> Null Lor me\Terminated Lor me\Playable <> 2) Then Return
 	
 	CatchErrors("PickItem()")
 	

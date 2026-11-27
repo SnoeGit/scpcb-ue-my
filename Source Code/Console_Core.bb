@@ -949,11 +949,13 @@ Function ExecuteConsoleCommand%(ConsoleMessage$)
 			;[End Block]
 		Case "spawnitem", "si", "giveitem", "gi"
 			;[Block]
+			Local IsGive% = StrTemp = "giveitem" Lor StrTemp = "gi"
 			StrTemp = Lower(Right(ConsoleInput, Len(ConsoleInput) - Instr(ConsoleInput, " ")))
 			Temp = False 
 			For itt.ItemTemplates = Each ItemTemplates
 				If Lower(itt\Name) = StrTemp Lor Lower(itt\DisplayName) = StrTemp Lor Str(itt\ID) = StrTemp
 					it.Items = CreateItem(itt\Name, itt\ID, EntityX(me\Collider), EntityY(Camera, True), EntityZ(me\Collider))
+					If IsGive Then PickItem(it, True, True)
 					CreateConsoleMsg(Format(GetLocalString("console", "si.success"), itt\DisplayName))
 					Temp = True
 					Exit
