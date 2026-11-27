@@ -1690,7 +1690,7 @@ Function UpdateEvent_Cont1_205%(e.Events)
 			
 			If e\room\RoomDoors[1]\Open Lor e\room\RoomDoors[2]\Open
 				
-				TFormPoint(-1055.0, -74.8, 650.0, e\room\OBJ, 0)
+				TFormPoint(-1055.0, -49.2, 650.0, e\room\OBJ, 0)
 				n.NPCs = CreateNPC(NPCTypeClerk, TFormedX(), TFormedY(), TFormedZ())
 				n\State3 = -1.0 : n\IsDead = True
 				ChangeNPCTextureID(n, NPC_CLERK_VICTIM_205_TEXTURE)
