@@ -3567,7 +3567,6 @@ Function UpdateUseItem%(item.Items)
 				EndIf
 				
 				CreateMsg(GetLocalString("msg", "eyedrop.moisturized"))
-				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 				
 				item\State = item\State - 1.0
 				If item\State > 0.0
@@ -3586,7 +3585,6 @@ Function UpdateUseItem%(item.Items)
 				me\BlinkTimer = me\BLINKFREQ
 				
 				CreateMsg(GetLocalString("msg", "eyedrop.moisturized.very"))
-				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 				
 				item\State = item\State - 1.0
 				If item\State > 0.0
@@ -3606,7 +3604,6 @@ Function UpdateUseItem%(item.Items)
 				me\BlurTimer = 800.0
 				
 				CreateMsg(GetLocalString("msg", "eyedrop.moisturized.veryvery"))
-				If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 				
 				item\State = item\State - 1.0
 				If item\State > 0.0
@@ -3838,7 +3835,6 @@ Function UpdateUseItem%(item.Items)
 					me\Stamina = Min(me\Stamina + 25.0, 100.0)
 					
 					CreateMsg(GetLocalString("msg", "syringe_1"))
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 					RemoveItem(SelectedItem)
 				EndIf
 			EndIf
@@ -3855,7 +3851,6 @@ Function UpdateUseItem%(item.Items)
 					me\Stamina = Min(me\Stamina + 50.0, 100.0)
 					
 					CreateMsg(GetLocalString("msg", "syringe_2"))
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 					RemoveItem(SelectedItem)
 				EndIf
 			EndIf
@@ -3886,7 +3881,6 @@ Function UpdateUseItem%(item.Items)
 							CreateMsg(GetLocalString("msg", "syringe_5"))
 							;[End Block]
 					End Select
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 					RemoveItem(SelectedItem)
 				EndIf
 			EndIf
@@ -3904,7 +3898,6 @@ Function UpdateUseItem%(item.Items)
 					me\VomitTimer = 70.0
 					I_008\Timer = I_008\Timer + 1.0
 					CreateMsg(GetLocalString("msg", "syringe_6"))
-					If item\ItemTemplate\SoundID <> 66 Then PlaySound_Strict(snd_I\PickSFX[item\ItemTemplate\SoundID])
 					RemoveItem(SelectedItem)
 				EndIf
 			EndIf
