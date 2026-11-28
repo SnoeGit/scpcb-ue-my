@@ -1,7 +1,14 @@
 {1.6.1}
 
+[Items]
+- Some consumable items no longer have a usage timer before being used to improve movement flow.
+
+[NPCs]
+- SCP-049 is stunned longer by SCP-513 and the lavender spray.
+
 [Bug Fixes]
 - Fixed light sprites peeking through blinds.
+- Fixed blob shadows not being removed when turned off.
 - Fixed some dead guards NPCs being inside the ground.
 - Fixed clerk position in «cont1_205»
 - Fixed cursor appearing over the item description boxes.
@@ -9,7 +16,7 @@
 - Fixed intro balcony guard looking the wrong direction.
 - Fixed icon borders.
 - Fixed gamma.fx crash.
-- Fixed missing strings for some items.
+- Fixed missing strings and descriptions for some items.
 - Fixed HUD offset tooltip.
 - Fixed generator door in «cont2_049» possibly being closed before going down there.
 
