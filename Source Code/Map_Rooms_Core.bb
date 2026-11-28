@@ -657,7 +657,7 @@ Function FillRoom%(r.Rooms)
 			
 			r\Objects[4] = CreateButton(BUTTON_DEFAULT, r\x - 1224.0 * RoomScale, r\y + 176.0 * RoomScale, r\z - 990.0 * RoomScale, 0.0, 180.0, 0.0, r\OBJ, True)
 			
-			r\Objects[5] = LoadRMesh(RoomPartsPath + "cont1_914_blinds.rmesh", Null, False)
+			r\Objects[5] = LoadRMesh(RoomPartsPath + "cont1_914_blinds.rmesh", Null)
 			ScaleEntity(r\Objects[5], RoomScale, RoomScale, RoomScale)
 			EntityParent(r\Objects[5], r\OBJ)
 			
@@ -1248,7 +1248,7 @@ Function FillRoom%(r.Rooms)
 					EndIf
 				EndIf
 			Next
-			If r\Objects[2] = 0 Then r\Objects[2] = LoadRMesh(RoomPartsPath + "room2_tesla_blinds.rmesh", Null, False)
+			If r\Objects[2] = 0 Then r\Objects[2] = LoadRMesh(RoomPartsPath + "room2_tesla_blinds.rmesh", Null)
 			ScaleEntity(r\Objects[2], RoomScale, RoomScale, RoomScale)
 			EntityParent(r\Objects[2], r\OBJ)
 			HideEntity(r\Objects[2])
@@ -1730,7 +1730,7 @@ Function FillRoom%(r.Rooms)
 			EntityParent(r\Objects[0], r\OBJ)
 			
 			; ~ Blinds #1
-			If r\Objects[1] = 0 Then r\Objects[1] = LoadRMesh(RoomPartsPath + "room2C_gw_lcz_blinds.rmesh", Null, False)
+			If r\Objects[1] = 0 Then r\Objects[1] = LoadRMesh(RoomPartsPath + "room2C_gw_lcz_blinds.rmesh", Null)
 			xTemp = 77.0 * RoomScale
 			yTemp = 132.0 * RoomScale
 			zTemp = 301.0 * RoomScale
