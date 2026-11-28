@@ -1,4 +1,19 @@
-{1.6]
+{1.6.1}
+
+[Bug Fixes]
+- Fixed light sprites peeking through blinds.
+- Fixed some dead guards NPCs being inside the ground.
+- Fixed clerk position in «cont1_205»
+- Fixed cursor appearing over the item description boxes.
+- Fixed Ulgrin getting angry if you were still close to intro cell door.
+- Fixed intro balcony guard looking the wrong direction.
+- Fixed icon borders.
+- Fixed gamma.fx crash.
+- Fixed missing strings for some items.
+- Fixed HUD offset tooltip.
+- Fixed generator door in «cont2_049» possibly being closed before going down there.
+
+{1.6}
 
 [Global]
 - Removed Bob.
