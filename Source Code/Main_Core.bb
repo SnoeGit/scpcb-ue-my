@@ -5220,9 +5220,12 @@ Function RenderGUI%()
 			EndIf
 		EndIf
 		
-		RenderCursor()
 		
-		If ShowItemDesc <> - 1 Then RenderItemTooltip(MousePosX, MousePosY, 300, 300, ShowItemDesc, ItName)
+		If ShowItemDesc <> - 1
+			RenderItemTooltip(MousePosX, MousePosY, 300, 300, ShowItemDesc, ItName)
+		Else
+			RenderCursor()
+		EndIf
 	ElseIf InvOpen
 		x = mo\Viewport_Center_X - ((INVENTORY_GFX_SIZE * MaxItemAmountHalf) + (INVENTORY_GFX_SPACING * (MaxItemAmountHalf - 1))) / 2
 		y = mo\Viewport_Center_Y - INVENTORY_GFX_SIZE - INVENTORY_GFX_SPACING
@@ -5391,9 +5394,11 @@ Function RenderGUI%()
 			EndIf
 		EndIf
 		
-		RenderCursor()
-		
-		If ShowItemDesc <> - 1 Then RenderItemTooltip(MousePosX, MousePosY, 300, 300, ShowItemDesc, ItName)
+		If ShowItemDesc <> - 1
+			RenderItemTooltip(MousePosX, MousePosY, 300, 300, ShowItemDesc, ItName)
+		Else
+			RenderCursor()
+		EndIf
 	Else
 		If SelectedItem <> Null Then RenderUseItem(SelectedItem)
 	EndIf
