@@ -3885,9 +3885,8 @@ Function UpdateShadows%()
 End Function
 
 Function RemoveShadow%(shdw.Shadows)
-	If (Not opt\BlobShadows) Then Return
 	shdw\ParentOBJ = 0
-	FreeEntity(shdw\OBJ) : shdw\OBJ = 0
+	If shdw\OBJ <> 0 Then FreeEntity(shdw\OBJ) : shdw\OBJ = 0
 	shdw\Surf = 0 
 	Delete(shdw)
 End Function
