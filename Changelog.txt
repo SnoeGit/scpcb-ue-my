@@ -1,5 +1,9 @@
 {1.6.1}
 
+[Global]
+- You can now use held down arrow keys to scroll through text faster.
+- Giveitem command now automatically places item in your inventory if space is available.
+
 [Items]
 - Some consumable items no longer have a usage timer before being used to improve movement flow.
 
@@ -19,6 +23,7 @@
 - Fixed missing strings and descriptions for some items.
 - Fixed HUD offset tooltip.
 - Fixed generator door in «cont2_049» possibly being closed before going down there.
+- Fixed console not allowing you to use left and right arrow keys.
 
 {1.6}
 
