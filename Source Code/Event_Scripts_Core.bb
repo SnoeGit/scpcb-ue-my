@@ -863,7 +863,7 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 				Case INTRO_CELL_OPENED
 					;[Block]
 					; ~ Outside the cell
-					If DistanceSquared(EntityX(me\Collider), e\room\x - 4096.0 * RoomScale, EntityZ(me\Collider), e\room\z + 192.0 * RoomScale) > 2.4025
+					If DistanceSquared(EntityX(me\Collider), e\room\x - 4096.0 * RoomScale, EntityZ(me\Collider), e\room\z + 192.0 * RoomScale) > 2.4025 Lor (Not e\room\RoomDoors[4]\Open)
 						If e\room\RoomDoors[4]\Open
 							StopChannel(e\room\NPC[3]\SoundCHN) : e\room\NPC[3]\SoundCHN = 0
 							
@@ -1586,8 +1586,6 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 			
 			If e\EventState < INTRO_IN_CHAMBER
 				If (Not me\Terminated)
-					Dist = DistanceSquared(EntityX(me\Collider), EntityX(e\room\NPC[3]\Collider), EntityZ(me\Collider), EntityZ(e\room\NPC[3]\Collider))
-					
 					If e\room\NPC[5] <> Null
 						If e\room\NPC[5]\State <> 11.0
 							If DistanceSquared(EntityX(me\Collider), EntityX(e\room\NPC[5]\Collider), EntityZ(me\Collider), EntityZ(e\room\NPC[5]\Collider)) < 25.0 And Dist > 25.0 And DistanceSquared(EntityX(me\Collider), EntityX(e\room\NPC[4]\Collider), EntityZ(me\Collider), EntityZ(e\room\NPC[4]\Collider)) > 25.0
