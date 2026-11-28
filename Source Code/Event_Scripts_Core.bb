@@ -1462,11 +1462,11 @@ Function UpdateEvent_Cont1_173_Intro%(e.Events)
 									e\room\NPC[0]\SoundCHN = PlaySoundEx(e\room\NPC[0]\Sound, Camera, e\room\NPC[0]\Collider, 20.0, 1.0, True)
 									
 									n_I\Curr173\Angle = 0.0 : n_I\Curr173\Idle = 1
-									PointEntity(e\room\NPC[0]\Collider, n_I\Curr173\OBJ)
-									TFormPoint(-320.0, 480.0, 1312.0, e\room\OBJ, 0)
+									TFormPoint(-320.0, 500.0, 1312.0, e\room\OBJ, 0)
 									PositionEntity(n_I\Curr173\Collider, TFormedX(), TFormedY(), TFormedZ())
 									ResetEntity(n_I\Curr173\Collider)
 									PointEntity(n_I\Curr173\Collider, e\room\NPC[0]\Collider)
+									PointEntity(e\room\NPC[0]\Collider, n_I\Curr173\OBJ)
 								EndIf
 								me\BlinkTimer = -10.0 : me\LightBlink = 1.0 : me\BigCameraShake = 3.0
 							ElseIf e\EventState3 < 20300.0
