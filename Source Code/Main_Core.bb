@@ -5222,6 +5222,7 @@ Function RenderGUI%()
 		
 		
 		If ShowItemDesc <> - 1
+			HidePointer()
 			RenderItemTooltip(MousePosX, MousePosY, 300, 300, ShowItemDesc, ItName)
 		Else
 			RenderCursor()
@@ -5395,6 +5396,7 @@ Function RenderGUI%()
 		EndIf
 		
 		If ShowItemDesc <> - 1
+			HidePointer()
 			RenderItemTooltip(MousePosX, MousePosY, 300, 300, ShowItemDesc, ItName)
 		Else
 			RenderCursor()
